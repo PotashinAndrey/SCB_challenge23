@@ -18,7 +18,21 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+    "@app/types": ["../../types/*"]
+    },
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "baseUrl": ".",
+      "paths": {
+        "@app/types": ["../../types/"]
+      },
+    },
+    "esm": true
   },
   "include": [
     "src"
