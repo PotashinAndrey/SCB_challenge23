@@ -5,8 +5,8 @@ import path from "path";
 import webpack from "webpack";
 import config from '../../config/index';
 
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+// const __filename = url.fileURLToPath(import.meta.url);
+// const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
