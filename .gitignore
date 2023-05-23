@@ -3,3 +3,5 @@
 **/.DS_Store
 config/local.js
 /node_modules
+
+source/backend/build

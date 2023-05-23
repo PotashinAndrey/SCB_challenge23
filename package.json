@@ -4,17 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start-backend": "node ./source/backend/index.js",
-    "start-frontend": "cd ./source/frontend && webpack-dev-server",
-    "start-x": "react-scripts start",
-    "start-frontend-legacy": "cd ./source/frontend && webpack serve --openssl-legacy-provider --hot --open",
-    "build-x": "react-scripts build",
-    "test-x": "react-scripts test",
-    "eject-x": "react-scripts eject",
-    "build-y": "webpack --config webpack.config.js --mode development"
+    "backend-start": "npm run backend-build && node ./source/backend/build/index.js",
+    "frontend-start": "cd ./source/frontend && webpack-dev-server",
+
+    "backend-build": "npx tsc --outDir ./source/backend/build ./source/backend/src/index.ts"
   },
-  "type": "module",
+  "type": "commonjs",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,7 +20,8 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.65",
-    "antd": "^4.24.1",
+    "antd": "^5.0.0",
+    "atomic-router": "^0.8.0",
     "deepmerge": "^4.3.0",
     "effector": "^22.4.0",
     "effector-react": "^22.3.4",
