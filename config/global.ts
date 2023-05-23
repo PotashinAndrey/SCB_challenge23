@@ -4,7 +4,7 @@ const config = {
     user: "postgres",
     database: "scbhack", // database name
     password: "password",
-    port: "5432",
+    port: 5432,
     host: "localhost",
   },
   backend: {

@@ -7,7 +7,7 @@
     "backend-start": "npm run backend-build && node ./source/backend/build/index.js",
     "frontend-start": "cd ./source/frontend && webpack-dev-server",
 
-    "backend-build": "npx tsc --outDir ./source/backend/build ./source/backend/src/index.ts"
+    "backend-build": "npx tsc --outDir ./source/backend/build --esModuleInterop ./source/backend/src/index.ts"
   },
   "type": "commonjs",
   "keywords": [],
@@ -20,6 +20,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.65",
+    "@types/pg": "^8.10.1",
     "antd": "^5.0.0",
     "atomic-router": "^0.8.0",
     "deepmerge": "^4.3.0",
