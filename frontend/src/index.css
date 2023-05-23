@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+ol, ul {
+  margin: 0 !important;
+	list-style: none;
+}
+
+p {
+  margin-bottom: 0 !important;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.nav ul{
+  display: grid;
+  gap: 4px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.padding-left-16 {
+  padding-left: 16px;
+}
+
+.border-card {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+}
+
+.ant-layout-header {
+  padding: 0 20px !important;
+}
+
+.ant-layout {
+  background-color: transparent !important;
+}
+
+.ant-select {
+  display: block !important;
+}
+
+.ant-table-wrapper {
+  max-width: 232px !important;
+}
+
+@media screen and (min-width: 360px) {
+  .ant-table-wrapper {
+    max-width: 274px !important;
+  }
+}
+
+@media screen and (min-width: 440px) {
+  .ant-table-wrapper {
+    max-width: 370px !important;
+  }
+}
+
+.ant-table-cell {
+  min-width: 150px;
+}
+
+.buttons-wrap {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 8px;
+}
+
+.ant-radio-group,
+.input-wrap {
+  margin-bottom: 16px !important;
+}
+
+.input-wrap label > span {
+  cursor: pointer;
+}
+
+.input-wrap_select label,
+.input-wrap label span {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.page-wrap {
+  display: grid;
+  gap: 8px;
+  padding: 30px 20px;
+}
+
+.section-wrap {
+  padding: 30px 24px;
+  max-width: 400px;
+  background-color: #f4f9fc;
+  border-radius: 12px;
+}
+
+.section-wrap .ant-typography b {
+  white-space: nowrap;
+}
+
+.text_info {
+  font-size: 20px
+}
+
+.detail {
+  display: inline-block;
+  color: #1890ff;
+}
+
+.detail:hover {
+  text-decoration: underline;
+}
+
+.card .detail {
+  margin-top: 12px;
+}
+
+.cards-list {
+  display: grid;
+  gap: 8px;
+}
+
+.card:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .5);
+}
+
+.card p {
+  margin-top: 4px;
+}
+
+.card img {
+  margin-bottom: 16px;
+}
+
+.card h1 {
+  margin-bottom: 16px;
+}
