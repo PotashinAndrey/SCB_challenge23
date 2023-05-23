@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-backend": "node ./backend/index.js",
-    "start-frontend": "cd frontend && webpack-dev-server",
+    "start-backend": "node ./source/backend/index.js",
+    "start-frontend": "cd ./source/frontend && webpack-dev-server",
     "start-x": "react-scripts start",
-    "start-frontend-legacy": "cd ./frontend && webpack serve --openssl-legacy-provider --hot --open",
+    "start-frontend-legacy": "cd ./source/frontend && webpack serve --openssl-legacy-provider --hot --open",
     "build-x": "react-scripts build",
     "test-x": "react-scripts test",
     "eject-x": "react-scripts eject",
