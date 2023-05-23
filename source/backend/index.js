@@ -2,7 +2,7 @@ import pg from "pg";
 import Fastify from 'fastify';
 import { promises as fs } from "fs";
 
-import config from "../config/index.js";
+import config from "../../config/index.js";
 import migrations from "./migrations/index.js";
 
 console.log(config);
