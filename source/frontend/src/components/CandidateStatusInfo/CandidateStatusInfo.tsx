@@ -5,13 +5,13 @@ import { Divider, Space, Tag, Dropdown } from 'antd';
 
 interface CandidateStatusInfoProps {
     name: string,
-    statuses: string[],
+    status: string,
     department: string,
-    histories: {date: string, message: string}[],
+    histories?: {date: string, message: string}[],
 }
 
 const CandidateStatusInfo: React.FC<CandidateStatusInfoProps> = props => {
-    const { name, statuses, department, histories } = props;
+    const { name, status, department, histories } = props;
 
     const items: MenuProps['items'] = [
         {
@@ -48,18 +48,17 @@ const CandidateStatusInfo: React.FC<CandidateStatusInfoProps> = props => {
                     Status
                 </Divider>
                 <Space size={[0, 8]} wrap>
-                    {statuses.map(status => {
-                        return <Tag color="grey">
+                        {/* <Tag color="grey">
                             {status}
-                        </Tag>;
-                    })}
+                        </Tag>
+
                     <Tag color="grey">
                         backlog
                     </Tag>
                     <Tag color="purple">preporation</Tag>
                     <Tag color="blue">
                             in progress
-                    </Tag>
+                    </Tag> */}
                     <Tag color="green">approved</Tag>
                 </Space>
                 <Divider
@@ -82,7 +81,7 @@ const CandidateStatusInfo: React.FC<CandidateStatusInfoProps> = props => {
                     History
                 </Divider>
                 <ul className="candidate-status__history-list">
-                    {histories.map(history => (
+                    {histories?.map(history => (
                         <li>
                             <div className="candidate-status-history">
                                 <div className="candidate-status-history__date">

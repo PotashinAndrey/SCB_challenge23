@@ -20,7 +20,7 @@ export const RadioField: React.FC<InputProps> = ({ controller, label, options })
         <label>{label}</label>
         <Radio.Group {...input} value={input.value || ''} className="input">
           {options.map(e => (
-            <Radio value={e.value}>{e.name}</Radio>
+            <Radio key={e.value} value={e.value}>{e.name}</Radio>
           ))}
         </Radio.Group>
       </div>

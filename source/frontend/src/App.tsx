@@ -12,24 +12,6 @@ import './App.css';
 
 const { Header, Content, Footer } = Layout;
 
-const candidate = {//todo
-  name: "Андрей Поташин",
-  role: "middle frontend developer",
-  description: {
-      birthDate: "29.04.2000",
-      sex: "Муж.",
-      text: "Работать умею - работать люблю, бизнес ставит задачу - я её делаю."
-  },
-  salary: 300000,
-  contacts: {
-      email: "test@test.test",
-      phone: "+55555555555",
-      telegram: "@potaqqshinAndrey",
-      vk: "vk.com",
-  },
-  notes: "Хороший чел, позитивный, надо брать!"
-}
-
 const App: FC = () => {
   const navigate = useNavigate();
   return (
@@ -41,13 +23,11 @@ const App: FC = () => {
               <p><Link to={"/login"}>Login</Link></p>
               <p><Link to={"/registration"}>Registration</Link></p>
               <p><Link to={"/dashboard"}>Dashboard</Link></p>
-              <p><Link to={"/candidate"}>Candidate</Link></p>
               <p><Link to={"/create-candidate"}>Create Candidate</Link></p>
             </>
           )} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
-          <Route path="/candidate" element={<CandidateInfo {...candidate} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-candidate" element={<CandidateCreate />} />
         </Routes>
