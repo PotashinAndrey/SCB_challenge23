@@ -1,17 +1,18 @@
 import React, { FC } from 'react';
-
+import { Layout } from 'antd';
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
-import { Layout } from 'antd';
+import { CandidateInfo } from './components/CandidateInfo';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
-import { CandidateInfo } from './components/CandidateInfo';
-const { Header, Content, Footer } = Layout;
+import CandidateCreate from './pages/CandidateCreate/CandidateCreate';
+import Registration from './pages/Registration/Registration';
 
 import './App.css';
-import CandidateCreate from './pages/CandidateCreate/CandidateCreate';
 
-const candidate = {
+const { Header, Content, Footer } = Layout;
+
+const candidate = {//todo
   name: "Андрей Поташин",
   role: "middle frontend developer",
   description: {
@@ -38,12 +39,14 @@ const App: FC = () => {
           <Route path="*" element={(
             <>
               <p><Link to={"/login"}>Login</Link></p>
+              <p><Link to={"/registration"}>Registration</Link></p>
               <p><Link to={"/dashboard"}>Dashboard</Link></p>
               <p><Link to={"/candidate"}>Candidate</Link></p>
               <p><Link to={"/create-candidate"}>Create Candidate</Link></p>
             </>
           )} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
           <Route path="/candidate" element={<CandidateInfo {...candidate} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-candidate" element={<CandidateCreate />} />
