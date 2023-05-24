@@ -3,7 +3,7 @@ import type { FastifyInstance, FastifyRegisterOptions } from "fastify";
 const usersApi = (fastify: FastifyInstance, opts: FastifyRegisterOptions<{}>, done: () => void): void => {
 
   /** регистрация пользователя */
-  fastify.post("/resister", async (request, reply) => {
+  fastify.post("/register", async (request, reply) => {
     console.log("/login", request.body);
     return request.body;
   });
