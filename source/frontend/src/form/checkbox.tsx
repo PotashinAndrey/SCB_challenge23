@@ -1,22 +1,20 @@
 import React from "react";
-import { DatePicker } from "antd";
+import { Checkbox  } from "antd";
 
 import { Controller } from "effector-react-form";
 
 type InputProps = {
     controller: Controller;
     label: React.ReactNode;
-    placeholder?: string;
   };
 
-export const DatePickerField: React.FC<InputProps> = ({ controller, label, placeholder }) => {
+export const CheckboxField: React.FC<InputProps> = ({ controller, label }) => {
     const { input } = controller();
   
     return (
       <div className="input-wrap input-wrap_select">
         <label>{label}</label>
-        {/* <Select {...input} value={input.value || ''} className="input" /> */}
-        <DatePicker {...input} placeholder={placeholder}  />
+        <Checkbox {...input} value={input.value || ''} className="input" />
       </div>
     );
   };

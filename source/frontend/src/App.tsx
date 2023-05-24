@@ -9,6 +9,7 @@ import { CandidateInfo } from './components/CandidateInfo';
 const { Header, Content, Footer } = Layout;
 
 import './App.css';
+import CandidateCreate from './pages/CandidateCreate/CandidateCreate';
 
 const candidate = {
   name: "Андрей Поташин",
@@ -39,11 +40,13 @@ const App: FC = () => {
               <p><Link to={"/login"}>Login</Link></p>
               <p><Link to={"/dashboard"}>Dashboard</Link></p>
               <p><Link to={"/candidate"}>Candidate</Link></p>
+              <p><Link to={"/create-candidate"}>Create Candidate</Link></p>
             </>
           )} />
           <Route path="/login" element={<Login />} />
           <Route path="/candidate" element={<CandidateInfo {...candidate} />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/create-candidate" element={<CandidateCreate />} />
         </Routes>
 
         {/* <div style={{ color: "red", fontSize: "32px" }}>
