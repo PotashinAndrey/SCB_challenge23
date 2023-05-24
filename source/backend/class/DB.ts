@@ -15,60 +15,11 @@ export default class DB {
 
   constructor() { this.config = config.database }
 
-  async connect(): Promise<DB> {
-    this.pool = new Pool(config.database);
-    try {
-      this.client = await this.pool!.connect();
-    } catch (connectError) {
-      console.error("database not exist", this.config.database);
-      // console.error(connectError); // DatabaseError // ?.["err"]?.["type"]
-      const createDatabase = await this.createDatabase();
-      if (createDatabase) {
-        this.client = await this.pool!.connect();
-        await this.initDatabase();
-      } else {
-        throw new Error("can't init DB");
-      }
-    }
-    return this;
-  }
-
-  async wrap<T extends any>(fn: (client: PoolClient, db: DB) => Promise<T>) {
-    const client = await this.pool!.connect();
-    try {
-      return await fn(client, this);
-    } catch (error) {
-      throw error;
-    } finally {
-      client.release();
-    }
-  }
-
-  async query<T extends Array<any>, S extends Array<any>>(query: QueryConfig<T>, client?: PoolClient | pg.Client): Promise<QueryArrayResult<S>> {
-    try {
-      return client
-        ? await client.query<S, T>(query)
-        : await this.wrap<QueryArrayResult<S>>(client => client.query<S, T>(query));
-    } catch (error) {
-      console.log(query);
-      console.error("DB ERROR:", (error as Error).message);
-      throw error;
-    }
-  }
-
   select(text: string, values: Array<any> = [], client?: PoolClient) {
     const query = { text, values };
     return client
       ? client.query(query)
       : this.wrap(client => client.query(query));
-  }
-
-  async selectArray0<T = any>(text: string, values: Array<any> = [], client?: PoolClient | pg.Client): Promise<Array<Array<T>>> {
-    const query = { text, values, rowMode: 'array' };
-    const promise = client
-      ? client.query(query)
-      : this.wrap(client => client.query(query));
-    return (await promise).rows as Array<Array<T>>;
   }
 
   async selectArray<T = any>(request: RequestSelectDB): Promise<Array<Array<T>>> {
@@ -146,40 +97,22 @@ export default class DB {
     return this.query({ text }, client);
   }
 
-  async migration(folder: string, index: number) {
-    console.log('применяем миграцию', index);
-    const obj = await import(folder + '/'+ index +'.js');
-    const migration = obj.default;
-    await this.wrap(migration);
-    await this.insert({ fields: "id", tables: "public.migrations", values: [index] });
-    console.log(`миграция ${index} применена`);
+  createExtension(name: string, client?: PoolClient | pg.Client) {
+    // DROP EXTENSION IF EXISTS "${name}";
+    const text = `CREATE EXTENSION IF NOT EXISTS "${name}" WITH SCHEMA public`;
+    return this.query({ text }, client);
   }
 
-  async migrations(folder: string) {
-    const files = await fs.readdir(folder);
-    const migrations = files
-      .map(f => parseInt(f.replace(/\.js$/, "")))
-      .filter(f => !Number.isNaN(f))
-      .sort();
-    console.log("все миграции", migrations);
-
-    const migratedQuery: RequestSelectDB = { fields: "id", tables: "public.migrations" };
-    let migrated = [];
+  async query<T extends Array<any>, S extends Array<any>>(query: QueryConfig<T>, client?: PoolClient | pg.Client): Promise<QueryArrayResult<S>> {
     try {
-      migrated = await this.selectArray<number>(migratedQuery);
-    } catch (error) { // нет таблицы public.migrations
-      await this.createTable("public.migrations", "timestamp", { id: "int4", timestamp: "timestamp now()" });
-      migrated = await this.selectArray<number>(migratedQuery);
+      return client
+        ? await client.query<S, T>(query)
+        : await this.wrap<QueryArrayResult<S>>(client => client.query<S, T>(query));
+    } catch (error) {
+      console.log(query);
+      console.error("DB ERROR:", (error as Error).message);
+      throw error;
     }
-    const applied = migrated.map(row => row[0]).sort();
-    console.log("применённые миграции", applied);
-
-    const rest = migrations.filter(f => !applied.includes(f));
-    // применение миграций
-    for (let i = 0; i < rest.length; ++i) {
-      await this.migration(folder, rest[i]);
-    }
-    console.log(rest.length > 0 ? "все новые миграции применены" : "не требуется применять миграции");
   }
 
   async createDatabase() {
@@ -216,17 +149,72 @@ export default class DB {
     await this.createExtension("uuid-ossp");
   }
 
-  createExtension(name: string, client?: PoolClient | pg.Client) {
-    // DROP EXTENSION IF EXISTS "${name}";
-    const text = `CREATE EXTENSION IF NOT EXISTS "${name}" WITH SCHEMA public`;
-    return this.query({ text }, client);
+  async connect(): Promise<DB> {
+    this.pool = new Pool(config.database);
+    try {
+      this.client = await this.pool!.connect();
+    } catch (connectError) {
+      console.error("database not exist", this.config.database);
+      // console.error(connectError); // DatabaseError // ?.["err"]?.["type"]
+      const createDatabase = await this.createDatabase();
+      if (createDatabase) {
+        this.client = await this.pool!.connect();
+        await this.initDatabase();
+      } else {
+        throw new Error("can't init DB");
+      }
+    }
+    return this;
   }
 
-  disconnect() {
-    return this.pool?.end(); // ?
+  async wrap<T extends any>(fn: (client: PoolClient, db: DB) => Promise<T>) {
+    const client = await this.pool!.connect();
+    try {
+      return await fn(client, this);
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
-  static get uuid() {
-    return crypto.randomUUID();
+  async migration(folder: string, index: number) {
+    console.log('применяем миграцию', index);
+    const obj = await import(folder + '/'+ index +'.js');
+    const migration = obj.default;
+    await this.wrap(migration);
+    await this.insert({ fields: "id", tables: "public.migrations", values: [index] });
+    console.log(`миграция ${index} применена`);
   }
+
+  async migrations(folder: string) {
+    const files = await fs.readdir(folder);
+    const migrations = files
+      .map(f => parseInt(f.replace(/\.js$/, "")))
+      .filter(f => !Number.isNaN(f))
+      .sort();
+    console.log("все миграции", migrations);
+
+    const migratedQuery: RequestSelectDB = { fields: "id", tables: "public.migrations" };
+    let migrated = [];
+    try {
+      migrated = await this.selectArray<number>(migratedQuery);
+    } catch (error) { // нет таблицы public.migrations
+      await this.createTable("public.migrations", "timestamp", { id: "int4", timestamp: "timestamp now()" });
+      migrated = await this.selectArray<number>(migratedQuery);
+    }
+    const applied = migrated.map(row => row[0]).sort();
+    console.log("применённые миграции", applied);
+
+    const rest = migrations.filter(f => !applied.includes(f));
+    // применение миграций
+    for (let i = 0; i < rest.length; ++i) {
+      await this.migration(folder, rest[i]);
+    }
+    console.log(rest.length > 0 ? "все новые миграции применены" : "не требуется применять миграции");
+  }
+
+  disconnect() { return this.pool?.end() }
+
+  static get uuid() { return crypto.randomUUID() }
 }
