@@ -1,5 +1,7 @@
+import "./CandidateModal.css";
 import React from "react";
 import { Modal } from 'antd';
+import CandidateStatusInfo from '../CandidateStatusInfo/CandidateStatusInfo';
 
 interface CandidateModalProps {
     isModalOpen: boolean;
@@ -14,9 +16,16 @@ const CandidateModal: React.FC<CandidateModalProps> = props => {
 
     return (
         <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleClose}>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+            <div className="candidate-modal">
+                <div>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </div>
+                <div>
+                    <CandidateStatusInfo />
+                </div>
+            </div>
         </Modal>
     );
 }
