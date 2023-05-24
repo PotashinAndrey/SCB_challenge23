@@ -8,17 +8,25 @@ export const loginForm = createForm();
 
 export const loginFormSubmit = createEvent<any>();
 
-const loginFx = createEffect((values: any) => location.hash = "/rooms-filters");
-
-sample({
-    clock: loginFormSubmit,
-    source: loginForm.$values,
-    fn: (source, clock) => source,
-    target: loginFx
+const loginFx = createEffect(async (values: any) => {
+  console.log("fx", { values })
+  const result = await api<any, any>("users/login", values);
+  console.log("result fx", { result });
+  return result;
 });
 
 sample({
-    clock: loginFx.doneData,
-    // fn: data => data
-    target: $user
+  clock: loginFormSubmit,
+  source: loginForm.$values,
+  fn: (source, clock) => {
+    console.log("sample", { source })
+    return source;
+  },
+  target: loginFx
+});
+
+sample({
+  clock: loginFx.doneData,
+  // fn: data => data
+  target: $user
 });

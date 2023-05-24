@@ -1,45 +1,32 @@
-import React, { FC } from 'react';
-import { Layout } from 'antd';
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { createRoutesView, Link } from 'atomic-router-react';
+import { routing } from './context/router';
+import './App.css';
 
-import { CandidateInfo } from './components/CandidateInfo';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import CandidateCreate from './pages/CandidateCreate/CandidateCreate';
 import Registration from './pages/Registration/Registration';
 
-import './App.css';
+const App = createRoutesView({
+  routes: [
+    { route: routing.login,           view: Login },
+    { route: routing.registration,    view: Registration },
+    { route: routing.dashboard,       view: Dashboard },
+    { route: routing.candidateCreate, view: CandidateCreate },
+    // { route: Post.route, view: PostPage.view },
+  ],
+  otherwise() {
+    return (
+      <div>
+        <h2>Page not found!</h2>
 
-const { Header, Content, Footer } = Layout;
-
-const App: FC = () => {
-  const navigate = useNavigate();
-  return (
-    <Layout className="layout">
-      <div className="App">
-        <Routes>
-          <Route path="*" element={(
-            <>
-              <p><Link to={"/login"}>Login</Link></p>
-              <p><Link to={"/registration"}>Registration</Link></p>
-              <p><Link to={"/dashboard"}>Dashboard</Link></p>
-              <p><Link to={"/create-candidate"}>Create Candidate</Link></p>
-            </>
-          )} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create-candidate" element={<CandidateCreate />} />
-        </Routes>
-
-        {/* <div style={{ color: "red", fontSize: "32px" }}>
-          прямые УРЛЫ страниц содержат символ решеточки (нужно для HashRouter)
-          <br />
-          Пример: <b>http://localhost:8080/#/login</b>
-        </div> */}
+        <p><Link to={routing.login}>Login</Link></p>
+        <p><Link to={routing.registration}>Registration</Link></p>
+        <p><Link to={routing.dashboard}>Dashboard</Link></p>
+        <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>
       </div>
-    </Layout>
-  );
-}
+    );
+  },
+});
 
 export default App;

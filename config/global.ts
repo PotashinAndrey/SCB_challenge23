@@ -12,10 +12,15 @@ const config = {
     connectionTimeoutMillis: 2000,
   },
   backend: {
+    protocol: "http",
     http: {
       host: "0.0.0.0",
       port: 3000
-    }
+    },
+    https: {
+      host: "0.0.0.0",
+      port: 3443
+    },
   },
   frontend: {
     port: 8080

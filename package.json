@@ -6,14 +6,11 @@
   "scripts": {
     "backend-start": "npm run backend-build && npm run backend-migrations && npm run backend-launch",
     "frontend-start": "npm run frontend-launch",
-
     "backend-clear": "rm -rf ./source/backend/build/",
     "backend-build": "npx tsc -p ./source/backend/",
     "backend-migrations": "cp -R ./source/backend/migrations ./source/backend/build/source/backend",
     "backend-launch": "cd ./source/backend && node --experimental-loader ./loader.js ./build/source/backend/src/index.js",
-
     "frontend-launch": "cd ./source/frontend && webpack serve --config ./webpack.config.ts",
-
     "clear": "npm run backend-clear && rm -rf package-lock.json node_modules/"
   },
   "keywords": [],
@@ -29,15 +26,16 @@
     "@types/pg": "^8.10.1",
     "antd": "^5.0.0",
     "atomic-router": "^0.8.0",
+    "atomic-router-react": "^0.8.3",
     "deepmerge": "^4.3.0",
     "effector": "^22.4.0",
     "effector-react": "^22.3.4",
     "effector-react-form": "^3.0.0-4",
     "fastify": "^4.8.1",
+    "history": "^5.3.0",
     "pg": "^8.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "web-vitals": "^2.1.4"
