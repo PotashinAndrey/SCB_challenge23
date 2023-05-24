@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import * as url from 'url';
 import config from '../../../config';
 import DB from "../class/DB";
+import usersApi from "./api/users";
 
 const fastify = Fastify({ logger: true })
 const db = await new DB().connect();
@@ -15,6 +16,8 @@ fastify.addHook("preHandler", async (request, reply) => {
     "Content-Type": "application/json"
   });
 });
+
+fastify.register(usersApi, { prefix: "/api/users" });
 
 fastify.get('/ping', async (request, reply) => {
   return 'pong\n';

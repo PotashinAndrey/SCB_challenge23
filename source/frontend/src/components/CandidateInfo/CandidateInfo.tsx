@@ -32,6 +32,24 @@ interface CandidateInfoProps {
     notes?: string;
 }
 
+const candidate = {
+  name: "Андрей Поташин",
+  role: "middle frontend developer",
+  description: {
+      birthDate: "29.04.2000",
+      sex: "Муж.",
+      text: "Работать умею - работать люблю, бизнес ставит задачу - я её делаю."
+  },
+  salary: 300000,
+  contacts: {
+      email: "test@test.test",
+      phone: "+55555555555",
+      telegram: "@potaqqshinAndrey",
+      vk: "vk.com",
+  },
+  notes: "Хороший чел, позитивный, надо брать!"
+}
+
 const ContactItem: React.FC<{ value: string, type: CandidateContact }> = props => {
     const {value, type} = props;
 

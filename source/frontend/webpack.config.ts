@@ -1,3 +1,5 @@
+import type { ServerProtocol } from "@app/types/config";
+
 import * as url from 'url';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
@@ -33,6 +35,10 @@ export default {
     }),
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),
+    new webpack.DefinePlugin({
+    //   __API_HOST__: config.backend[config.backend.protocol].host,
+      __API_PORT__: config.backend[(config.backend.protocol as ServerProtocol )|| "http"].port
+    })
   ],
   resolve: {
     modules: [__dirname, "src", "node_modules"],

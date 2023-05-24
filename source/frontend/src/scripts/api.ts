@@ -1,24 +1,32 @@
-const host = "http://localhost";
-const port = "8080";
+import type { ServerProtocol } from "@app/types/config";
 
-const api = async (method: string, data: any): Promise<any> => {
-    try {
-        return await fetch(`${host}:${port}/api/${method}`, {
-            // mode: "opaque",
-            // mode: 'cors',
-            // credentials: 'include',
-            method: "post",
-            // withCredentials: true,
-            // crossorigin: true,
-            body: JSON.stringify(data),
-            // headers: {
-            //     "Content-Type": "application/json",
-            //     // "Access-Control-Allow-Origin": "*"
-            // },
-        }).then(r => r.json())
-    } catch (e) {
-        console.error(e)
-    }
+// declare const __API_HOST__: string;
+declare const __API_PORT__: number;
+
+const api = async <S, T>(method: string, data?: S): Promise<T> => {
+  console.log("api1", 0);
+
+
+  try {
+    const protocol = window.location.protocol.replace(/:$/, "") as ServerProtocol;
+
+    const host = "localhost";
+    const port = __API_PORT__ || (protocol === "http" ? 80 : 443);
+    const url = `${protocol}://${host}:${port}/api/${method}`;
+
+    console.log("api", { url });
+
+    const response = await fetch(url, {
+      method: "post",
+      body: data ? JSON.stringify(data) : null
+    });
+
+    const result = await response.text();
+    return result as T;
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
 }
 
 export default api;
