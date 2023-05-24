@@ -5,14 +5,19 @@ import "./ColumnItem.css";
 
 interface ColumnItemProps {
     title: string;
-    tagText: string
+    tagText: string;
+    id: string;
 }
 
 const ColumnItem: React.FC<ColumnItemProps> = props => {
-    const { title, tagText} = props;
+    const { title, tagText, id} = props;
+
+    const handleDragStart = (ev: any) => {
+        ev.dataTransfer.setData("itemId", id);
+    }
 
     return (
-        <div className="column-item-component boxAndRadius">
+        <div draggable onDragStart={handleDragStart} className="column-item-component boxAndRadius">
             <p className="column-item-header">{title}</p>
             <Tag color="yellow">{tagText}</Tag>
         </div>

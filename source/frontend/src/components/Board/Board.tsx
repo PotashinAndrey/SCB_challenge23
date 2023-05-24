@@ -20,6 +20,7 @@ const Board: React.FC<BoardProps> = ({ columns }) => {
         <div className="board-component boxAndRadius">
             {columns.map(e => (
                 <BoardColumn
+                    key={e.name}
                     items={e.items}
                     name={e.name}
                     total={e.totalItemsNumber}
