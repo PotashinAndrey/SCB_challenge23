@@ -1,0 +1,27 @@
+.candidate-status__top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.candidate-status__name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.candidate-status__button {
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(3, 1px);
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.candidate-status__button span {
+  width: 1px;
+  height: 1px;
+  background-color: #000;
+}
