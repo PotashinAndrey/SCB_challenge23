@@ -1,0 +1,21 @@
+.column-component {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: rgb(233, 232, 232);
+    min-width: 200px;
+}
+
+.column-header {
+    text-transform: uppercase;
+    color: rgb(82, 82, 82);
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

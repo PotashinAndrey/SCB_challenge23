@@ -1,0 +1,8 @@
+.board-component {
+  display: flex;
+  gap: 20px;
+  /* background-color: rgb(247, 247, 247); */
+  padding: 20px;
+  margin: 10px;  
+  height: 100%;
+}

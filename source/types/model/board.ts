@@ -2,5 +2,6 @@
 
 export interface BoardCardItemType {
     title: string;
-    step: string; 
+    step: string;
+    id: string;
 }
