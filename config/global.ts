@@ -6,6 +6,10 @@ const config = {
     password: "password",
     port: 5432,
     host: "localhost",
+
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
   },
   backend: {
     http: {
