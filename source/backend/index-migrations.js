@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import * as url from 'url';
 
-const __filename = url.fileURLToPath(import.meta.url);
+// const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export default async function migrations(client) {
