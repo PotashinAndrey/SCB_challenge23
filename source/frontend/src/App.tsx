@@ -14,7 +14,7 @@ const App = createRoutesView({
     { route: routing.registration,    view: Registration },
     { route: routing.dashboard,       view: Dashboard },
     { route: routing.candidate,       view: CandidateInfo },
-    { route: routing.candidateCreate: view: CandidateCreate },
+    { route: routing.candidateCreate, view: CandidateCreate },
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {
