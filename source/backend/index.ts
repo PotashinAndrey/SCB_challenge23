@@ -1,3 +1,6 @@
+import type {BackendConfig} from "@app/types/config";
+
+import usersApi from "./src/api/users";
 import Fastify from 'fastify';
 import * as url from 'url';
 import config from '../../config';
@@ -16,15 +19,13 @@ fastify.addHook("preHandler", async (request, reply) => {
   });
 });
 
-fastify.get('/ping', async (request, reply) => {
-  return 'pong\n';
-});
+fastify.register(usersApi, { prefix: "/api/users" });
 
 const start = async () => {
   try {
     const __migrations = __dirname.replace(/\/?$/, "/migrations");
     await db.migrations(__migrations);
-    await fastify.listen(config.backend.http);
+    await fastify.listen((config as unknown as {backend: BackendConfig}).backend.http || {host: "localhost", port: 8080});
   } catch (error) {
     fastify.log.error(error);
     // console.error("Error: fastify.start", error);
@@ -53,3 +54,4 @@ start();
 process.once('SIGINT', () => stop('SIGINT'));
 process.once('SIGTERM', () => stop('SIGTERM'));
 process.on('uncaughtException', () => stop('uncaughtException', 1));
+ 

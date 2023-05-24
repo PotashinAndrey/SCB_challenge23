@@ -5,4 +5,8 @@ export type ServerInfo = {
   port: number;
 }
 
-export type BackendConfig = { [protocol in ServerProtocol]?: ServerInfo };
+export type BackendConfig = {
+  protocol: ServerProtocol;
+} & {
+  [x in ServerProtocol]?: ServerInfo;
+};

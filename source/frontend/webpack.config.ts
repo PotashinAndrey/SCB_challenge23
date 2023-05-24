@@ -1,4 +1,4 @@
-import type { ServerProtocol } from "@app/types/config";
+import type { ServerProtocol, BackendConfig } from "@app/types/config";
 
 import * as url from 'url';
 import HtmlWebpackPlugin from "html-webpack-plugin";
@@ -21,7 +21,7 @@ export default {
       directory: path.join(__dirname, 'public'),
     },
     compress: true,
-    port: config.frontend.port,
+    port: (config as never as {frontend: {port: number}}).frontend.port,
     allowedHosts: "all"
   },
   target: "web",
@@ -37,7 +37,7 @@ export default {
     isDevelopment && new ReactRefreshWebpackPlugin(),
     new webpack.DefinePlugin({
     //   __API_HOST__: config.backend[config.backend.protocol].host,
-      __API_PORT__: config.backend[(config.backend.protocol as ServerProtocol )|| "http"].port
+      __API_PORT__: (config as unknown as {backend: BackendConfig}).backend[((config as unknown as {backend: BackendConfig}).backend.protocol as ServerProtocol )|| "http"]?.port
     })
   ],
   resolve: {
