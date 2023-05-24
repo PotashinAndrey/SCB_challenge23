@@ -1,0 +1,11 @@
+.column-item-component {
+    background: white;
+    padding: 10px 7px;
+    cursor: pointer;
+}
+
+.column-item-header {
+    /* text-transform: uppercase; */
+    font-size: small;
+    font-weight: 600;
+}

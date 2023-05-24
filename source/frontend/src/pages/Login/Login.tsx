@@ -9,8 +9,6 @@ import "./Login.css";
 import { InputField } from '../../form/input';
 import { useEffect } from 'react';
 
-import { BoardCardItemType } from "@app/types/model/board";
-
 const {Title} = Typography;
 
 const Login: FC = () => {
