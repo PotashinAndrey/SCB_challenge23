@@ -5,10 +5,28 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Layout } from 'antd';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import { CandidateInfo } from './components/CandidateInfo';
 const { Header, Content, Footer } = Layout;
 
 import './App.css';
 
+const candidate = {
+  name: "Андрей Поташин",
+  role: "middle frontend developer",
+  description: {
+      birthDate: "29.04.2000",
+      sex: "Муж.",
+      text: "Работать умею - работать люблю, бизнес ставит задачу - я её делаю."
+  },
+  salary: 300000,
+  contacts: {
+      email: "test@test.test",
+      phone: "+55555555555",
+      telegram: "@potaqqshinAndrey",
+      vk: "vk.com",
+  },
+  notes: "Хороший чел, позитивный, надо брать!"
+}
 
 const App: FC = () => {
   const navigate = useNavigate();
@@ -20,9 +38,11 @@ const App: FC = () => {
             <>
               <p><Link to={"/login"}>Login</Link></p>
               <p><Link to={"/dashboard"}>Dashboard</Link></p>
+              <p><Link to={"/candidate"}>Candidate</Link></p>
             </>
           )} />
           <Route path="/login" element={<Login />} />
+          <Route path="/candidate" element={<CandidateInfo {...candidate} />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
 

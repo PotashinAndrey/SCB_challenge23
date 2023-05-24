@@ -1,0 +1,47 @@
+.candidateInfoComponent {
+ padding: 15px;
+}
+
+.candidateInfoName {
+
+}
+
+.candidateInfoRoleAndSalary {
+    margin: 15px 0;
+    display: flex;
+    font-weight: 600;
+    font-size: 1.3em;
+    justify-content: space-between;
+}
+
+.candidateInfoDescription {
+    margin: 10px 0;
+
+}
+
+.candidateInfoBirthAndSex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.candidateInfoDescriptionText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.candidateInfoContacts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.candidateInfoNotes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ContactItemType {
+    font-weight: 600;
+}
