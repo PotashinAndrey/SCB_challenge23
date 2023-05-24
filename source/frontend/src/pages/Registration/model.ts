@@ -8,17 +8,22 @@ export const registrationForm = createForm();
 
 export const registrationFormSubmit = createEvent<any>();
 
-const registrationFx = createEffect((values: any) => location.hash = "/rooms-filters");
-
-sample({
-    clock: registrationFormSubmit,
-    source: registrationForm.$values,
-    fn: (source, clock) => source,
-    target: registrationFx
+const registrationFx = createEffect(async (values: any) => {
+  console.log("fx", { values })
+  const result = await api<any, any>("users/registration", values);
+  console.log("result fx", { result });
+  return result;
 });
 
 sample({
-    clock: registrationFx.doneData,
-    // fn: data => data
-    target: $user
+  clock: registrationFormSubmit,
+  source: registrationForm.$values,
+  fn: (source, clock) => source,
+  target: registrationFx
+});
+
+sample({
+  clock: registrationFx.doneData,
+  // fn: data => data
+  target: $user
 });

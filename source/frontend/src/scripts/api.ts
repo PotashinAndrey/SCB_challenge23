@@ -21,7 +21,7 @@ const api = async <S, T>(method: string, data?: S): Promise<T> => {
       body: data ? JSON.stringify(data) : null
     });
 
-    const result = await response.text();
+    const result = await response.json();
     return result as T;
   } catch (error) {
     console.error(error)

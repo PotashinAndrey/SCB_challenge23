@@ -10,7 +10,7 @@ export type BaseQueryType = {
 };
 
 export type RequestSelectDB = BaseDBRequestClient & BaseQueryValues & (BaseQueryType | TextQueryType);
-export type RequestInsertDB = RequestSelectDB & { returnID?: boolean }
+export type RequestInsertDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & { returning?: string }) | TextQueryType)
 
 export type RequestRelationDB = {
   source: `${string}.${string}` | `${string}.${string}.${string}`;

@@ -24,7 +24,7 @@ const Registration: FC = () => {
                 <Title>Регистрация</Title>
 
                 <InputField controller={controller({ name: "name" })} label={"Имя"} />
-                <InputField controller={controller({ name: "login" })} label={"Электронная почта"} />
+                <InputField controller={controller({ name: "email" })} label={"Электронная почта"} />
                 <InputField controller={controller({ name: "password" })} label={"Пароль"} />
                 <InputField controller={controller({ name: "passwordCheck" })} label={"Повтор пароля"} />
 

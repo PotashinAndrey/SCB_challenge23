@@ -34,13 +34,14 @@ export default class DB {
   }
 
   insert(request: RequestInsertDB): Promise<any> {
-    const text = "text" in request ? request.text : `insert into ${request.tables} (${request.fields}) values (${request.values?.map((e, i) => "$" + (i + 1)).join(", ")})`;
-    const query = { text, values: request.values };
+    const text = "text" in request
+      ? request.text
+      : `insert into ${request.tables} (${request.fields}) values (${request.values?.map((e, i) => "$" + (i + 1)).join(", ")})`;
+    const query = {
+      text: "returning" in request ? text + " returning " + request.returning : text,
+      values: request.values
+    };
     return this.query(query, request.client);
-  }
-
-  insertByID() {
-
   }
 
   update() {
@@ -89,6 +90,14 @@ export default class DB {
     });
     const text = `CREATE TABLE IF NOT EXISTS "${name.replace(".", '"."')}" (${columns.join(", ")}, PRIMARY KEY ("${primary}"))`;
     // console.log(text);
+    return this.query({ text }, client);
+  }
+
+  createField(table: string, field: string, structure: string, client?: PoolClient | pg.Client): Promise<any> {
+    const [type, initial = "NULL"] = structure.split(" ");
+    const nullable = initial !== "NULL" ? "NOT NULL" : "";
+    const info = [`"${field}"`, type, nullable, "DEFAULT", initial].join(" ");
+    const text = `ALTER TABLE "${table.replace(".", '"."')}" ADD COLUMN ${info}`;
     return this.query({ text }, client);
   }
 

@@ -1,10 +1,10 @@
-import type {BackendConfig} from "@app/types/config";
-
-import usersApi from "./src/api/users";
 import Fastify from 'fastify';
 import * as url from 'url';
+import type { BackendConfig } from "@app/types/config";
 import config from '../../config';
 import DB from "./class/DB";
+
+import usersApi from "./src/api/users";
 
 const fastify = Fastify({ logger: true })
 const db = await new DB().connect();
@@ -19,7 +19,7 @@ fastify.addHook("preHandler", async (request, reply) => {
   });
 });
 
-fastify.register(usersApi, { prefix: "/api/users" });
+fastify.register(usersApi, { prefix: "/api/users", db });
 
 const start = async () => {
   try {
@@ -54,4 +54,3 @@ start();
 process.once('SIGINT', () => stop('SIGINT'));
 process.once('SIGTERM', () => stop('SIGTERM'));
 process.on('uncaughtException', () => stop('uncaughtException', 1));
- 
