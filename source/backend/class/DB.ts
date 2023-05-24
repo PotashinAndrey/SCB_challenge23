@@ -180,7 +180,8 @@ export default class DB {
 
   async migration(folder: string, index: number) {
     console.log('применяем миграцию', index);
-    const obj = await import(folder + '/'+ index +'.js');
+    console.log(folder + '/'+ index +'.js');
+    const obj = await import('../migrations/'+ index +'.js');
     const migration = obj.default;
     await this.wrap(migration);
     await this.insert({ fields: "id", tables: "public.migrations", values: [index] });
