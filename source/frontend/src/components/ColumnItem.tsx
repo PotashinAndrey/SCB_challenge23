@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Tag } from 'antd';
 
-import "./ColumnItem.css";
-import CandidateModal from "../CandidateModal/CandidateModal";
+import "../style/ColumnItem.css";
+import CandidateModal from "./CandidateModal";
 
 interface ColumnItemProps {
     title: string;
@@ -10,7 +10,7 @@ interface ColumnItemProps {
     id: string;
 }
 
-const ColumnItem: React.FC<ColumnItemProps> = props => {
+const ColumnItem: FC<ColumnItemProps> = props => {
     const { title, tagText, id } = props;
     const [isModalOpen, setModalOpen] = useState(false);
 

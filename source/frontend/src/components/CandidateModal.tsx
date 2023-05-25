@@ -1,8 +1,8 @@
-import "./CandidateModal.css";
-import React from "react";
+import type { FC } from "react";
 import { Modal } from 'antd';
-import CandidateStatusInfo from '../CandidateStatusInfo/CandidateStatusInfo';
-import { CandidateInfo } from "../CandidateInfo";
+import "../style/CandidateModal.css";
+import CandidateStatusInfo from './CandidateStatusInfo';
+import CandidateInfo from "./CandidateInfo";
 
 interface CandidateModalProps {
     isModalOpen: boolean;
@@ -39,7 +39,7 @@ const history = [{
     message: "Умер"
 }]
 
-const CandidateModal: React.FC<CandidateModalProps> = props => {
+const CandidateModal: FC<CandidateModalProps> = props => {
     const { isModalOpen, handleOk, handleClose } = props;
 
     console.log(isModalOpen)

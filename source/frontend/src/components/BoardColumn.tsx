@@ -1,10 +1,7 @@
 import React from 'react';
-
-import { BoardCardItemType } from "@app/types/model/board";
-
-import { ColumnItem } from "../ColumnItem";
-
-import "./BoardColumn.css"
+import type { BoardCardItemType } from "@app/types/model/board";
+import ColumnItem from "./ColumnItem";
+import "../style/BoardColumn.css"
 
 interface BoardColumnProps {
     name: string;
@@ -13,7 +10,7 @@ interface BoardColumnProps {
     items: Array<BoardCardItemType>;
 }
 
-const BoardColumn: React.FC<BoardColumnProps> = props => {
+const BoardColumn: FC<BoardColumnProps> = props => {
     const { name, total, current, items } = props;
 
     const onDragOverHandler = (event: any) => {

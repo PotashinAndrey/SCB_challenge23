@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { Radio } from "antd";
 
 import { Controller } from "effector-react-form";
@@ -12,9 +12,9 @@ type InputProps = {
     }[]
   };
 
-export const RadioField: React.FC<InputProps> = ({ controller, label, options }) => {
+export const RadioField: FC<InputProps> = ({ controller, label, options }) => {
     const { input } = controller();
-  
+
     return (
       <div className="input-wrap input-wrap_select">
         <label>{label}</label>

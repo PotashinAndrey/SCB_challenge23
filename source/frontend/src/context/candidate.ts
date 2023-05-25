@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { createForm } from "effector-react-form";
-import api from "../../scripts/api";
+import api from "../scripts/api";
 
 export const $newCandidate = createStore({});
 

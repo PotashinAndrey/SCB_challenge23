@@ -3,10 +3,10 @@ import { useUnit } from "effector-react";
 import { Button, Checkbox, Input, Typography } from 'antd';
 import { useForm } from 'effector-react-form';
 
-import { registrationForm, registrationFormSubmit, $user } from './model';
+import { registrationForm, registrationFormSubmit, $user } from '../context/registration';
 
-import "./Registration.css";
-import { InputField } from '../../form/input';
+import "../style/Registration.css";
+import { InputField } from '../form/input';
 import { useEffect } from 'react';
 
 const {Title} = Typography;

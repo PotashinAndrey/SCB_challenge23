@@ -2,10 +2,10 @@ import { createRoutesView, Link } from 'atomic-router-react';
 import { routing } from './context/router';
 import './App.css';
 
-import Login from './pages/Login/Login';
-import Dashboard from './pages/Dashboard/Dashboard';
-import CandidateCreate from './pages/CandidateCreate/CandidateCreate';
-import Registration from './pages/Registration/Registration';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import CandidateCreate from './pages/CandidateCreate';
+import Registration from './pages/Registration';
 
 const App = createRoutesView({
   routes: [

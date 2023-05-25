@@ -1,5 +1,5 @@
-import React from "react";
-import "./CandidateStatusInfo.css";
+import type { FC } from "react";
+import "../style/CandidateStatusInfo.css";
 import type { MenuProps } from 'antd';
 import { Divider, Space, Tag, Dropdown } from 'antd';
 
@@ -10,7 +10,7 @@ interface CandidateStatusInfoProps {
     histories?: {date: string, message: string}[],
 }
 
-const CandidateStatusInfo: React.FC<CandidateStatusInfoProps> = props => {
+const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
     const { name, status, department, histories } = props;
 
     const items: MenuProps['items'] = [
@@ -38,7 +38,7 @@ const CandidateStatusInfo: React.FC<CandidateStatusInfoProps> = props => {
                         <span></span>
                         <span></span>
                     </div>
-                </Dropdown> 
+                </Dropdown>
             </div>
             <div className="candidate-status__mid">
                 <Divider

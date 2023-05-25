@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { Select } from "antd";
 
 import { Controller } from "effector-react-form";
@@ -9,9 +9,9 @@ type InputProps = {
     options: Array<any>;
   };
 
-export const SelectField: React.FC<InputProps> = ({ controller, label, options }) => {
+export const SelectField: FC<InputProps> = ({ controller, label, options }) => {
     const { input } = controller();
-  
+
     return (
       <div className="input-wrap input-wrap_select">
         <label>{label}</label>

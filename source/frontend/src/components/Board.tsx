@@ -1,9 +1,7 @@
-import React from "react";
-
-import { BoardCardItemType } from "@app/types/model/board";
-
-import "./Board.css";
-import BoardColumn from "../BoardColumn/BoardColumn";
+import type { FC } from "react";
+import type { BoardCardItemType } from "@app/types/model/board";
+import "../style/Board.css";
+import BoardColumn from "./BoardColumn";
 
 interface BoardProps {
     columns: Array<{
@@ -14,7 +12,7 @@ interface BoardProps {
     }>;
 }
 
-const Board: React.FC<BoardProps> = ({ columns }) => {
+const Board: FC<BoardProps> = ({ columns }) => {
 
     return (
         <div className="board-component boxAndRadius">

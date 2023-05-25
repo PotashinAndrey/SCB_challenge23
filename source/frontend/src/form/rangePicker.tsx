@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { DatePicker } from "antd";
 
 import { Controller } from "effector-react-form";
@@ -10,9 +10,9 @@ type InputProps = {
     label: React.ReactNode;
   };
 
-export const DatePickerField: React.FC<InputProps> = ({ controller, label }) => {
+export const DatePickerField: FC<InputProps> = ({ controller, label }) => {
     const { input } = controller();
-  
+
     return (
       <div className="input-wrap input-wrap_select">
         <label>{label}</label>

@@ -1,14 +1,14 @@
-import React from "react";
+import type { FC } from "react";
 import { useForm } from 'effector-react-form';
 import { Button } from "antd";
 
-import { candidateCreateForm, candidateCreateFormSubmit, $newCandidate } from './model';
-import { InputField, TextAreaField } from '../../form/input';
-import { SelectField } from '../../form/select';
-import { RadioField } from '../../form/radio';
-import { DatePickerField } from "../../form/datePicker";
+import { candidateCreateForm, candidateCreateFormSubmit, $newCandidate } from '../context/candidate';
+import { InputField, TextAreaField } from '../form/input';
+import { SelectField } from '../form/select';
+import { RadioField } from '../form/radio';
+import { DatePickerField } from "../form/datePicker";
 
-import "./CandidateCreate.css";
+import "../style/CandidateCreate.css";
 
 const SEX = [{
     name: "Муж.",

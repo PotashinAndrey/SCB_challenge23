@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { Input, message, Upload, } from "antd";
 import type { UploadProps } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
@@ -33,7 +33,7 @@ const uploadProps: UploadProps = {
   },
 };
 
-export const InputField: React.FC<InputProps> = ({ controller, label }) => {
+export const InputField: FC<InputProps> = ({ controller, label }) => {
   const { input } = controller();
 
   return (
@@ -46,7 +46,7 @@ export const InputField: React.FC<InputProps> = ({ controller, label }) => {
   );
 };
 
-export const TextAreaField: React.FC<InputProps> = ({ controller, label }) => {
+export const TextAreaField: FC<InputProps> = ({ controller, label }) => {
   const { input } = controller();
 
   return (
@@ -59,7 +59,7 @@ export const TextAreaField: React.FC<InputProps> = ({ controller, label }) => {
   );
 };
 
-export const DocsUploadField: React.FC<InputProps> = ({ controller, label }) => {
+export const DocsUploadField: FC<InputProps> = ({ controller, label }) => {
   const { input } = controller();
 
   return (

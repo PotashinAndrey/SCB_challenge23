@@ -1,7 +1,7 @@
-import React from "react";
+import type { FC } from "react";
 import { Divider } from 'antd';
 
-import "./CandidateInfo.css";
+import "../style/CandidateInfo.css";
 
 const CONTACT_TYPES = {
     email: "Почта",
@@ -50,7 +50,7 @@ const candidate = {
   notes: "Хороший чел, позитивный, надо брать!"
 }
 
-const ContactItem: React.FC<{ value: string, type: CandidateContact }> = props => {
+const ContactItem: FC<{ value: string, type: CandidateContact }> = props => {
     const {value, type} = props;
 
     return (
@@ -61,7 +61,7 @@ const ContactItem: React.FC<{ value: string, type: CandidateContact }> = props =
     );
 }
 
-const CandidateInfo: React.FC<CandidateInfoProps> = props => {
+const CandidateInfo: FC<CandidateInfoProps> = props => {
     const { name, role, description, salary, contacts, notes, className } = props;
     const { email, phone, telegram, vk} = contacts || {};
 

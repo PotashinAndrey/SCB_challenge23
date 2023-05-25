@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import "./Dashboard.css";
-import Board from "src/components/Board/Board";
+import "../style/Dashboard.css";
+import Board from "../components/Board";
 
 
 const columns = [{
