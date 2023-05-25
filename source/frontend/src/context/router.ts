@@ -7,6 +7,7 @@ export const routing = {
   dashboard: createRoute(),
   candidate: createRoute(),
   candidateCreate: createRoute(),
+  calendar: createRoute(),
 }
 
 export const routes = [
@@ -14,7 +15,8 @@ export const routes = [
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
   { path: '/candidate', route: routing.candidate },
-  { path: '/candidate-create', route: routing.candidateCreate }
+  { path: '/candidate-create', route: routing.candidateCreate },
+  { path: '/calendar', route: routing.calendar }
   // { path: '/posts/:postId', route: postRoute },
 ];
 

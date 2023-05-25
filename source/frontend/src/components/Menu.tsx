@@ -14,79 +14,71 @@ import '../../../../node_modules/antd/dist/reset.css'
 import SmileOutlined from '@ant-design/icons/SmileOutlined';
 import CalendarItem from "./Calendar";
 
-  const leftItems: MenuProps['items'] = [
-    {
-      label: (
-        <a>
-          <Link to={routing.login}>Login</Link>
-        </a>
-      ),
-      key: 'login',
-    },
-    {
-        label: (
-          <a>
-            <Link to={routing.registration}>Registration</Link>
-          </a>
-        ),
-        key: 'register',
-        
-    },
-    {
-        label: (
-          <a>
-            <Link to={routing.dashboard}>Dashboard</Link>
-          </a>
-        ),
-        key: 'dashboard',
-        icon: <SmileOutlined/>
-    },
-    {
-        label: (
-          <a>
-            <Link to={routing.candidateCreate}>Create Candidate</Link>
-          </a>
-        ),
-        key: 'create',
-    }
-  ];
+const leftItems: MenuProps['items'] = [
+  {
+    label: (
+      <Link to={routing.login}>Login</Link>
+    ),
+    key: 'login',
+  },
+  {
+    label: (
+      <Link to={routing.registration}>Registration</Link>
+    ),
+    key: 'register',
 
-  const rightItems: MenuProps['items'] = [
-    {
-        label: 'Vladlena Na ',
-        key: 'logout',
-        style: {float: 'right'},
+  },
+  {
+    label: (
+      <Link to={routing.dashboard}>Dashboard</Link>
+    ),
+    key: 'dashboard',
+    icon: <SmileOutlined />
+  },
+  {
+    label: (
+      <Link to={routing.candidateCreate}>Create Candidate</Link>
+    ),
+    key: 'create',
+  }
+];
+
+const rightItems: MenuProps['items'] = [
+  {
+    label: 'Vladlena Na ',
+    key: 'logout',
+    style: { float: 'right' },
+    children: [
+      {
+        type: 'group',
+        label: '',
         children: [
           {
-            type: 'group',
-            label: '',
-            children: [
-              {
-                label: 'Выйти из системы',
-                key: 'logout-submenu',
-              }
-            ],
+            label: 'Выйти из системы',
+            key: 'logout-submenu',
           }
         ],
-      },
-  ];
-const Menu1 = createRoutesView({
-    routes: [
-      { route: routing.login,           view: Login },
-      { route: routing.registration,    view: Registration },
-      { route: routing.dashboard,       view: Dashboard },
-      { route: routing.candidateCreate, view: CandidateCreate },
-      // { route: Post.route, view: PostPage.view },
+      }
     ],
-    otherwise() {
-      return (
-        <div className="menu">
-            <CaretDownFilled style={{color: 'purple'}}/>
-            <Menu style={{width: '90%'}} mode="horizontal" items={leftItems}/>
-            <Menu style={{width: '10%'}} mode="horizontal" items={rightItems}/>
-            <CalendarItem/>
-        </div>
-      );
-    },
+  },
+];
+const Menu1 = createRoutesView({
+  routes: [
+    { route: routing.login, view: Login },
+    { route: routing.registration, view: Registration },
+    { route: routing.dashboard, view: Dashboard },
+    { route: routing.candidateCreate, view: CandidateCreate },
+    // { route: Post.route, view: PostPage.view },
+  ],
+  otherwise() {
+    return (
+      <div className="menu">
+        <CaretDownFilled style={{ color: 'purple' }} />
+        <Menu style={{ width: '90%' }} mode="horizontal" items={leftItems} />
+        <Menu style={{ width: '10%' }} mode="horizontal" items={rightItems} />
+        {/* <CalendarItem /> */}
+      </div>
+    );
+  },
 });
 export default Menu1;
