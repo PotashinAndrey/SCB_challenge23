@@ -35,7 +35,7 @@ const history = [{
     date: "23.03.0033",
     message: "Распят"
 }, {
-    date: "03.05.0033",
+    date: "03.04.0033",
     message: "Умер"
 }]
 
