@@ -1,4 +1,4 @@
-import pg from "pg";
+import pg, { Query } from "pg";
 import type { QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from "pg";
 import crypto from "node:crypto";
 import { promises as fs } from "fs";
@@ -15,11 +15,11 @@ export default class DB {
 
   constructor() { this.config = config.database }
 
-  select(text: string, values: Array<any> = [], client?: PoolClient) {
-    const query = { text, values };
-    return client
-      ? client.query(query)
-      : this.wrap(client => client.query(query));
+  async select<T = any>(request: RequestSelectDB): Promise<Array<T>> {
+    const text = "text" in request ? request.text : `select ${request.fields} from ${request.tables}`;
+    const query = { text, values: request.values };
+    const result = await this.query(query, request.client);
+    return result.rows as Array<T>;
   }
 
   async selectArray<T = any>(request: RequestSelectDB): Promise<Array<Array<T>>> {

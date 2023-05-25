@@ -5,6 +5,7 @@ import config from '../../config';
 import DB from "./class/DB";
 
 import usersApi from "./src/api/users";
+import calendarApi from "./src/api/calendar";
 
 const fastify = Fastify({ logger: true })
 const db = await new DB().connect();
@@ -20,6 +21,7 @@ fastify.addHook("preHandler", async (request, reply) => {
 });
 
 fastify.register(usersApi, { prefix: "/api/users", db });
+fastify.register(calendarApi, { prefix: "/api/calendar", db });
 
 const start = async () => {
   try {
