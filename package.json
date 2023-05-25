@@ -41,6 +41,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@ant-design/icons": "^5.1.2",
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
