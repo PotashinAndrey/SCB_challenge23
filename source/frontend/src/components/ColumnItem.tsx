@@ -28,6 +28,8 @@ const ColumnItem: React.FC<ColumnItemProps> = props => {
                 size="small"
                 title={title}
                 onClick={() => setModalOpen(true)}
+                onDragStart={handleDragStart}
+                draggable
                 extra={<a>Открыть</a>}
                 style={{ width: 300 }}
             >
