@@ -36,13 +36,14 @@ const Board: FC<BoardProps> = ({ columns }) => {
     const handleCreate = () => {
 
     }
-    
+
     const handleClose = () => setOpen(false);
 
     return (
         <div className="boxAndRadius">
             <div className="board-header">
                 <div className="board-header-search-filters">
+                    <Button onClick={handleAdd} type="primary">Добавить</Button>
                     <Search
                         className="board-component-search"
                         placeholder="Поиск..."
@@ -51,7 +52,6 @@ const Board: FC<BoardProps> = ({ columns }) => {
                     />
                     <Filters />
                 </div>
-                <Button onClick={handleAdd} type="primary">Добавить</Button>
             </div>
 
             <div className="board-component">
