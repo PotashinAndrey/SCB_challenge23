@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import "../style/CandidateModal.css";
 import CandidateStatusInfo from './CandidateStatusInfo';
 import CandidateInfo from "./CandidateInfo";
@@ -45,7 +45,21 @@ const CandidateModal: FC<CandidateModalProps> = props => {
     console.log(isModalOpen)
 
     return (
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleClose} width={900}>
+        <Modal
+            open={isModalOpen}
+            width={900}
+            footer={[
+                <Button type="primary" key="goOn" onClick={() => { }}>
+                    Назначить собеседование
+                </Button>,
+                <Button danger key="reject" onClick={() => { }}>
+                    Отказать
+                </Button>,
+                <Button key="back" onClick={handleClose}>
+                    Закрыть
+                </Button>,
+            ]}
+        >
             <div className="candidate-modal">
                 <div className="candidateInfoBlock">
                     <CandidateInfo {...candidate} />

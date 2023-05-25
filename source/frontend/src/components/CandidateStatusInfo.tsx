@@ -15,12 +15,8 @@ const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
 
     const items: MenuProps['items'] = [
         {
-            label: '1st menu item',
+            label: 'Удалить',
             key: '1',
-        },
-        {
-            label: '2nd menu item',
-            key: '2',
         }
     ];
 
