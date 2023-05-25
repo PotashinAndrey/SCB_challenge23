@@ -45,7 +45,7 @@ const CandidateModal: FC<CandidateModalProps> = props => {
     console.log(isModalOpen)
 
     return (
-        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleClose} width={900}>
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleClose} width={900}>
             <div className="candidate-modal">
                 <div className="candidateInfoBlock">
                     <CandidateInfo {...candidate} />

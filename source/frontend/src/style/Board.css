@@ -6,3 +6,18 @@
   margin: 10px;  
   height: 100%;
 }
+
+.board-component-search {
+
+}
+
+.board-header {
+  margin: 20px 30px 0 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.board-header-search-filters {
+  display: flex;
+  gap: 15px;
+}

@@ -1,17 +1,23 @@
 import React from 'react';
 import type { BoardCardItemType } from "@app/types/model/board";
 import ColumnItem from "./ColumnItem";
-import "../style/BoardColumn.css"
+import "../style/BoardColumn.css";
 
 interface BoardColumnProps {
     name: string;
     total: number;
     current: number;
     items: Array<BoardCardItemType>;
+    search?: string;
+    filters?: {
+        status?: string;
+        step?: string;
+        department?: string;
+    }
 }
 
-const BoardColumn: FC<BoardColumnProps> = props => {
-    const { name, total, current, items } = props;
+const BoardColumn: React.FC<BoardColumnProps> = props => {
+    const { name, total, current, items, search } = props;
 
     const onDragOverHandler = (event: any) => {
         event.preventDefault();
@@ -29,7 +35,7 @@ const BoardColumn: FC<BoardColumnProps> = props => {
                 <span>{`${current}/${total}`}</span>
             </h4>
             {items && <div className="column-content">
-                {items.map(e => (
+                {items.filter(e => e.title.toLocaleLowerCase().includes((search || "").toLocaleLowerCase())).map(e => (
                     <ColumnItem key={e.id} title={e.title} tagText={e.step} id={e.id} />
                 ))}
             </div>}
