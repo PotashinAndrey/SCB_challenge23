@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tag } from 'antd';
+import { Tag, Card } from 'antd';
 
 import "../style/ColumnItem.css";
 import CandidateModal from "./CandidateModal";
@@ -10,7 +10,7 @@ interface ColumnItemProps {
     id: string;
 }
 
-const ColumnItem: FC<ColumnItemProps> = props => {
+const ColumnItem: React.FC<ColumnItemProps> = props => {
     const { title, tagText, id } = props;
     const [isModalOpen, setModalOpen] = useState(false);
 
@@ -24,7 +24,18 @@ const ColumnItem: FC<ColumnItemProps> = props => {
 
     return (
         <>
-            <div
+            <Card
+                size="small"
+                title={title}
+                onClick={() => setModalOpen(true)}
+                onDragStart={handleDragStart}
+                draggable
+                extra={<a>Открыть</a>}
+                style={{ width: 300 }}
+            >
+                <Tag color="yellow">{tagText}</Tag>
+            </Card>
+            {/* <div
                 onClick={() => setModalOpen(true)}
                 draggable
                 onDragStart={handleDragStart}
@@ -32,7 +43,7 @@ const ColumnItem: FC<ColumnItemProps> = props => {
             >
                 <p className="column-item-header">{title}</p>
                 <Tag color="yellow">{tagText}</Tag>
-            </div>
+            </div> */}
             <CandidateModal isModalOpen={isModalOpen} handleClose={handleClik} />
         </>
     );
