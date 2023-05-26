@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { Children } from 'react';
 import type { BoardColumnModelType } from "@app/types/model/board";
 import ColumnItem from "./ColumnItem";
+
 import "../style/BoardColumn.css";
 
 interface BoardColumnProps {

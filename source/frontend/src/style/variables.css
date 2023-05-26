@@ -1,15 +1,17 @@
 * {
-  --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
-  --font-size: 16px;
+  --base-unit: 4px;
 
-  --rounded: 8px;
-  --gap: 10px;
+  --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
+  --font-size: calc(var(--base-unit) * 4);
+
+  --rounded: calc(var(--base-unit) * 2);
+  --gap: calc(var(--base-unit) * 3);
 
   --background-secondary: hsl(0, 0%, 97%);
   --background-tertiary: hsl(203, 57%, 97%);
 
-  --shadow-primary: 1px 2px 5px hsl(0, 0%, 83%);
+  --shadow-primary: 1px 2px 4px hsl(0, 0%, 83%);
 
-  /* APP */
+  /* APP SIZES */
   --width-card: 280px;
 }

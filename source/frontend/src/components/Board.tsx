@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { Children } from "react";
 // import { useState } from "react";
 // import Modal from "antd/es/modal/Modal";
 import type { BoardColumnModelType } from "@app/types/model/board";
@@ -62,30 +63,32 @@ const Board: FC = () => {
 
   return (
     <div className="flex gap">
-      {/* <div className="board-header">
-                <div className="board-header-search-filters">
+      {Children.toArray(columns.map(column => <BoardColumn column={column} />))}
+    </div>
+  );
 
+        {/* <div className="board-header">
+                <div className="board-header-search-filters">
+                  {columns.map(column => (
+                  <BoardColumn
+                    // search={search}
+                    key={column.name}
+                    column={column}
+                    // items={column.items}
+                    // name={column.name}
+                    // total={column.totalItemsNumber}
+                    // current={column.displayedItemsNumber}
+                  />
+                ))}
                 </div>
             </div> */}
 
       {/* <div className="board-component"> */}
-        {columns.map(column => (
-          <BoardColumn
-            // search={search}
-            key={column.name}
-            column={column}
-            // items={column.items}
-            // name={column.name}
-            // total={column.totalItemsNumber}
-            // current={column.displayedItemsNumber}
-          />
-        ))}
+
       {/* </div> */}
       {/* <Modal title="Добавление кандидата" open={open} onOk={handleCreate} onCancel={handleClose} width={700}>
                 <CandidateCreate />
             </Modal> */}
-    </div>
-  );
 }
 
 export default Board;

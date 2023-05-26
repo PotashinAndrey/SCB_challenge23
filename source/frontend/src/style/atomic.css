@@ -14,6 +14,31 @@
   gap: var(--gap)
 }
 
+.mt-1 {
+  margin-top: var(--base-unit);
+}
+
+.mt-2 {
+  margin-top: calc(var(--base-unit) * 2);
+}
+
+.mt-4 {
+  margin-top: calc(var(--base-unit) * 4);
+}
+
+.mr-1 {
+  margin-right: var(--base-unit);
+}
+
+.mr-2 {
+  margin-right: calc(var(--base-unit) * 2);
+}
+
+.mr-4 {
+  margin-right: calc(var(--base-unit) * 4);
+}
+
+/* APP-SIZES */
 .w-card {
   width: var(--width-card);
 }
