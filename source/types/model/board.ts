@@ -1,7 +1,7 @@
 import type { UUID } from "node:crypto";
 
 export type BoardCardModelType = {
-  id: UUID;
+  id: UUID | string;
   name: string;
   step: string;
 }
