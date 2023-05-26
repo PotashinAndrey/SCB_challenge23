@@ -8,6 +8,8 @@ export const routing = {
   candidate: createRoute(),
   candidateCreate: createRoute(),
   calendar: createRoute(),
+  vacancies: createRoute(),
+  departments: createRoute()
 }
 
 export const routes = [
@@ -16,7 +18,9 @@ export const routes = [
   { path: '/login', route: routing.login },
   { path: '/candidate', route: routing.candidate },
   { path: '/candidate-create', route: routing.candidateCreate },
-  { path: '/calendar', route: routing.calendar }
+  { path: '/calendar', route: routing.calendar },
+  { path: '/vacancies', route: routing.vacancies },
+  { path: '/departments', route: routing.departments }
   // { path: '/posts/:postId', route: postRoute },
 ];
 

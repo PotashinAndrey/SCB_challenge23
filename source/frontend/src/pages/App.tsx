@@ -8,6 +8,8 @@ import Dashboard from './Dashboard';
 import CandidateCreate from './CandidateCreate';
 import CalendarPage from "./Calendar";
 import Registration from './Registration';
+import Vacancies from 'src/components/Vacancies';
+import Department from 'src/components/Departments';
 
 const RoutesView = createRoutesView({
   routes: [
@@ -16,6 +18,8 @@ const RoutesView = createRoutesView({
     { route: routing.dashboard,       view: Dashboard },
     { route: routing.candidateCreate, view: CandidateCreate },
     { route: routing.calendar,        view: CalendarPage },
+    { route: routing.vacancies,       view: Vacancies },
+    { route: routing.departments,       view: Department }
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {

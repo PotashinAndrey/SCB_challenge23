@@ -31,10 +31,10 @@ const leftItems: MenuProps['items'] = [{
     label: "Компания",
     children: [{
         key: "vacancies",
-        label: "Вакансии"
+        label: <Link to={routing.vacancies}>Вакансии</Link>
       }, {
         key: "departments",
-        label: "Отделы"
+        label: <Link to={routing.departments}>Отделы</Link>
       }
     ]
   }, {
