@@ -27,6 +27,6 @@ sample({
 
 sample({
   clock: loginFx.doneData,
-  // fn: data => data
+  fn: data => data,
   target: $user
 });
