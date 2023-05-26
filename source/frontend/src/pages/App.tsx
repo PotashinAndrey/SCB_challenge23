@@ -20,7 +20,8 @@ const RoutesView = createRoutesView({
     { route: routing.login,           view: Login },
     { route: routing.registration,    view: Registration },
     { route: routing.dashboard,       view: Dashboard },
-    { route: routing.candidateCreate, view: Candidates },
+    { route: routing.candidateList,   view: Candidates },
+    { route: routing.candidateCreate, view: CandidateCreate },
     { route: routing.calendar,        view: CalendarPage },
     { route: routing.vacancies,       view: Vacancies },
     { route: routing.departments,     view: Department }
@@ -36,6 +37,7 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.registration}>Registration</Link></p>
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
         <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>
+        <p><Link to={routing.candidateList}>Candidates list</Link></p>
       </div>
     );
   },

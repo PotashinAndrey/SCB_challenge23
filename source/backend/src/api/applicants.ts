@@ -15,6 +15,16 @@ const applicantsApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
     }
   });
 
+  fastify.post("/append", async (request, reply) => {
+    try {
+      // const items = await applicantsList(db);
+      // return { items };
+      return request.body;
+    } catch (error) {
+      //
+    }
+  });
+
   done();
 }
 

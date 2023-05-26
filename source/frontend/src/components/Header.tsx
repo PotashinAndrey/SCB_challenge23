@@ -1,7 +1,10 @@
 import type { FC } from "react";
+import { useUnit } from "effector-react";
 import { Menu, MenuProps, Dropdown, message, Avatar, Space, Typography, Input } from "antd";
 import { UserOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link } from "atomic-router-react";
+
+import { $user } from "../context/login";
 import { routing } from "../context/router";
 // import "../style/ColumnItem.css";
 // import "../style/Menu.css";
@@ -21,6 +24,9 @@ const leftItems: MenuProps['items'] = [{
     children: [{
       label: <Link to={routing.candidateCreate}>Добавить кандидата</Link>,
       key: 'applicants-create',
+    },{
+      label: <Link to={routing.candidateList}>Список кандидатов</Link>,
+      key: 'applicants-list',
     }]
   }, {
     label: <Link to={routing.dashboard}>Процессы</Link>,
@@ -53,26 +59,6 @@ const leftItems: MenuProps['items'] = [{
     }]
   }];
 
-const rightItems: MenuProps['items'] = [
-  {
-    label: 'Vladlena Na',
-    key: 'logout',
-    // style: { float: 'right' },
-    children: [
-      {
-        type: 'group',
-        label: '',
-        children: [
-          {
-            label: 'Выйти из системы',
-            key: 'logout-submenu',
-          }
-        ],
-      }
-    ],
-  },
-];
-
 const onClick: MenuProps['onClick'] = ({ key }) => {
   message.info(`Click on item ${key}`);
 };
@@ -93,6 +79,8 @@ const items: MenuProps['items'] = [
 ];
 
 const Header: FC = () => {
+  const user = useUnit($user);
+
   return (
     <div className="flex items-center space-between padding margin">
       <div className="flex items-center">
@@ -103,7 +91,7 @@ const Header: FC = () => {
       <Dropdown menu={{ items, onClick }}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-            <Text>Имя Фамилия</Text>
+            <Text>{user.name}</Text>
             <Avatar icon={<UserOutlined />} />
           </Space>
         </a>

@@ -3,6 +3,12 @@ export type UserLoginModel = {
   password: string;
 }
 
+export type UserModel = {
+  name: string;
+  email: string;
+  id: string;
+}
+
 export type UserRegistrationModel = {
   name: string;
   email: string;
