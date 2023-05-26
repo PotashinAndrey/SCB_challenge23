@@ -1,7 +1,25 @@
+@import "./style/variables.css";
+@import "./style/atomic.css";
+@import "./style/ui.css";
+
+@font-face {
+  font-family: 'anticon';
+  src: url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.eot');
+}
+
 * {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+.boxAndRadius {
+    box-shadow: 1px 2px 5px lightgrey;
+    border-radius: 10px;
+}
+
+body {
+  font-family: --font;
 }
 
 ol, ul {

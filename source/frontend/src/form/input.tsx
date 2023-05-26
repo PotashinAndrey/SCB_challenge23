@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Input, message, Upload, } from "antd";
 import type { UploadProps } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
+import InboxOutlined from '@ant-design/icons/InboxOutlined';
 
 import { Controller } from "effector-react-form";
 

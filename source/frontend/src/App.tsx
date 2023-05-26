@@ -1,16 +1,15 @@
+import type { FC } from 'react';
 import { createRoutesView, Link } from 'atomic-router-react';
 import { routing } from './context/router';
-import './App.css';
+import Header from './components/Header';
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import CandidateCreate from './pages/CandidateCreate';
 import CalendarItem from "./components/Calendar";
 import Registration from './pages/Registration';
-import Menu from './components/Menu';
-import { FC } from 'react';
 
-const App = createRoutesView({
+const RoutesView = createRoutesView({
   routes: [
     { route: routing.login,           view: Login },
     { route: routing.registration,    view: Registration },
@@ -35,12 +34,14 @@ const App = createRoutesView({
   },
 });
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <Menu></Menu>
-//     </div>
-//   );
-// }
+const App: FC = () => {
+  return (
+    <div className="application">
+      <Header />
+      <RoutesView />
+      {/* Popups */}
+    </div>
+  );
+}
 
 export default App;

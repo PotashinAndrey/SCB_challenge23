@@ -17,12 +17,14 @@
   "author": "lambda 2 team",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^5.1.2",
     "@fastify/static": "^6.10.1",
     "@types/node": "^20.2.3",
     "@types/pg": "^8.10.1",
     "antd": "^5.5.1",
     "atomic-router": "^0.8.0",
     "atomic-router-react": "^0.8.3",
+    "classnames": "^2.3.2",
     "deepmerge": "^4.3.1",
     "effector": "^22.8.6",
     "effector-react": "^22.5.3",
@@ -36,7 +38,6 @@
     "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "@ant-design/icons": "^5.1.2",
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",
     "@babel/preset-react": "^7.18.6",
@@ -47,7 +48,6 @@
     "@types/react-dom": "^18.2.4",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.4",
-    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.1",
     "nodemon": "^2.0.22",
     "react-refresh": "^0.14.0",

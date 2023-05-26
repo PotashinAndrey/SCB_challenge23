@@ -1,0 +1,15 @@
+* {
+  --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
+  --font-size: 16px;
+
+  --rounded: 8px;
+  --gap: 10px;
+
+  --background-secondary: hsl(0, 0%, 97%);
+  --background-tertiary: hsl(203, 57%, 97%);
+
+  --shadow-primary: 1px 2px 5px hsl(0, 0%, 83%);
+
+  /* APP */
+  --width-card: 280px;
+}

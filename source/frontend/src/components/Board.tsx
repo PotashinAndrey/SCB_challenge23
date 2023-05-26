@@ -1,114 +1,91 @@
-import { useState } from "react";
-
 import type { FC } from "react";
-import { Input, Button, Select, Modal } from 'antd';
-
-import type { BoardCardItemType } from "@app/types/model/board";
+// import { useState } from "react";
+// import Modal from "antd/es/modal/Modal";
+import type { BoardColumnModelType } from "@app/types/model/board";
 
 import BoardColumn from "./BoardColumn";
 
-import "../style/Board.css";
-import CandidateCreate from "src/pages/CandidateCreate";
+// import "../style/Board.css";
+// import CandidateCreate from "src/pages/CandidateCreate";
+import Paper from "../ui/Paper";
 
-const { Search } = Input;
+const columns: Array<BoardColumnModelType> = [{
+  name: "solo",
+  total: 13,
+  count: 2,
+  items: [{
+    name: "first item",
+    step: "yellow tag",
+    id: "someID1"
+  }, {
+    name: "second item",
+    step: "yellow tag",
+    id: "someID2"
+  }, {
+    name: "third item",
+    step: "yellow tag",
+    id: "someID3"
+  }]
+}, {
+  name: "waagh",
+  total: 4,
+  count: 3,
+  items: [{
+    name: "first item",
+    step: "yellow tag",
+    id: "someID4"
+  }, {
+    name: "second item",
+    step: "yellow tag",
+    id: "someID5"
+  }, {
+    name: "third item",
+    step: "yellow tag",
+    id: "someID6"
+  }, {
+    name: "fourth item",
+    step: "yellow tag",
+    id: "someID7"
+  }]
+}];
 
-interface BoardProps {
-    columns: Array<{
-        name: string;
-        totalItemsNumber: number;
-        displayedItemsNumber: number;
-        items: Array<BoardCardItemType>;
-    }>;
-}
 
-const Board: FC<BoardProps> = ({ columns }) => {
-    const [search, setSearch] = useState("");
-    const [open, setOpen] = useState(false);
+// type BoardProps = {
+//   columns: Array<BoardColumnModelType>;
+// }
 
-    const handleSearch = (e: any) => {
-        setSearch((e.target.value))
-    }
+const Board: FC = () => {
+  // const { columns } = props;
+  // const [open, setOpen] = useState(false);
 
-    const handleAdd = () => {
-        setOpen(true);
-    }
+  // const handleClose = () => setOpen(false);
 
-    const handleCreate = () => {
-
-    }
-
-    const handleClose = () => setOpen(false);
-
-    return (
-        <div className="boxAndRadius">
-            <div className="board-header">
+  return (
+    <div className="flex gap">
+      {/* <div className="board-header">
                 <div className="board-header-search-filters">
-                    <Button onClick={handleAdd} type="primary">Добавить</Button>
-                    <Search
-                        className="board-component-search"
-                        placeholder="Поиск..."
-                        onInput={handleSearch}
-                        style={{ width: 200 }}
-                    />
-                    <Filters />
+
                 </div>
-            </div>
+            </div> */}
 
-            <div className="board-component">
-                {columns.map(e => (
-                    <BoardColumn
-                        search={search}
-                        key={e.name}
-                        items={e.items}
-                        name={e.name}
-                        total={e.totalItemsNumber}
-                        current={e.displayedItemsNumber}
-                    />
-                ))}
-            </div>
-            <Modal title="Добавление кандидата" open={open} onOk={handleCreate} onCancel={handleClose} width={700}>
+      {/* <div className="board-component"> */}
+        {columns.map(column => (
+          <BoardColumn
+            // search={search}
+            key={column.name}
+            column={column}
+            // items={column.items}
+            // name={column.name}
+            // total={column.totalItemsNumber}
+            // current={column.displayedItemsNumber}
+          />
+        ))}
+      {/* </div> */}
+      {/* <Modal title="Добавление кандидата" open={open} onOk={handleCreate} onCancel={handleClose} width={700}>
                 <CandidateCreate />
-            </Modal>
-        </div>
-    );
-}
-
-interface FiltersProps {
-
-}
-
-const Filters: React.FC<FiltersProps> = () => {
-
-    const departmentOptions = [
-        { value: '', label: 'Департамент' },
-        { value: 'development', label: 'Разработка' },
-        { value: 'support', label: 'Поддержка' },
-        { value: 'managment', label: 'Менеджмент' }
-    ];
-
-    const vacanciesOptions = [
-        { value: '', label: 'Вакансия' },
-        { value: 'junior', label: 'Джун' },
-        { value: 'middle', label: 'Мидл' },
-        { value: 'senior', label: 'Помидор' }
-    ];
-
-    return (
-        <>
-            <Select
-                defaultValue=""
-                style={{ width: 140 }}
-                onChange={() => { }}
-                options={departmentOptions}
-            />
-            <Select
-                defaultValue=""
-                style={{ width: 120 }}
-                onChange={() => { }}
-                options={vacanciesOptions}
-            />
-        </>
-    );
+            </Modal> */}
+    </div>
+  );
 }
 
 export default Board;

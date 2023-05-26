@@ -23,20 +23,16 @@
     "paths": {
         "@app/types": ["../types"],
         "@app/types/*": ["../types/*"]
-    },
+    }
   },
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS",
-      // "baseUrl": ".",
-      // "paths": {
-      //   "@app/types": ["../types"],
-      //   "@app/types/*": ["../types/*"]
-      // },
+      "module": "CommonJS"
     },
     "esm": true
   },
   "include": [
-    "src"
+    "src",
+    "custom.d.ts"
   ]
 }

@@ -1,0 +1,19 @@
+.box {
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.gap {
+  gap: var(--gap)
+}
+
+.w-card {
+  width: var(--width-card);
+}
