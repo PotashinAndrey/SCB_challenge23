@@ -11,6 +11,7 @@ const ApplicantProcessPopup: FC = () => {
     <Modal
         open={visible}
         width={900}
+        onCancel={() => applicantProcessPopup.close()}
         footer={[
             <Button type="primary" key="goOn" onClick={() => { }}>
                 Назначить собеседование
