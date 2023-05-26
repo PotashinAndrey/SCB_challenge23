@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import CandidateCreate from './CandidateCreate';
-import CalendarItem from "../components/Calendar";
+import CalendarPage from "./Calendar";
 import Registration from './Registration';
 
 const RoutesView = createRoutesView({
@@ -15,7 +15,7 @@ const RoutesView = createRoutesView({
     { route: routing.registration,    view: Registration },
     { route: routing.dashboard,       view: Dashboard },
     { route: routing.candidateCreate, view: CandidateCreate },
-    { route: routing.calendar,        view: CalendarItem },
+    { route: routing.calendar,        view: CalendarPage },
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {

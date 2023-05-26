@@ -38,7 +38,7 @@ const leftItems: MenuProps['items'] = [{
       }
     ]
   }, {
-    label: "Календарь событий",
+    label: <Link to={routing.calendar}>Календарь событий</Link>,
     key: "calendar"
   }, {
     label: (<Space><Text>Дополнительно</Text><DownOutlined /></Space>),
