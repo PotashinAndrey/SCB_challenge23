@@ -1,13 +1,13 @@
 import type { FC } from 'react';
 import { createRoutesView, Link } from 'atomic-router-react';
-import { routing } from './context/router';
-import Header from './components/Header';
+import { routing } from '../context/router';
+import Header from '../components/Header';
 
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import CandidateCreate from './pages/CandidateCreate';
-import CalendarItem from "./components/Calendar";
-import Registration from './pages/Registration';
+import Login from './Login';
+import Dashboard from './Dashboard';
+import CandidateCreate from './CandidateCreate';
+import CalendarItem from "../components/Calendar";
+import Registration from './Registration';
 
 const RoutesView = createRoutesView({
   routes: [

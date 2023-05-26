@@ -1,11 +1,6 @@
-@import "./style/variables.css";
-@import "./style/atomic.css";
-@import "./style/ui.css";
-
-@font-face {
-  font-family: 'anticon';
-  src: url('https://at.alicdn.com/t/font_zck90zmlh7hf47vi.eot');
-}
+@import "./variables.css";
+@import "./atomic.css";
+@import "./ui.css";
 
 * {
   margin: 0;

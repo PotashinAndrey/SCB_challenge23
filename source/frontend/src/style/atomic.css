@@ -10,8 +10,33 @@
   justify-content: space-between;
 }
 
+.flex.items-center {
+  align-items: center;
+}
+
+.grow {
+  flex-grow: 1
+}
+
+.responsive {
+  min-width: 0;
+  flex: auto;
+}
+
 .gap {
-  gap: var(--gap)
+  gap: var(--base-unit);
+}
+
+.gap-3 {
+  gap: calc(var(--base-unit) * 3);
+}
+
+.padding {
+  padding: var(--base-unit);
+}
+
+.margin {
+  margin: var(--base-unit);
 }
 
 .mt-1 {
@@ -36,6 +61,10 @@
 
 .mr-4 {
   margin-right: calc(var(--base-unit) * 4);
+}
+
+.w-100 {
+  width: 100%;
 }
 
 /* APP-SIZES */

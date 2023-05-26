@@ -62,7 +62,7 @@ const Board: FC = () => {
   // const handleClose = () => setOpen(false);
 
   return (
-    <div className="flex gap">
+    <div className="flex gap-3">
       {Children.toArray(columns.map(column => <BoardColumn column={column} />))}
     </div>
   );

@@ -1,5 +1,6 @@
 import type { FC } from "react";
-import { Menu, MenuProps } from "antd";
+import { Menu, MenuProps, Dropdown, message, Avatar, Space, Typography, Input } from "antd";
+import { UserOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link } from "atomic-router-react";
 import { routing } from "../context/router";
 // import "../style/ColumnItem.css";
@@ -9,19 +10,47 @@ import { routing } from "../context/router";
 // import SmileOutlined from '@ant-design/icons/SmileOutlined';
 // import CalendarItem from "./Calendar";
 
+const { Text } = Typography;
+const { Search } = Input;
+
+const onSearch = (value: string) => console.log(value);
+
 const leftItems: MenuProps['items'] = [{
-    label: <Link to={routing.login}>Login</Link>,
-    key: 'login'
+    key: "applicants",
+    label: "Кандидаты",
+    children: [{
+      label: <Link to={routing.candidateCreate}>Добавить кандидата</Link>,
+      key: 'applicants-create',
+    }]
   }, {
-    label: <Link to={routing.registration}>Registration</Link>,
-    key: 'register'
-  }, {
-    label: <Link to={routing.dashboard}>Dashboard</Link>,
+    label: <Link to={routing.dashboard}>Процессы</Link>,
     key: 'dashboard',
     // icon: <SmileOutlined />
   }, {
-    label: <Link to={routing.candidateCreate}>Create Candidate</Link>,
-    key: 'create',
+    key: "company",
+    label: "Компания",
+    children: [{
+        key: "vacancies",
+        label: "Вакансии"
+      }, {
+        key: "departments",
+        label: "Отделы"
+      }
+    ]
+  }, {
+    label: "Календарь событий",
+    key: "calendar"
+  }, {
+    label: (<Space><Text>Дополнительно</Text><DownOutlined /></Space>),
+    key: 'more',
+    // icon: <DownOutlined />, // <SettingOutlined />,
+    children: [{
+        label: <Link to={routing.login}>Страница логина</Link>,
+        key: 'login',
+      }, {
+        label: <Link to={routing.registration}>Страница регистрации</Link>,
+        key: 'register',
+    }]
   }];
 
 const rightItems: MenuProps['items'] = [
@@ -44,12 +73,41 @@ const rightItems: MenuProps['items'] = [
   },
 ];
 
+const onClick: MenuProps['onClick'] = ({ key }) => {
+  message.info(`Click on item ${key}`);
+};
+
+const items: MenuProps['items'] = [
+  {
+    label: 'Профиль',
+    key: '1',
+  },
+  {
+    label: 'Параметры',
+    key: '2',
+  },
+  {
+    label: 'Выход из системы',
+    key: '3',
+  }
+];
+
 const Header: FC = () => {
   return (
-    <div className="box flex space-between">
-      {/* <CaretDownFilled style={{ color: 'purple' }} /> */}
-      <Menu mode="horizontal" items={leftItems} /> {/* style={{ width: '90%' }} */}
-      <Menu mode="horizontal" items={rightItems} /> {/* style={{ width: '10%' }} сделать button + dropdown */}
+    <div className="flex items-center space-between padding margin">
+      <div className="flex items-center">
+        <Menu mode="horizontal" items={leftItems} disabledOverflow /> {/* selectedKeys={["dashboard"]} */}
+        <Search placeholder="Поиск..." onSearch={onSearch} className="w-card" />
+      </div>
+
+      <Dropdown menu={{ items, onClick }}>
+        <a onClick={(e) => e.preventDefault()}>
+          <Space>
+            <Text>Имя Фамилия</Text>
+            <Avatar icon={<UserOutlined />} />
+          </Space>
+        </a>
+      </Dropdown>
     </div>
   );
 }
