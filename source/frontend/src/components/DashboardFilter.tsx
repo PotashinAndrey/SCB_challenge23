@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useState } from "react";
-import { Input, Button, Select } from 'antd';
+import { Input, Button, Select, Space } from 'antd';
 const { Search } = Input;
 
 import Paper from "../ui/Paper";
@@ -26,15 +26,17 @@ const DashboardFilter: FC = () => {
   }
 
   return (
-    <Paper className="flex">
-      <Button onClick={handleAdd} type="primary">Добавить</Button>
-      <Search
-        className="board-component-search"
-        placeholder="Поиск..."
-        onInput={handleSearch}
-        style={{ width: 200 }}
-      />
-      <Filters />
+    <Paper className="flex dashboard-header">
+      <Space>
+        <Button onClick={handleAdd} type="primary">Добавить</Button>
+        <Search
+          className="board-component-search"
+          placeholder="Поиск..."
+          onInput={handleSearch}
+          style={{ width: 200 }}
+        />
+        <Filters />
+      </Space>
     </Paper>
   );
 };
@@ -58,7 +60,7 @@ const Filters: FC = () => {
   ];
 
   return (
-    <>
+    <Space>
       <Select
         defaultValue=""
         style={{ width: 140 }}
@@ -71,6 +73,6 @@ const Filters: FC = () => {
         onChange={() => { }}
         options={vacanciesOptions}
       />
-    </>
+    </Space>
   );
 }
