@@ -29,7 +29,7 @@ const Department: FC = () => {
                 <List.Item>
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                    title={<a href="https://ant.design">{item.department}</a>}
+                    title={item.department}
                     description={``}
                     />
                 </List.Item>

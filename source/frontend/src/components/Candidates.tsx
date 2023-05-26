@@ -1,44 +1,41 @@
 import type { FC } from "react";
 import { Avatar, List } from 'antd';
 import Paper from "src/ui/Paper";
+import { applicantProcessPopup } from "src/context/model/applicant";
+import { candidateProcessPopup } from "src/context/model/candidate";
 
 
 const items = [
     {
-      title: 'Front-end разработчик',
+      title: 'Анна Матвеева',
       department: 'Розница',
       experience: '1-3 года'
     },
     {
-      title: 'Аналитик',
+      title: 'Максим Иванов',
       department: 'Розница',
       experience: '3-5 лет'
-    },
-    {
-      title: 'Тестировщик ПО',
-      department: 'Розница',
-      experience: 'от 1 года'
-    },
-    {
-      title: 'Back-end разработчик',
-      department: 'Розница',
-      experience: '1-3 года'
-    },
+    }
 ];
 
-const Vacancies: FC = () => {
+const Candidates: FC = () => {
   return (
         <Paper>
             <List
-                style={{width: '870px'}}
                 itemLayout="horizontal"
                 dataSource={items}
                 renderItem={(item, index) => (
-                <List.Item>
+                <List.Item onClick={() => candidateProcessPopup.open()}>
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                    title={item.title}
-                    description={`Отдел: ${item.department}, опыт работы: ${item.experience}`}
+                    description={
+                        <>
+                            {item.title} 
+                            <br/>
+                            Отдел: {item.department}
+                            <br/>
+                            Опыт работы: {item.experience}
+                        </>}
                     />
                 </List.Item>
                 )}
@@ -47,4 +44,4 @@ const Vacancies: FC = () => {
   );
 }
 
-export default Vacancies;
+export default Candidates;

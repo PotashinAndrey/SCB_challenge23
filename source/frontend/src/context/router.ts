@@ -9,7 +9,8 @@ export const routing = {
   candidateCreate: createRoute(),
   calendar: createRoute(),
   vacancies: createRoute(),
-  departments: createRoute()
+  departments: createRoute(),
+  candidates: createRoute()
 }
 
 export const routes = [

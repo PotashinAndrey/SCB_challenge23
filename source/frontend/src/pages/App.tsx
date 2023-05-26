@@ -12,13 +12,15 @@ import Vacancies from 'src/components/Vacancies';
 import Department from 'src/components/Departments';
 
 import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
+import CandidateProcessPopup from '../popup/CandidateProcessPopup';
+import Candidates from 'src/components/Candidates';
 
 const RoutesView = createRoutesView({
   routes: [
     { route: routing.login,           view: Login },
     { route: routing.registration,    view: Registration },
     { route: routing.dashboard,       view: Dashboard },
-    { route: routing.candidateCreate, view: CandidateCreate },
+    { route: routing.candidateCreate, view: Candidates },
     { route: routing.calendar,        view: CalendarPage },
     { route: routing.vacancies,       view: Vacancies },
     { route: routing.departments,     view: Department }
@@ -46,6 +48,7 @@ const App: FC = () => {
       <RoutesView />
       {/* Popups */}
       <ApplicantProcessPopup />
+      <CandidateProcessPopup/>
     </div>
   );
 }

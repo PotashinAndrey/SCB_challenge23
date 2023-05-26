@@ -57,4 +57,4 @@ start();
 // Enable graceful stop
 process.once('SIGINT', () => stop('SIGINT'));
 process.once('SIGTERM', () => stop('SIGTERM'));
-process.on('uncaughtException', () => stop('uncaughtException', 1));
+// process.on('uncaughtException', () => stop('uncaughtException', 1));

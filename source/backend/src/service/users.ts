@@ -1,4 +1,4 @@
-import type { UserRegistrationModel } from "@app/types/model/user";
+import type { UserRegistrationModel, UserLoginModel } from "@app/types/model/user";
 import type DB from "../../class/DB";
 import type { UUID } from "node:crypto";
 
@@ -13,6 +13,11 @@ const usersService = {
 
     const id = data.rows[0].id as UUID;
     return id;
+  },
+  async login(user: UserLoginModel, db: DB) {
+    return db.select<UserLoginModel>({
+      text: `select name, id, email from service.users where email='${user.login}'`
+  });
   }
 }
 

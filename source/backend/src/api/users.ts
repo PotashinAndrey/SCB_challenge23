@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyRegisterOptions } from "fastify";
-import type { UserRegistrationModel } from "@app/types/model/user";
+import type { UserLoginModel, UserRegistrationModel } from "@app/types/model/user";
 import type DB from "../../class/DB";
 import usersService from "../service/users";
 
@@ -18,9 +18,11 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
   });
 
   /** авторизация пользователя */
-  fastify.post("/login", (request, reply) => {
+  fastify.post("/login", async (request, reply) => {
     console.log("/login", request.body);
-    return request.body;
+    const user = JSON.parse(request.body as string) as UserLoginModel;
+    const id = await usersService.login(user, db);
+    return { ...id[0] };
   });
 
   done();
