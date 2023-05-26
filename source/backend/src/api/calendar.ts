@@ -3,7 +3,7 @@ import type DB from "../../class/DB";
 import { eventCreate, eventsList } from "../service/calendar";
 import { CalendarEventModel } from "@app/types/model/calendar";
 
-const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
+const calendarApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
 
   /** регистрация пользователя */
@@ -30,4 +30,4 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
   done();
 }
 
-export default usersApi;
+export default calendarApi;

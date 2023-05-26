@@ -11,6 +11,8 @@ import Registration from './Registration';
 import Vacancies from 'src/components/Vacancies';
 import Department from 'src/components/Departments';
 
+import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
+
 const RoutesView = createRoutesView({
   routes: [
     { route: routing.login,           view: Login },
@@ -32,7 +34,6 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.registration}>Registration</Link></p>
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
         <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>
-        {/* <Menu></Menu> */}
       </div>
     );
   },
@@ -44,6 +45,7 @@ const App: FC = () => {
       <Header />
       <RoutesView />
       {/* Popups */}
+      <ApplicantProcessPopup />
     </div>
   );
 }
