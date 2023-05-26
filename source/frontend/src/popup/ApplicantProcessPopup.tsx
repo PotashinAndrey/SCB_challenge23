@@ -2,6 +2,8 @@ import type { FC } from "react";
 import { useUnit } from "effector-react";
 import { Modal, Button } from 'antd';
 import { applicantProcessPopup } from "../context/model/applicant";
+import CandidateStatusInfo from '../components/CandidateStatusInfo';
+import CandidateInfo from "../components/CandidateInfo";
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
@@ -23,19 +25,15 @@ const ApplicantProcessPopup: FC = () => {
             </Button>,
         ]}
     >
-        {/* <div className="candidate-modal">
-            <div className="candidateInfoBlock">
-                <CandidateInfo {...candidate} />
-            </div>
-            <div>
-                <CandidateStatusInfo
-                    name={candidate.name}
-                    status={"test status"}
-                    department="Разработка"
-                    histories={history} />
-            </div>
+      <div className="candidate-modal">
+        <div className="candidateInfoBlock">
+            {/* <CandidateInfo /> */}
+            123
+        </div>
+        {/* <div>
+            <CandidateStatusInfo />
         </div> */}
-        123
+      </div>
     </Modal>
   );
 };

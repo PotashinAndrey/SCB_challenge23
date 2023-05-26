@@ -21,7 +21,7 @@ const RoutesView = createRoutesView({
     { route: routing.candidateCreate, view: CandidateCreate },
     { route: routing.calendar,        view: CalendarPage },
     { route: routing.vacancies,       view: Vacancies },
-    { route: routing.departments,       view: Department }
+    { route: routing.departments,     view: Department }
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {
