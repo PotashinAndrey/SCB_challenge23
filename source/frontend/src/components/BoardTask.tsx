@@ -1,12 +1,14 @@
 import type { FC } from "react";
 import { Tag, Card, Avatar, Tabs, Divider, Tooltip, Badge, Space, Typography, Descriptions } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, AlipayCircleOutlined, AntDesignOutlined, UserOutlined, MessageOutlined } from '@ant-design/icons';
-// import {  } from '@ant-design/icons';
+import Amount from "../ui/Amount";
+import { applicantProcessPopup } from "../context/model/applicant";
+
 
 import type { BoardCardModelType } from "@app/types/model/board";
 const { Text } = Typography;
 
-type ColumnItemProps = {
+type BoardTaskProps = {
   task: BoardCardModelType;
   // title: string;
   // tagText: string;
@@ -47,7 +49,7 @@ const onChange = (key: string) => {
   console.log(key);
 };
 
-const ColumnItem: FC<ColumnItemProps> = props => {
+const BoardTask: FC<BoardTaskProps> = props => {
   const { task } = props;
   const { name, id } = task;
 
@@ -71,6 +73,7 @@ const ColumnItem: FC<ColumnItemProps> = props => {
         // size="small"
         // title={name}
         // onClick={() => setModalOpen(true)}
+        onClick={() => applicantProcessPopup.open()}
         onDragStart={handleDragStart}
         draggable
         // extra={<a>Открыть</a>}
@@ -84,7 +87,7 @@ const ColumnItem: FC<ColumnItemProps> = props => {
           //     <MessageOutlined />
           //   </Badge>
           // </Space>,
-          <Tag>от 300 000 ₽</Tag>,
+          <Amount mode="from" value={3e5} />,
           // <SettingOutlined />,
           // <EllipsisOutlined />,
           // <AlipayCircleOutlined />
@@ -147,4 +150,4 @@ const ColumnItem: FC<ColumnItemProps> = props => {
   {/* <CandidateModal isModalOpen={isModalOpen} handleClose={handleClik} /> */}
 }
 
-export default ColumnItem;
+export default BoardTask;

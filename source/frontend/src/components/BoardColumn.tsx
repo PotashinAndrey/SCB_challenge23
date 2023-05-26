@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Children } from 'react';
 import type { BoardColumnModelType } from "@app/types/model/board";
-import ColumnItem from "./ColumnItem";
+import BoardTask from "./BoardTask";
 
 import "../style/BoardColumn.css";
 
@@ -40,7 +40,7 @@ const BoardColumn: FC<BoardColumnProps> = props => {
       </h4>
       {items?.length && <div className="column-content">
         {/* {items.filter(e => e.name.toLocaleLowerCase().includes((search || "").toLocaleLowerCase())).map(e => ( */}
-          {Children.toArray(items.map(e => <ColumnItem task={e} />))}
+          {Children.toArray(items.map(e => <BoardTask task={e} />))}
         {/* ))} */}
       </div>}
     </div>

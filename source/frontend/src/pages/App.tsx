@@ -9,6 +9,8 @@ import CandidateCreate from './CandidateCreate';
 import CalendarPage from "./Calendar";
 import Registration from './Registration';
 
+import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
+
 const RoutesView = createRoutesView({
   routes: [
     { route: routing.login,           view: Login },
@@ -28,7 +30,6 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.registration}>Registration</Link></p>
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
         <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>
-        {/* <Menu></Menu> */}
       </div>
     );
   },
@@ -40,6 +41,7 @@ const App: FC = () => {
       <Header />
       <RoutesView />
       {/* Popups */}
+      <ApplicantProcessPopup />
     </div>
   );
 }

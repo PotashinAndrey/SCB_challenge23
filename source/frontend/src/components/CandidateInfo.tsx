@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Divider } from 'antd';
 
 import "../style/CandidateInfo.css";
+import Amount from "src/ui/Amount";
 
 const CONTACT_TYPES = {
     email: "Почта",
@@ -70,7 +71,8 @@ const CandidateInfo: FC<CandidateInfoProps> = props => {
             <h2 className="candidateInfoName">{name}</h2>
             <div className="candidateInfoRoleAndSalary">
                 <span>{role}</span>
-                <span>{salary} Руб.</span>
+                {/* <span>{salary} Руб.</span> */}
+                <Amount value={salary!} />
             </div>
             <Divider />
             <div className="candidateInfoDescription">

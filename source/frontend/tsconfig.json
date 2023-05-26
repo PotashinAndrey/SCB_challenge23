@@ -21,8 +21,10 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-        "@app/types": ["../types"],
-        "@app/types/*": ["../types/*"]
+      "@app/types": ["../types"],
+      "@app/types/*": ["../types/*"],
+      "@app/scripts": ["../scripts"],
+      "@app/scripts/*": ["../scripts/*"]
     }
   },
   "ts-node": {
