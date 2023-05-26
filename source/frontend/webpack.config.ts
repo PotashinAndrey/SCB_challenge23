@@ -42,7 +42,8 @@ export default {
   ],
   resolve: {
     modules: [__dirname, "src", "node_modules"],
-    extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
+    // extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
+    extensions: [".js", ".jsx", ".tsx", ".ts"],
   },
   module: {
     rules: [
@@ -77,9 +78,13 @@ export default {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.png|svg|jpg|gif$/,
-        use: ["file-loader"],
+        test: /\.(png|jpe?g|gif)$/i,
+        type: "asset/resource",
       },
+      {
+        test: /\.svg/,
+        type: 'asset/source' // inline
+      }
     ],
   },
 };
