@@ -19,7 +19,7 @@ const CandidateProcessPopup: FC = () => {
       onCancel={() => candidateProcessPopup.close()}
       footer={[
         <Button type="primary" key="goOn" onClick={() => { }}>
-          Взять на рассмотрение
+          Продолжить назначение
         </Button>,
         <Button danger key="reject" onClick={() => candidateProcessPopup.close()}>
           Отказать
