@@ -21,22 +21,7 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
     try {
       const applicant = await applicantByID(db);//todo
 
-      const moks = {
-        candidates: [
-          {
-            name: "Абдул Саль Ах Ад-динни",
-            department: "Продажи",
-            experience: "4 года 3 месяца",
-          },
-          {
-            name: "Яна Матвеева",
-            department: "Тестирование",
-            experience: "2 года 11 месяцев",
-          },
-        ] 
-      }
-
-      return {...moks, ...applicant};
+      return applicant;
     } catch (error) {
       //
     }
