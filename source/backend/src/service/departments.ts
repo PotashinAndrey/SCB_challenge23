@@ -13,5 +13,7 @@ export const departmentsList = async (filter: {company?: UUID} = {}, db: DB): Pr
             text: `select id, name, company from company.departments`
         });
     }
+    console.log('department items',result)
+    
     return result;
 }

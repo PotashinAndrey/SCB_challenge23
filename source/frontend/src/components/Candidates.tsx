@@ -11,29 +11,10 @@ import { routing } from "../context/router";
 import { applicantData, applicantesPageOpen, applicantListData } from "../context/model/applicant";
 
 
-const items = [
-    {
-      title: 'Анна Матвеева',
-      department: 'Розница',
-      experience: '1-3 года'
-    },
-    {
-      title: 'Максим Иванов',
-      department: 'Розница',
-      experience: '3-5 лет'
-    }
-];
-
-interface iCandidateItem {
-
-}
-
 const Candidates: FC = () => {
-    const { store, loading } = useUnit(applicantListData);
+  const { store, loading } = useUnit(applicantListData);
 
-    console.log(store)
-
-    useEffect(applicantesPageOpen, []);
+  useEffect(applicantesPageOpen, []);
 
   return (
         <Paper>

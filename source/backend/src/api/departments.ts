@@ -13,7 +13,6 @@ const departmentsApi = (fastify: FastifyInstance, options: { db: DB }, done: () 
       const items = await departmentsList(filter, db);
       return { items };
     } catch (error) {
-      //
     }
   });
   done();

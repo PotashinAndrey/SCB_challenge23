@@ -1,6 +1,10 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { Avatar, List } from 'antd';
 import Paper from "src/ui/Paper";
+import { useUnit } from "effector-react";
+import { vacanciesListData, vacanciesPageOpen } from "src/context/model/applicant";
+
+import type { VacancyModel } from "@app/types/model/vacancy";
 
 
 const items = [
@@ -27,18 +31,22 @@ const items = [
 ];
 
 const Vacancies: FC = () => {
+  const { store, loading } = useUnit(vacanciesListData);
+
+  useEffect(vacanciesPageOpen, []);
+
   return (
         <Paper>
             <List
                 style={{width: '870px'}}
                 itemLayout="horizontal"
-                dataSource={items}
+                dataSource={(store?.items || []) as VacancyModel[]}
                 renderItem={(item, index) => (
                 <List.Item>
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                    title={item.title}
-                    description={`Отдел: ${item.department}, опыт работы: ${item.experience}`}
+                    title={item.department}
+                    description={`Отдел: ${item.department}, опыт работы: ${item.description}`}
                     />
                 </List.Item>
                 )}
