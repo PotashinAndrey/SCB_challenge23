@@ -8,7 +8,7 @@ import BoardColumn from "./BoardColumn";
 
 // import "../style/Board.css";
 // import CandidateCreate from "../pages/CandidateCreate";
-import Paper from "../ui/Paper";
+// import Paper from "../ui/Paper";
 
 const columns: Array<BoardColumnModelType> = [{
   name: "solo",
