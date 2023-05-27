@@ -15,8 +15,6 @@ const ApplicantProcessPopup: FC = () => {
   const contactsData = popupData.email || popupData.phone || popupData.vk || popupData.telegram;
   const notesAndDescription = popupData.notes || popupData.description;
 
-  console.log("popupData", popupData)
-
   return (
     <Modal
       open={visible}
@@ -65,7 +63,7 @@ const ApplicantProcessPopup: FC = () => {
 
         {popupData.link && <Divider />}
 
-        {contactsData && <Title level={3}>Описание и заметки</Title>}
+        {notesAndDescription && <Title level={3}>Описание и заметки</Title>}
         <InfoString text="Заметки: " value={popupData.notes} />
         <InfoString text="Описание: " value={popupData.description} />
       </div>
