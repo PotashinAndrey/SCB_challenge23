@@ -26,7 +26,7 @@ const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
                 <p className="candidate-status__name">
                     {name}
                 </p>
-                <Dropdown
+                {/* <Dropdown
                     menu={{ items }}
                 >
                     <div className="candidate-status__button">
@@ -34,7 +34,7 @@ const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
                         <span></span>
                         <span></span>
                     </div>
-                </Dropdown>
+                </Dropdown> */}
             </div>
             <div className="candidate-status__mid">
                 <Divider

@@ -9,10 +9,12 @@ import CandidateStatusInfo from "src/components/CandidateStatusInfo";
 const CandidateProcessPopup: FC = () => {
   const { open, close, visible, popupData } = useUnit(candidateProcessPopup);
 
+  console.log(popupData)
+
   return (
     <Modal
       open={visible}
-      width={600}
+      width={800}
       closable={true}
       onCancel={() => candidateProcessPopup.close()}
       footer={[
@@ -25,7 +27,7 @@ const CandidateProcessPopup: FC = () => {
 
       ]}
     >
-      <div className="flex">
+      <div className="candidateInfoPopup">
         <div className="candidateInfoBlock">
           <CandidateInfo {...popupData} />
         </div>
@@ -33,7 +35,7 @@ const CandidateProcessPopup: FC = () => {
           <CandidateStatusInfo
             name={popupData.name}
             status={"test status"}
-            department="Разработка"
+            department="Разработка"//todo
             // histories={history} 
             />
         </div>

@@ -3,6 +3,7 @@ import { Divider } from 'antd';
 
 import "../style/CandidateInfo.css";
 import Amount from "src/ui/Amount";
+import { CandidateModel } from "@app/types/model/candidate";
 
 const CONTACT_TYPES = {
     email: "Почта",
@@ -13,46 +14,9 @@ const CONTACT_TYPES = {
 
 type CandidateContact = "email" | "phone" | "telegram" | "vk";
 
-interface CandidateInfoProps {
-    className?: string;
-    name: string;
-    role: string;
-    img?: string;
-    description: {
-        birthDate: string;
-        sex: string;
-        text?: string;
-    }
-    salary?: number;
-    contacts?: {
-        email?: string;
-        phone?: string;
-        telegram?: string;
-        vk?: string;
-    },
-    notes?: string;
-}
-
-const candidate = {
-  name: "Андрей Поташин",
-  role: "middle frontend developer",
-  description: {
-      birthDate: "29.04.2000",
-      sex: "Муж.",
-      text: "Работать умею - работать люблю, бизнес ставит задачу - я её делаю."
-  },
-  salary: 300000,
-  contacts: {
-      email: "test@test.test",
-      phone: "+55555555555",
-      telegram: "@potaqqshinAndrey",
-      vk: "vk.com",
-  },
-  notes: "Хороший чел, позитивный, надо брать!"
-}
 
 const ContactItem: FC<{ value: string, type: CandidateContact }> = props => {
-    const {value, type} = props;
+    const { value, type } = props;
 
     return (
         <div>
@@ -62,28 +26,30 @@ const ContactItem: FC<{ value: string, type: CandidateContact }> = props => {
     );
 }
 
-const CandidateInfo: FC<CandidateInfoProps> = props => {
-    const { name, role, description, salary, contacts, notes, className } = props;
-    const { email, phone, telegram, vk} = contacts || {};
+const CandidateInfo: FC<CandidateModel & { className: string }> = props => {
+    console.log(props)
+    const { name, position, description, birthdate, salary, sex, email, telegram, vk, phone, notes, className } = props;
+
+    const contacts = phone || email || vk || telegram;
 
     return (
         <div className={`candidateInfoComponent ${className}`}>
             <h2 className="candidateInfoName">{name}</h2>
-            <div className="candidateInfoRoleAndSalary">
-                <span>{role}</span>
+            <div className="candidateInfoRoleAndSalary flex">
+                <span>{position}</span>
                 {/* <span>{salary} Руб.</span> */}
-                <Amount value={salary!} />
+                <Amount value={Number(salary) || 0} />
             </div>
             <Divider />
             <div className="candidateInfoDescription">
                 <div className="candidateInfoBirthAndSex">
-                    <span>Дата рождения: {description.birthDate}</span>
-                    <span>Пол: {description.sex}</span>
+                    <span>Дата рождения: {new Date(birthdate).toDateString()}</span>
+                    <span>Пол: {sex === "male" ? "Мужской" : "Женский"}</span>
                 </div>
                 <Divider />
                 <div className="candidateInfoDescriptionText">
                     <h4>Описание:</h4>
-                    <span>{description.text}</span>
+                    <span>{description}</span>
                 </div>
             </div>
             {contacts && (<>
@@ -97,10 +63,10 @@ const CandidateInfo: FC<CandidateInfoProps> = props => {
                 </div>
             </>)}
             <Divider />
-            <div className="candidateInfoNotes">
+            {notes && <div className="candidateInfoNotes">
                 <h4>Заметки:</h4>
                 <span>{notes}</span>
-            </div>
+            </div>}
         </div>
     );
 }

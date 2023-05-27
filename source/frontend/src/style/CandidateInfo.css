@@ -6,6 +6,18 @@
 
 }
 
+.candidateInfoPopup {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 20px
+}
+
+
+.candidateInfoBlock {
+    border-right: 1px solid #eee;
+}
+
+
 .candidateInfoRoleAndSalary {
     margin: 15px 0;
     display: flex;

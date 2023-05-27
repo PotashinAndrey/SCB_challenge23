@@ -14,7 +14,7 @@ const candidate = {//todo
     name: "Андрей Поташин",
     role: "middle frontend developer",
     description: {
-        birthDate: "29.04.2000",
+        birthdate: "29.04.2000",
         sex: "Муж.",
         text: "Работать умею - работать люблю, бизнес ставит задачу - я её делаю."
     },
@@ -60,7 +60,7 @@ const CandidateModal: FC<CandidateModalProps> = props => {
         >
             <div className="candidate-modal">
                 <div className="candidateInfoBlock">
-                    <CandidateInfo {...candidate} />
+                    {/* <CandidateInfo {...candidate} /> */}
                 </div>
                 <div>
                     <CandidateStatusInfo
