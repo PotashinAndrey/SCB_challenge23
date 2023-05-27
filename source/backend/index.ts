@@ -8,6 +8,8 @@ import usersApi from "./src/api/users";
 import calendarApi from "./src/api/calendar";
 import candidatesApi from "./src/api/candidates"
 import companiesApi from './src/api/companies';
+import departmentsApi from './src/api/departments';
+import vacanciesApi from './src/api/vacancies';
 
 const fastify = Fastify({ logger: true })
 const db = await new DB().connect();
@@ -26,6 +28,8 @@ fastify.register(usersApi, { prefix: "/api/users", db });
 fastify.register(calendarApi, { prefix: "/api/calendar", db });
 fastify.register(candidatesApi, { prefix: "/api/candidates", db });
 fastify.register(companiesApi, { prefix: "/api/companies", db });
+fastify.register(departmentsApi, { prefix: "/api/departments", db });
+fastify.register(vacanciesApi, { prefix: "/api/vacancies", db });
 
 const start = async () => {
   try {
