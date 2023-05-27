@@ -8,7 +8,7 @@ import type { CandidateModel } from "@app/types/model/candidate";
 import Paper from "../ui/Paper";
 import { candidateProcessPopup } from "../context/model/candidate";
 import { routing } from "../context/router";
-import { applicantData, applicantesPageOpen } from "../context/model/applicant";
+import { applicantData, applicantesPageOpen, applicantListData } from "../context/model/applicant";
 
 
 const items = [
@@ -29,7 +29,7 @@ interface iCandidateItem {
 }
 
 const Candidates: FC = () => {
-    const { store, loading } = useUnit(applicantData);
+    const { store, loading } = useUnit(applicantListData);
 
     useEffect(applicantesPageOpen, []);
 
