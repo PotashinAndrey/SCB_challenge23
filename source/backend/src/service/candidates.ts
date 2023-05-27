@@ -15,7 +15,7 @@ export const createCandidate = async (values: CandidateModel, db: DB): Promise<U
     const result = await db.insert({
         fields: "vacancy, name, birthDate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, telegram, vk, grade",
         tables: "service.applicants",
-        values: [vacancy, name, birthDate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, telegram, vk, grade],
+        values: [vacancy, name, birthdate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, telegram, vk, grade],
         returning: "id"
     });
     const candidateId = result.rows[0].id;
@@ -25,14 +25,14 @@ export const createCandidate = async (values: CandidateModel, db: DB): Promise<U
             fields: "applicant, skill",
             tables: "service.abilities",
             values: [candidateId, skillId]
-        });   
+        });
     }
     for (const tagId of values.tags) {
         await db.insert({
             fields: "applicant, skill, tag",
             tables: "service.abilities",
             values: [candidateId, tagId, true]
-        });   
+        });
     }
     return candidateId;
 }
