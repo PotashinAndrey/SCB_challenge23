@@ -39,6 +39,10 @@
   margin: var(--base-unit);
 }
 
+.margin-center {
+  margin: 0 auto;
+}
+
 .mt-1 {
   margin-top: var(--base-unit);
 }
@@ -49,6 +53,36 @@
 
 .mt-4 {
   margin-top: calc(var(--base-unit) * 4);
+}
+
+.mt-8 {
+  margin-top: calc(var(--base-unit) * 8);
+}
+
+/** отступ от хидера до контента со списками */
+.mt-content {
+  margin-top: var(--margin-content-top);
+}
+
+.mb-1 {
+  margin-bottom: var(--base-unit);
+}
+
+.mb-2 {
+  margin-bottom: calc(var(--base-unit) * 2);
+}
+
+.mb-4 {
+  margin-bottom: calc(var(--base-unit) * 4);
+}
+
+.mb-8 {
+  margin-bottom: calc(var(--base-unit) * 8);
+}
+
+/** отступ от контента со списками до низа страницы */
+.mb-content {
+  margin-bottom: var(--margin-content-bottom);
 }
 
 .mr-1 {
@@ -67,7 +101,35 @@
   width: 100%;
 }
 
+.bordered {
+  border: var(--border);
+}
+
+.no-shadow {
+  box-shadow: none;
+}
+
+.ta-c {
+  text-align: center;
+}
+
+.ta-r {
+  text-align: right;
+}
+
+.ta-l {
+  text-align: left;
+}
+
 /* APP-SIZES */
 .w-card {
   width: var(--width-card);
+}
+
+.w-main {
+  width: var(--width-main);
+}
+
+.w-aside {
+  width: var(--width-aside);
 }

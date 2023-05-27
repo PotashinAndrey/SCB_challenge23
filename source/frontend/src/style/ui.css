@@ -6,6 +6,10 @@
   box-shadow: var(--shadow-primary);
 }
 
-.flex {
-  display: flex;
+.ui-paper.primary {
+  background-color: var(--background-primary);
+}
+
+.ui-paper.tertiary {
+  background-color: var(--background-tertiary);
 }

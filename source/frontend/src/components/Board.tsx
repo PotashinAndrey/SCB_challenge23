@@ -7,7 +7,7 @@ import type { BoardColumnModelType } from "@app/types/model/board";
 import BoardColumn from "./BoardColumn";
 
 // import "../style/Board.css";
-// import CandidateCreate from "src/pages/CandidateCreate";
+// import CandidateCreate from "../pages/CandidateCreate";
 import Paper from "../ui/Paper";
 
 const columns: Array<BoardColumnModelType> = [{

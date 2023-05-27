@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 import DashboardFilter from "../components/DashboardFilter";
-import Board from "src/components/Board";
+import Board from "../components/Board";
 
 const Dashboard: FC = () => {
 

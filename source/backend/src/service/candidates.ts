@@ -1,6 +1,7 @@
 import type DB from "../../class/DB";
 import type { UUID } from "node:crypto";
 import { skillById } from "./skills";
+import { createTask } from "./tasks";
 import { CandidateModel } from "@app/types/model/candidate";
 
 export const candidatesList = async (db: DB): Promise<Array<any>> => {
@@ -58,3 +59,14 @@ export const candidateByID = async (id: UUID, db: DB): Promise<CandidateModel> =
         tags: extCandidateTags
     } as unknown as CandidateModel;
 }
+
+export const applyCandidate = async (id: UUID, db: DB) => {
+    // TODO: Сделать update кандидата. removed: true
+    const newTask = (await createTask({
+        applicant: id,
+        // FIXME Сейчас захардкожен дашборд разработки.
+        // Наверное нужна выпадашка на интерфейсе с возможностью выбора дашборда.
+        dashboard: 'f236cb65-63ef-4d32-bc96-0792dab66801'
+    }, db));
+    return newTask;
+};

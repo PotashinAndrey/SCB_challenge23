@@ -6,7 +6,7 @@ import { createVacancyPopupOpen, departamentListData } from "../context/model/de
 import { Modal, Button } from 'antd';
 import { InputField, TextAreaField } from "../form/input";
 import { newVacancyForm, newVacancyFormSubmit } from "../context/vacancy";
-import { SelectField } from "src/form/select";
+import { SelectField } from "../form/select";
 import { DepartmentModel } from "@app/types/model/department";
 
 /** VacancyCreate -  */

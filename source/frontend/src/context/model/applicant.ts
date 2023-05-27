@@ -1,7 +1,8 @@
 import { createEffect, sample, createEvent } from "effector";
 import factoryPopupBehaviour from "../factory/popup";
 import factoryExteralData from "../factory/external";
-import { applicantLoad, applicantsListLoad } from "../../service/applicant";
+import { applicantApply, applicantLoad, applicantsListLoad } from "../../service/applicant";
+import { UUID } from "crypto";
 
 export const applicantesPageOpen = createEvent<any>();
 export const applicantProcessPopup = factoryPopupBehaviour();
@@ -31,3 +32,16 @@ sample({
     clock: applicantListLoadFx.doneData,
     target: applicantListData.$store
 });
+
+export const candidateApply = createEvent<any>();
+
+const candidateAllpyFx = createEffect(async (id: UUID) => {
+  const result = applicantApply(id);
+  return result;
+});
+
+sample({
+  clock: candidateApply,
+  target: candidateAllpyFx
+});
+
