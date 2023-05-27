@@ -5,7 +5,7 @@ import { useUnit } from "effector-react";
 import type { DepartmentModel } from "@app/types/model/department";
 
 import Paper from "src/ui/Paper";
-import { departamentListData, departamentPageOpen } from "src/context/model/applicant";
+import { departamentListData, departamentPageOpen } from "src/context/model/department";
 
 
 const Department: FC = () => {

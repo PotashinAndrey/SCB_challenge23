@@ -53,7 +53,6 @@ const CandidateCreate: React.FC = () => {
 
             <RadioField controller={controller({ name: "sex" })} label={"Пол"} options={SEX} />
             <DatePickerField controller={controller({ name: "birthDate" })} label={"День Рожденья"} placeholder="Выберете дату" />
-            {/* <SelectField controller={controller({ name: "department" })} label={"Департамент"} options={DEPARTMENTS} /> */}
             
             <Divider />
             <Title level={4}>Профессиональные навыки</Title>

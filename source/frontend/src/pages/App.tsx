@@ -13,6 +13,7 @@ import Department from 'src/components/Departments';
 
 import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
 import CandidateProcessPopup from '../popup/CandidateProcessPopup';
+import VacancyCreate from '../popup/VacancyCreate';
 import Candidates from 'src/components/Candidates';
 import api from 'src/scripts/api';
 
@@ -45,15 +46,6 @@ const RoutesView = createRoutesView({
 });
 
 const App: FC = () => {
-  useEffect(() => {
-    try {
-      api("vacancies/list", {department: '6521d533-4973-413b-9376-c25ecb414941'}).then((result) => {
-        console.log(result);
-      });
-    } catch (error) {
-      console.log('error: ', error);
-    }
-  }, []);
   return (
     <div className="application">
       <Header />
@@ -61,6 +53,7 @@ const App: FC = () => {
       {/* Popups */}
       <ApplicantProcessPopup />
       <CandidateProcessPopup/>
+      <VacancyCreate/>
     </div>
   );
 }

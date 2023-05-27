@@ -1,42 +1,33 @@
 import { FC, useEffect } from "react";
-import { Avatar, List } from 'antd';
+import { Avatar, Button, List } from 'antd';
 import Paper from "src/ui/Paper";
 import { useUnit } from "effector-react";
-import { vacanciesListData, vacanciesPageOpen } from "src/context/model/applicant";
+import { vacanciesListData, vacanciesPageOpen } from "../context/model/vacancy";
 
 import type { VacancyModel } from "@app/types/model/vacancy";
+import { vacancyCreatePopup } from "../context/model/vacancy";
+import { departamentListData } from "src/context/model/department";
+import { UUID } from "crypto";
+import { DepartmentModel } from "@app/types/model/department";
 
-
-const items = [
-    {
-      title: 'Front-end разработчик',
-      department: 'Розница',
-      experience: '1-3 года'
-    },
-    {
-      title: 'Аналитик',
-      department: 'Розница',
-      experience: '3-5 лет'
-    },
-    {
-      title: 'Тестировщик ПО',
-      department: 'Розница',
-      experience: 'от 1 года'
-    },
-    {
-      title: 'Back-end разработчик',
-      department: 'Розница',
-      experience: '1-3 года'
-    },
-];
 
 const Vacancies: FC = () => {
   const { store, loading } = useUnit(vacanciesListData);
+  const { store: departmentsStore, } = useUnit(departamentListData);
 
   useEffect(vacanciesPageOpen, []);
 
+  const findDepartmentName = (departmentId: string | UUID) => {
+    return (departmentsStore?.items as DepartmentModel[] || []).find(e => e.id === departmentId)?.name;
+  }
+
+  const handleCreate = () => {
+    vacancyCreatePopup.open()
+  }
+
   return (
         <Paper>
+            <Button type="primary" onClick={handleCreate}>Добавить вакансию</Button>
             <List
                 style={{width: '870px'}}
                 itemLayout="horizontal"
@@ -45,8 +36,8 @@ const Vacancies: FC = () => {
                 <List.Item>
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                    title={item.department}
-                    description={`Отдел: ${item.department}, опыт работы: ${item.description}`}
+                    title={item.name}
+                    description={`Отдел: ${findDepartmentName(item.department)}, опыт работы: ${item.description}`}
                     />
                 </List.Item>
                 )}
