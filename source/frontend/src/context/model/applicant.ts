@@ -5,6 +5,7 @@ import { applicantLoad, applicantsListLoad } from "../../service/applicant";
 
 export const applicantesPageOpen = createEvent<any>();
 export const applicantProcessPopup = factoryPopupBehaviour();
+export const interviewPopup = factoryPopupBehaviour();
 export const applicantLoadFx = createEffect(applicantLoad);
 export const applicantListLoadFx = createEffect(applicantsListLoad);
 export const applicantData = factoryExteralData(applicantLoadFx);

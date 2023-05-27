@@ -16,10 +16,10 @@ const Candidates: FC = () => {
 
   useEffect(applicantesPageOpen, []);
 
-    const handeItemClick = (item: CandidateModel) => {
-        applicantProcessPopup.setPopupData(item)
-        applicantProcessPopup.open();
-    }
+  const handeItemClick = (item: CandidateModel) => {
+    applicantProcessPopup.setPopupData(item)
+    applicantProcessPopup.open();
+  }
 
   return (
         <Paper>

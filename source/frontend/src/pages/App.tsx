@@ -15,6 +15,7 @@ import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
 import CandidateProcessPopup from '../popup/CandidateProcessPopup';
 import VacancyCreate from '../popup/VacancyCreate';
 import Candidates from 'src/components/Candidates';
+import InterviewPopup from 'src/popup/InterviewPopup';
 
 const RoutesView = createRoutesView({
   routes: [
@@ -52,6 +53,7 @@ const App: FC = () => {
       {/* Popups */}
       <ApplicantProcessPopup />
       <CandidateProcessPopup/>
+      <InterviewPopup/>
       <VacancyCreate/>
     </div>
   );

@@ -1,75 +1,85 @@
 import React, { FC, useState } from "react";
-
+import { Badge, Calendar, Timeline, Descriptions } from 'antd';
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
-import type { Dayjs } from 'dayjs';
-import { Badge, Calendar, BadgeProps } from 'antd';
 import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
+
+import Paper from "src/ui/Paper";
 
 import "../style/ColumnItem.css";
 
-interface CalendarProps {
+interface iCalendarData {
+  id: number,
+  content: string,
+  date: number
 }
 
-const data = [
+const data:iCalendarData[] = [
     {
-        "id": 0,
-        "content": "Иванов Иван",
-        "date": 1685037923,
+        id: 0,
+        content: "Иванов Иван",
+        date: 1685037923,
     },
     {
-        "id": 1,
-        "content": "Матвеева Анна",
-        "date": 1684778723,
-    }
+      id: 1,
+      content: "Помидоркин Константин",
+      date: 1685037820,
+    },
+    {
+        id: 2,
+        content: "Матвеева Анна",
+        date: 1684778723,
+    },
+    {
+      id: 3,
+      content: "Киров Андрей",
+      date: 1685214350,
+  }
 ];
 
+const getItemsByDate = (day: Dayjs) => {
+  const dayString = day.format('DD/MM/YYYY');
 
-const CalendarItem: FC<CalendarProps> = props => {
+  return data.filter((item)=> {
+    const timestamp = item.date;
+    const date = new Date(timestamp * 1000);
+    const dateMonth = date.getMonth()+1;
+    const dateMonthZero =  dateMonth < 10 ? '0' + dateMonth.toString() : dateMonth.toString();
+    const dateString = date.getDate().toString() + '/' + dateMonthZero + '/' + date.getFullYear().toString()
+    return dateString === dayString
+  })
+}
+
+const getItemsByMonth = (day: Dayjs) => {
+  const dayString = day.get('M');
+
+  return data.filter((item)=> {
+    const timestamp = item.date;
+    const date = new Date(timestamp * 1000);
+    const dateMonth = date.getMonth()+1;
+    return dayString === dateMonth
+  })
+}
+
+
+const CalendarItem: FC = () => {
     const [value, setValue] = useState(() => dayjs('2017-01-25'));
     const [selectedValue, setSelectedValue] = useState(() => dayjs('2017-01-25'));
+    const [todayList, setTodayList] = useState<iCalendarData[]>(getItemsByDate(dayjs()));
     
-    // const dateCellRender = (value: Dayjs) => {
-    //     calendarData.filter((item) => 
-    //         ((new Date(item.date * 1000)).getDay() === value.get('date'))
-    //     )
-    //     console.log(calendarData, value.get('date'), value.get('month'))
-    //     return (
-    //         <ul className="events">
-    //         {calendarData.map((item) => (
-    //             <li key={item.name+item.surname}>
-    //             <Badge status={item.type as BadgeProps['status']} text={item.name} />
-    //             </li>
-    //         ))}
-    //         </ul>
-    //     );
-    // };
-    
-    // const cellRender = (current: Dayjs, info: CellRenderInfo<Dayjs>) => {
-    //     if (info.type === 'date') return dateCellRender(current);
-    //     return info.originNode;
-    // };
 
     const onSelect = (newValue: Dayjs) => {
         setValue(newValue);
         setSelectedValue(newValue);
-        alert(newValue)
+        setTodayList(getItemsByDate(newValue));
     };
 
     const onPanelChange = (newValue: Dayjs) => {
         setValue(newValue);
     };
 
-    const cellRender = (value: Dayjs) => {
-        const stringValue = value.format('DD/MM/YYYY');
-        
-        const listData = data.filter((item)=> {
-            const timestamp = item.date;
-            const date = new Date(timestamp * 1000);
-            const dateMonth = date.getMonth()+1;
-            const dateMonthZero =  dateMonth < 10 ? '0' + dateMonth.toString() : dateMonth.toString();
-            const dateString = date.getDate().toString() + '/' + dateMonthZero + '/' + date.getFullYear().toString()
-            return dateString === stringValue
-        })
+    const dateCellRender = (value: Dayjs) => {
+        const listData = getItemsByDate(value)
 
         return (
           <ul className="events">
@@ -80,14 +90,53 @@ const CalendarItem: FC<CalendarProps> = props => {
             ))}
           </ul>
         );
-      };
-    
-      
+    };
+
+    const getTimeByDate = (dateTs: number) => {
+      const date = new Date(dateTs * 1000);
+      const minutes = date.getMinutes() > 10 ? date.getMinutes() : '0' + date.getMinutes();
+      return date.getHours() + ":" + minutes;
+    }
+
+    const monthCellRender = (value: Dayjs) => {
+      const listData = getItemsByMonth(value)
+
       return (
-          <>
-            <Calendar onSelect={onSelect} cellRender={cellRender} onPanelChange={onPanelChange}/>;
-        </>
-    );
+        <ul className="events">
+          {listData.map((item) => (
+            <li key={item.content}>
+              <Badge status={"success"} text={item.content} />
+            </li>
+          ))}
+        </ul>
+      );
+    };
+
+    const cellRender = (current: Dayjs, info: CellRenderInfo<Dayjs>) => {
+      if (info.type === 'date') return dateCellRender(current);
+      if (info.type === 'month') return monthCellRender(current);
+      return info.originNode;
+    };
+      
+    return (
+      <Paper className="flex">
+          <Calendar style={{width: '860px'}} onSelect={onSelect} cellRender={cellRender} onPanelChange={onPanelChange}/>
+          <Timeline
+            style={{width: '250px'}}
+            items={
+              todayList?.map((item) => {
+                return { children:
+                  <Descriptions column={1} size="small">
+                    <Descriptions.Item label="Время">
+                      {getTimeByDate(item.date)}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Кандидат">{item.content}</Descriptions.Item>
+                  </Descriptions>}
+              })
+          }
+          />
+      </Paper>
+    )
 }
 
 export default CalendarItem;
