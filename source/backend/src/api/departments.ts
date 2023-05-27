@@ -9,7 +9,7 @@ const departmentsApi = (fastify: FastifyInstance, options: { db: DB }, done: () 
   /** Получение списка всех компаний */
   fastify.post("/list", async (request, reply) => {
     try {
-    const filter = JSON.parse(request.body as string);
+    const filter = request.body ? JSON.parse(request.body as string) : {};
       const items = await departmentsList(filter, db);
       return { items };
     } catch (error) {
