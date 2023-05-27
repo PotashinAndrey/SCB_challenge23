@@ -10,7 +10,7 @@ export type CandidateModel = {
     skills: string[];
     sex: string;
     birthDate: string;
-    descriptionText: string;
+    description: string;
     email: string;
     phone: string;
     telegram: string;

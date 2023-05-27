@@ -53,7 +53,7 @@ const CandidateCreate: React.FC = () => {
 
             <RadioField controller={controller({ name: "sex" })} label={"Пол"} options={SEX} />
             <DatePickerField controller={controller({ name: "birthDate" })} label={"День Рожденья"} placeholder="Выберете дату" />
-            <SelectField controller={controller({ name: "department" })} label={"Департамент"} options={DEPARTMENTS} />
+            {/* <SelectField controller={controller({ name: "department" })} label={"Департамент"} options={DEPARTMENTS} /> */}
             
             <Divider />
             <Title level={4}>Профессиональные навыки</Title>
@@ -84,7 +84,7 @@ const CandidateCreate: React.FC = () => {
             <Divider />
 
             <TextAreaField controller={controller({ name: "notes" })} label={"Заметки"} />
-            <TextAreaField controller={controller({ name: "descriptionText" })} label={"Описание"} />
+            <TextAreaField controller={controller({ name: "description" })} label={"Описание"} />
 
             <Button onClick={candidateCreateFormSubmit}>Создать</Button>
         </div>

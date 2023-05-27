@@ -16,13 +16,18 @@ const Candidates: FC = () => {
 
   useEffect(applicantesPageOpen, []);
 
+    const handeItemClick = (item: CandidateModel) => {
+        candidateProcessPopup.setPopupData(item)
+        candidateProcessPopup.open();
+    }
+
   return (
         <Paper>
             <List
                 itemLayout="horizontal"
                 dataSource={(store?.items || []) as CandidateModel[]}
                 renderItem={(item, index) => (
-                <List.Item onClick={() => candidateProcessPopup.open()}>
+                <List.Item onClick={() => handeItemClick(item)}>
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                     description={
