@@ -1,9 +1,15 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { Avatar, List, Button } from 'antd';
-import Paper from "src/ui/Paper";
-import { candidateProcessPopup } from "src/context/model/candidate";
-import { routing } from "src/context/router";
 import { Link } from "atomic-router-react";
+import { useUnit } from "effector-react";
+
+import type { CandidateModel } from "@app/types/model/candidate";
+
+import Paper from "../ui/Paper";
+import { candidateProcessPopup } from "../context/model/candidate";
+import { routing } from "../context/router";
+import { applicantData, applicantesPageOpen } from "../context/model/applicant";
+
 
 const items = [
     {
@@ -19,18 +25,24 @@ const items = [
 ];
 
 const Candidates: FC = () => {
+    const { store, loading } = useUnit(applicantData);
+
+    useEffect(applicantesPageOpen, []);
+
+    console.log(store)
+
   return (
         <Paper>
             <List
                 itemLayout="horizontal"
-                dataSource={items}
+                dataSource={(store?.candidates || []) as CandidateModel[]}
                 renderItem={(item, index) => (
                 <List.Item onClick={() => candidateProcessPopup.open()}>
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                     description={
                         <>
-                            {item.title}
+                            {item.name}
                             <br/>
                             Отдел: {item.department}
                             <br/>
