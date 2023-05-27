@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from 'effector-react-form';
 import { useUnit } from "effector-react";
 import { Button, Divider, Typography  } from "antd";
@@ -11,6 +11,7 @@ import { DatePickerField } from "../form/datePicker";
 
 import "../style/CandidateCreate.css";
 import { InputTagField } from "src/form/inputTag";
+import api from "src/scripts/api";
 
 const SEX = [{
     name: "Муж.",
@@ -42,9 +43,35 @@ const DEPARTMENTS = [{
 
 const { Title } = Typography;
 
+type TSkill = {
+    id: string;
+    name: string;
+    tag: boolean;
+}
+
+type TTagItem = {
+    label: string, value: string
+};
 const CandidateCreate: React.FC = () => {
     const { controller, handleSubmit } = useForm({ form: candidateCreateForm });
-
+    const [skillsList, setSkillsList] = useState<Array<TTagItem>>([]);
+    const [tagsList, setTagsList] = useState<Array<TTagItem>>([]);
+    
+    useEffect(() => {
+        api('skills/list').then((result) => {
+            // @ts-ignore
+            const items: TSkill[] = result.items;
+            console.log('skills: ', items);
+            const tags = (items as TSkill[])
+                .filter((skill) => skill.tag)
+                .map((item: TSkill) => { return {value: item.id, label: item.name }});
+            setTagsList(tags as TTagItem[]);
+            const skills = (items as TSkill[])
+                .filter((skill) => !skill.tag)
+                .map((item: TSkill) => { return {value: item.id, label: item.name }});
+            setSkillsList(skills as TTagItem[]);
+        });
+    }, []);
     return (
         <div className="candidateCreatePage boxAndRadius">
             <Title level={4}>Основная информация</Title>
@@ -52,7 +79,7 @@ const CandidateCreate: React.FC = () => {
             <DocsUploadField controller={controller({ name: "photo" })} label={"Фото кандидата"} />
 
             <RadioField controller={controller({ name: "sex" })} label={"Пол"} options={SEX} />
-            <DatePickerField controller={controller({ name: "birthDate" })} label={"День Рожденья"} placeholder="Выберете дату" />
+            <DatePickerField controller={controller({ name: "birthdate" })} label={"День Рожденья"} placeholder="Выберете дату" />
             
             <Divider />
             <Title level={4}>Профессиональные навыки</Title>
@@ -61,8 +88,8 @@ const CandidateCreate: React.FC = () => {
             <InputField controller={controller({ name: "salary" })} label={"Зарплата"} />
             <InputField controller={controller({ name: "experience" })} label={"Опыт"} />
 
-            <InputTagField controller={controller({ name: "tags" })} label={"Теги"} />
-            <InputTagField controller={controller({ name: "skills" })} label={"Навыки"} />
+            <InputTagField controller={controller({ name: "tags" })} label={"Теги"} data={tagsList} />
+            <InputTagField controller={controller({ name: "skills" })} label={"Навыки"} data={skillsList} />
 
             <Divider />
             <Title level={4}>Стороние резюме</Title>

@@ -13,7 +13,7 @@ export const candidatesList = async (db: DB): Promise<Array<any>> => {
 export const createCandidate = async (values: CandidateModel, db: DB): Promise<UUID> => {
     const { name, birthdate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vacancy, vk, grade } = values;
     const result = await db.insert({
-        fields: "vacancy, name, birthDate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, telegram, vk, grade",
+        fields: "vacancy, name, birthdate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, telegram, vk, grade",
         tables: "service.applicants",
         values: [vacancy, name, birthdate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, telegram, vk, grade],
         returning: "id"
@@ -34,7 +34,7 @@ export const createCandidate = async (values: CandidateModel, db: DB): Promise<U
             values: [candidateId, tagId, true]
         });
     }
-    return candidateId;
+    return result;
 }
 
 export const candidateByID = async (id: UUID, db: DB): Promise<CandidateModel> => {
