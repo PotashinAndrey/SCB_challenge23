@@ -1,48 +1,39 @@
-import { FC, useEffect } from "react";
-import { Avatar, Button, List } from 'antd';
-import Paper from "../ui/Paper";
+import type { FC } from "react";
+import { useEffect } from "react";
+import { Avatar, Button, List, Descriptions } from 'antd';
 import { useUnit } from "effector-react";
-import { vacanciesListData, vacanciesPageOpen } from "../context/model/vacancy";
-
 import type { VacancyModel } from "@app/types/model/vacancy";
-import { vacancyCreatePopup } from "../context/model/vacancy";
-import { departamentListData } from "../context/model/department";
-import { UUID } from "crypto";
-import { DepartmentModel } from "@app/types/model/department";
-
+import PageList from "../ui/PageList";
+import { vacanciesListData, vacanciesPageOpen, vacancyCreatePopup } from "../context/model/vacancy";
 
 const Vacancies: FC = () => {
   const { store, loading } = useUnit(vacanciesListData);
-  const { store: departmentsStore, } = useUnit(departamentListData);
 
   useEffect(vacanciesPageOpen, []);
 
-  const findDepartmentName = (departmentId: string | UUID) => {
-    return (departmentsStore?.items as DepartmentModel[] || []).find(e => e.id === departmentId)?.name;
-  }
-
-  const handleCreate = () => {
-    vacancyCreatePopup.open()
-  }
-
   return (
-        <Paper>
-            <Button type="primary" onClick={handleCreate}>Добавить вакансию</Button>
-            <List
-                style={{width: '870px'}}
-                itemLayout="horizontal"
-                dataSource={(store?.items || []) as VacancyModel[]}
-                renderItem={(item, index) => (
-                <List.Item>
-                    <List.Item.Meta
-                    avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                    title={item.name}
-                    description={`Отдел: ${item.department.name}, опыт работы: ${item.description}`}
-                    />
-                </List.Item>
-                )}
-            />
-        </Paper>
+    <PageList
+      caption="Наши вакансии"
+      description="Эти вакансии также размещаются на всех популярных площадках"
+      loading={loading}
+      dataSource={(store?.items || []) as Array<VacancyModel>}
+      renderItem={(item, index) => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} size={60} />}
+            title={item.name}
+            description={(
+              <Descriptions column={1} size="small">
+                <Descriptions.Item label="Отдел / Команда">{item.department.name}</Descriptions.Item>
+                <Descriptions.Item label="Описание">{item.description}</Descriptions.Item>
+              </Descriptions>
+            )}
+          />
+        </List.Item>
+      )}
+    >
+      <Button type="primary" onClick={() => vacancyCreatePopup.open()}>Добавить вакансию</Button>
+    </PageList>
   );
 }
 
