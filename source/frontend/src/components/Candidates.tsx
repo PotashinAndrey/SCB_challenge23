@@ -31,13 +31,15 @@ interface iCandidateItem {
 const Candidates: FC = () => {
     const { store, loading } = useUnit(applicantListData);
 
+    console.log(store)
+
     useEffect(applicantesPageOpen, []);
 
   return (
         <Paper>
             <List
                 itemLayout="horizontal"
-                dataSource={(store?.candidates || []) as CandidateModel[]}
+                dataSource={(store?.items || []) as CandidateModel[]}
                 renderItem={(item, index) => (
                 <List.Item onClick={() => candidateProcessPopup.open()}>
                     <List.Item.Meta
@@ -45,8 +47,8 @@ const Candidates: FC = () => {
                     description={
                         <>
                             {item.name}
-                            {/* <br/> */}
-                            {/* Отдел: {item.} */}
+                            <br/>
+                            {item.position}
                             <br/>
                             Опыт работы: {item.experience}
                         </>}
