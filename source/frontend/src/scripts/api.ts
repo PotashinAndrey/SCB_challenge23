@@ -4,9 +4,6 @@ import type { ServerProtocol } from "@app/types/config";
 declare const __API_PORT__: number;
 
 const api = async <S, T>(method: string, data?: S): Promise<T> => {
-  console.log("api1", 0);
-
-
   try {
     const protocol = window.location.protocol.replace(/:$/, "") as ServerProtocol;
 

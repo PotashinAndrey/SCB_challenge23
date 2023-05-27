@@ -44,11 +44,6 @@ const { Title } = Typography;
 
 const CandidateCreate: React.FC = () => {
     const { controller, handleSubmit } = useForm({ form: candidateCreateForm });
-    const values = useUnit(candidateCreateForm.$values)
-
-    const handleCreate = () => {
-        console.log(JSON.stringify(values, null, 2))
-    }
 
     return (
         <div className="candidateCreatePage boxAndRadius">

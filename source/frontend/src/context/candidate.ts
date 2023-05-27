@@ -10,9 +10,7 @@ export const candidateCreateForm = createForm();
 export const candidateCreateFormSubmit = createEvent<any>();
 
 const candidateCreateFx = createEffect(async (values: any) => {
-  console.log("fx", { values })
   const result = createCandidateService(values);
-  console.log("result fx", { result });
   return result;
 }); //todo
 

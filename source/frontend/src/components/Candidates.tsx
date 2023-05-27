@@ -29,8 +29,6 @@ const Candidates: FC = () => {
 
     useEffect(applicantesPageOpen, []);
 
-    console.log(store)
-
   return (
         <Paper>
             <List

@@ -16,8 +16,6 @@ const Login: FC = () => {
 
   const user = useUnit($user);
 
-  useEffect(() => console.log({ user }), [user]);
-
   return (
     <div className="page-wrap page-login">
       <div className="section-wrap">
