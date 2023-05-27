@@ -1,7 +1,7 @@
 import type { UUID } from "node:crypto";
 
 export type CandidateModel = {
-    id?: UUID;
+    id: UUID;
     name: string;
     photo: string; // путь до фотки
     sex: string;

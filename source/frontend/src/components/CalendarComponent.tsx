@@ -4,9 +4,15 @@ import type { CellRenderInfo } from 'rc-picker/lib/interface';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 
+
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Button, Dropdown, message, Space, Tooltip } from 'antd';
+
 import Paper from "src/ui/Paper";
 
 import "../style/ColumnItem.css";
+import { applicantProcessPopup, interviewPopup } from "src/context/model/applicant";
 
 interface iCalendarData {
   id: number,
@@ -34,6 +40,19 @@ const data:iCalendarData[] = [
       id: 3,
       content: "Киров Андрей",
       date: 1685214350,
+  }
+];
+
+const items: MenuProps['items'] = [
+  {
+    label: 'Назначить собеседование',
+    key: '1',
+    icon: <UserOutlined />,
+  },
+  {
+    label: 'Связаться с кандидатом',
+    key: '2',
+    icon: <UserOutlined />,
   }
 ];
 
@@ -72,6 +91,7 @@ const CalendarItem: FC = () => {
         setValue(newValue);
         setSelectedValue(newValue);
         setTodayList(getItemsByDate(newValue));
+        interviewPopup.open(newValue);
     };
 
     const onPanelChange = (newValue: Dayjs) => {
@@ -117,6 +137,11 @@ const CalendarItem: FC = () => {
       if (info.type === 'month') return monthCellRender(current);
       return info.originNode;
     };
+
+    const menuProps = {
+      items,
+      onClick: () => {},
+    };
       
     return (
       <Paper className="flex">
@@ -135,6 +160,14 @@ const CalendarItem: FC = () => {
               })
           }
           />
+          <Dropdown menu={menuProps}>
+            <Button>
+              <Space>
+                Добавить событие
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
       </Paper>
     )
 }
