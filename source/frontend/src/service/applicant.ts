@@ -6,7 +6,7 @@ export const applicantLoad = (): Promise<any> => {
 }
 
 export const applicantsListLoad = (): Promise<any> => {
-  return api("candidates/list");
+  return api("candidates/list")
 }
 
 export const applicantApply = (id: UUID): Promise<any> => {

@@ -1,31 +1,42 @@
 import type { FC } from "react";
 import { useUnit } from "effector-react";
-import { candidateProcessPopup } from "../context/model/candidate";
-import { Modal, Button } from 'antd';
-import CandidateInfo from "src/components/CandidateInfo";
-import CandidateStatusInfo from "src/components/CandidateStatusInfo";
+import { Modal, Button, Select } from 'antd';
+import { $interviewPopupDate, applicantData, applicantListData, interviewPopup } from "../context/model/applicant";
 
 /** ApplicantProcessPopup -  */
 const InterviewPopup: FC = () => {
-  const { open, close, visible } = useUnit(candidateProcessPopup);
+  const { open, close, visible } = useUnit(interviewPopup);
+  const { store } = useUnit(applicantListData);
+  const interviewPopupDate = useUnit($interviewPopupDate);
 
+  const candidatesOptions = store.items.map((item) => {
+      return {
+          label: item.name,
+          value: item.id
+      }
+  });
 
   return (
     <Modal
       open={visible}
-      width={800}
+      width={600}
       closable={true}
-      onCancel={() => candidateProcessPopup.close()}
+      onCancel={() => interviewPopup.close()}
       footer={[
         <Button type="primary" key="goOn" onClick={() => { }}>
-          Взять на рассмотрение
+          Назначить интервью
         </Button>,
-        <Button danger key="reject" onClick={() => candidateProcessPopup.close()}>
-          Отказать
-        </Button>,
-
+        <Button type="primary" key="goOn" onClick={() => { }}>
+          Отменить интервью
+        </Button>
       ]}
     >
+        <Select
+          defaultValue="Выбор кандидата"
+          style={{ width: 230 }}
+          onChange={() => { }}
+          options={candidatesOptions}
+        />
     </Modal>
   );
 };
