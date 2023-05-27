@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Avatar, List, Button } from 'antd';
 import Paper from "src/ui/Paper";
-import { applicantProcessPopup } from "src/context/model/applicant";
+import { candidateProcessPopup } from "src/context/model/candidate";
 import { candidateProcessPopup } from "src/context/model/candidate";
 import { routing } from "src/context/router";
 import { Link } from "atomic-router-react";

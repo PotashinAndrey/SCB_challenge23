@@ -6,7 +6,8 @@ import DB from "./class/DB";
 
 import usersApi from "./src/api/users";
 import calendarApi from "./src/api/calendar";
-import applicantsApi from "./src/api/applicants"
+import candidatesApi from "./src/api/candidates"
+import companiesApi from './src/api/companies';
 
 const fastify = Fastify({ logger: true })
 const db = await new DB().connect();
@@ -23,7 +24,8 @@ fastify.addHook("preHandler", async (request, reply) => {
 
 fastify.register(usersApi, { prefix: "/api/users", db });
 fastify.register(calendarApi, { prefix: "/api/calendar", db });
-fastify.register(applicantsApi, { prefix: "/api/applicants", db });
+fastify.register(candidatesApi, { prefix: "/api/candidates", db });
+fastify.register(companiesApi, { prefix: "/api/companies", db });
 
 const start = async () => {
   try {

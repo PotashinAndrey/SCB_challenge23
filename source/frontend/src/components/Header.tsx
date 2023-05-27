@@ -19,14 +19,14 @@ const { Search } = Input;
 const onSearch = (value: string) => console.log(value);
 
 const leftItems: MenuProps['items'] = [{
-    key: "applicants",
+    key: "candidates",
     label: "Кандидаты",
     children: [{
       label: <Link to={routing.candidateCreate}>Добавить кандидата</Link>,
-      key: 'applicants-create',
+      key: 'candidates-create',
     },{
       label: <Link to={routing.candidateList}>Список кандидатов</Link>,
-      key: 'applicants-list',
+      key: 'candidates-list',
     }]
   }, {
     label: <Link to={routing.dashboard}>Процессы</Link>,

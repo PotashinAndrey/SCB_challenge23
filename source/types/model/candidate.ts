@@ -1,5 +1,8 @@
-export type CreateCandidateModel = {
+import type { UUID } from "node:crypto";
+
+export type CandidateModel = {
     name: string;
+    vacancy: UUID; // id вакансии по которой создали кандидата
     position: string;
     salary: string;
     experience: string;

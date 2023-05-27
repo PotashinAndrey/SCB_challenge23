@@ -1,19 +1,19 @@
 import type { FC } from "react";
 import { useUnit } from "effector-react";
 import { Modal, Button } from 'antd';
-import { applicantProcessPopup } from "../context/model/applicant";
+import { candidateProcessPopup } from "../context/model/candidate";
 import CandidateStatusInfo from '../components/CandidateStatusInfo';
 import CandidateInfo from "../components/CandidateInfo";
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
-  const { open, close, visible } = useUnit(applicantProcessPopup);
+  const { open, close, visible } = useUnit(candidateProcessPopup);
 
   return (
     <Modal
         open={visible}
         width={900}
-        onCancel={() => applicantProcessPopup.close()}
+        onCancel={() => candidateProcessPopup.close()}
         footer={[
             <Button type="primary" key="goOn" onClick={() => { }}>
                 Назначить собеседование

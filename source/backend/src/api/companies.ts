@@ -7,7 +7,7 @@ const companiesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
   const { db } = options;
 
   /** Получение списка всех компаний */
-  fastify.post("/companies/list", async (request, reply) => {
+  fastify.post("/list", async (request, reply) => {
     try {
       const items = await companiesList(db);
       return { items };
@@ -17,7 +17,7 @@ const companiesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
   });
 
   /** Создание новой компании */
-  fastify.post("/companies/create", async (request, reply) => {
+  fastify.post("/append", async (request, reply) => {
     const eventData = JSON.parse(request.body as string) as CompanyModel;
     const id = await companyCreate(eventData, db);
     return {
