@@ -19,5 +19,4 @@ export type CandidateModel = {
     photo: string; // путь до фотки
     vk: string;
     notes: string;
-    department: string;
 }

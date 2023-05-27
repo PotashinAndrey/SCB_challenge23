@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { createRoutesView, Link } from 'atomic-router-react';
 import { routing } from '../context/router';
 import Header from '../components/Header';
@@ -14,6 +14,7 @@ import Department from 'src/components/Departments';
 import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
 import CandidateProcessPopup from '../popup/CandidateProcessPopup';
 import Candidates from 'src/components/Candidates';
+import api from 'src/scripts/api';
 
 const RoutesView = createRoutesView({
   routes: [
@@ -44,6 +45,15 @@ const RoutesView = createRoutesView({
 });
 
 const App: FC = () => {
+  useEffect(() => {
+    try {
+      api("vacancies/list", {department: '6521d533-4973-413b-9376-c25ecb414941'}).then((result) => {
+        console.log(result);
+      });
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }, []);
   return (
     <div className="application">
       <Header />

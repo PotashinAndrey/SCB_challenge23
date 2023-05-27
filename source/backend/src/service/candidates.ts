@@ -5,16 +5,16 @@ import { CandidateModel } from "@app/types/model/candidate";
 export const candidatesList = async (db: DB): Promise<Array<any>> => {
     return db.select<any>({
         fields: "*",
-        tables: "service.candidates"
+        tables: "service.applicants"
     });
 }
 
 export const createCandidate = async (values: CandidateModel, db: DB): Promise<UUID> => {
-    const { name, birthDate, department, descriptionText, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vacancy, vk } = values;
+    const { name, birthDate, descriptionText, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vacancy, vk } = values;
     return await db.insert({
-        fields: "vacancy, name, birthDate, department, descriptionText, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vk",
+        fields: "vacancy, name, birthDate, descriptionText, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vk",
         tables: "service.applicants",
-        values: [vacancy, name, birthDate, department, descriptionText, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vk],
+        values: [vacancy, name, birthDate, descriptionText, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vk],
         returning: "id"
     });
 }
