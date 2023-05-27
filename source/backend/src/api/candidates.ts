@@ -43,11 +43,11 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
 
   fastify.post("/apply", async (request, reply) => {
     try {
-      const { id } = JSON.parse(request.body as string) as { id: UUID };
+      const { candidateId } = JSON.parse(request.body as string) as { candidateId: UUID };
 
-      if (id) return;
+      if (!candidateId) return;
 
-      const applyResult = await applyCandidate(id, db);
+      const applyResult = await applyCandidate(candidateId, db);
       return {
         ...applyResult
       };

@@ -35,8 +35,8 @@ sample({
 
 export const candidateApply = createEvent<any>();
 
-const candidateAllpyFx = createEffect(async (id: UUID) => {
-  const result = applicantApply(id);
+const candidateAllpyFx = createEffect(async (candidateId: UUID) => {
+  const result = applicantApply(candidateId);
   return result;
 });
 
