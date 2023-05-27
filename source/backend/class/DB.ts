@@ -1,9 +1,9 @@
 import crypto from "node:crypto";
 import type { UUID } from "node:crypto";
 import pg from "pg";
-import type { QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from "pg";
+import type { QueryResult, QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from "pg";
 import { promises as fs } from "fs";
-import type { RequestInsertDB, RequestSelectDB, RequestRelationDB } from "@app/types/DB";
+import type { RequestInsertDB, RequestSelectDB, RequestRelationDB, RequestUpdateFieldByID } from "@app/types/DB";
 import config from '../../../config';
 import SQL from "./SQL";
 
@@ -36,13 +36,6 @@ class DB {
   }
 
   insert(request: RequestInsertDB): Promise<any> {
-    // const text = "text" in request
-    //   ? request.text
-    //   : `insert into ${request.tables} (${request.fields}) values (${request.values?.map((e, i) => "$" + (i + 1)).join(", ")})`;
-    // const query = {
-    //   text: "returning" in request ? text + " returning " + request.returning : text,
-    //   values: request.values
-    // };
     const query = {
       text: SQL.requestInsert(request),
       values: request.values // "text" in request ? undefined : [...(request.values || []), ...(request.conditionValues || [])]
@@ -58,8 +51,12 @@ class DB {
 
   }
 
-  updateByID() {
-
+  updateFieldByID<T extends {} = {}>(request: RequestUpdateFieldByID): Promise<T> {
+    const query = {
+      text: SQL.requestUpdateFiledByID(request),
+      values: [request.value, request.id]
+    };
+    return this.query<T>(query, request.client).then(r => r.rows[0]);
   }
 
   remove() {
@@ -75,21 +72,28 @@ class DB {
   }
 
   async createRelation(request: RequestRelationDB, client?: PoolClient | pg.Client): Promise<any> {
-    const sourceSplitIndex = request.source.lastIndexOf(".");
-    const sourceTable = request.source.substring(0, sourceSplitIndex).replace(".", '"."');
-    const sourceField = request.source.substring(sourceSplitIndex + 1);
+    // const sourceSplitIndex = request.source.lastIndexOf(".");
+    // const sourceTable = request.source.substring(0, sourceSplitIndex).replace(".", '"."');
+    // const sourceField = request.source.substring(sourceSplitIndex + 1);
 
-    const targetSplitIndex = request.target.lastIndexOf(".");
-    const targetTable = request.target.substring(0, targetSplitIndex).replace(".", '"."');
-    const targetField = request.target.substring(targetSplitIndex + 1);
+    // const targetSplitIndex = request.target.lastIndexOf(".");
+    // const targetTable = request.target.substring(0, targetSplitIndex).replace(".", '"."');
+    // const targetField = request.target.substring(targetSplitIndex + 1);
 
-    const name = request.source + "_" + request.target;
+    // const name = request.source + "_" + request.target;
 
-    const remove = `alter table "${targetTable}" drop constraint if exists "${name}"`;
-    const insert = `alter table "${targetTable}" add constraint "${name}" foreign key ("${targetField}") references "${sourceTable}" ("${sourceField}")`;
+    // const { name, sourceTable, sourceField, targetTable, targetField } = SQL.requestRelationParse(request);
 
-    await this.query({ text: remove }, client);
-    return await this.query({ text: insert }, client);
+    // const remove = SQL.removeRelation(request); // `alter table "${targetTable}" drop constraint if exists "${name}"`;
+
+    await this.removeRelation(request, client);
+    const text = SQL.createRelation(request); // `alter table "${targetTable}" add constraint "${name}" foreign key ("${targetField}") references "${sourceTable}" ("${sourceField}")`;
+    return await this.query({ text }, client);
+  }
+
+  async removeRelation(request: RequestRelationDB, client?: PoolClient | pg.Client): Promise<any> {
+    const text = SQL.removeRelation(request); // `alter table "${targetTable}" drop constraint if exists "${name}"`;
+    return this.query({ text }, client);
   }
 
   createTable(name: string, primary: string, fields: Record<string, string>, client?: PoolClient) {
@@ -111,6 +115,11 @@ class DB {
     return this.query({ text }, client);
   }
 
+  removeField(table: string, field: string, client?: PoolClient | pg.Client): Promise<any> {
+    const text = `ALTER TABLE "${table.replace(".", '"."')}" DROP COLUMN "${field}"`;
+    return this.query({ text }, client);
+  }
+
   createSchema(name: string, client?: PoolClient) {
     const text = `create schema IF NOT EXISTS "${name}"`;
     return this.query({ text }, client);
@@ -122,11 +131,11 @@ class DB {
     return this.query({ text }, client);
   }
 
-  async query<T extends Array<any>, S extends Array<any>>(query: QueryConfig<T>, client?: PoolClient | pg.Client): Promise<QueryArrayResult<S>> {
+  async query<S extends {} = {}>(query: QueryConfig, client?: PoolClient | pg.Client): Promise<QueryResult<S>> {
     try {
       return client
-        ? await client.query<S, T>(query)
-        : await this.wrap<QueryArrayResult<S>>(client => client.query<S, T>(query));
+        ? await client.query<S>(query)
+        : await this.wrap<S>(client => client.query<S>(query));
     } catch (error) {
       console.log(query);
       console.error("DB ERROR:", (error as Error).message);
@@ -186,7 +195,7 @@ class DB {
     return this;
   }
 
-  async wrap<T extends any>(fn: (client: PoolClient, db: DB) => Promise<T>) {
+  async wrap<T extends {} = {}>(fn: (client: PoolClient, db: DB) => Promise<QueryResult<T>>) {
     const client = await this.pool!.connect();
     try {
       return await fn(client, this);
