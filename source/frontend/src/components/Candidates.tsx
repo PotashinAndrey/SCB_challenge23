@@ -10,12 +10,11 @@ import { candidateProcessPopup } from "../context/model/candidate";
 import { routing } from "../context/router";
 import { applicantData, applicantesPageOpen, applicantListData } from "../context/model/applicant";
 
+
 const Candidates: FC = () => {
-    const { store, loading } = useUnit(applicantListData);
+  const { store, loading } = useUnit(applicantListData);
 
-    console.log(store)
-
-    useEffect(applicantesPageOpen, []);
+  useEffect(applicantesPageOpen, []);
 
     const handeItemClick = (item: CandidateModel) => {
         candidateProcessPopup.setPopupData(item)
