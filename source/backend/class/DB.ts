@@ -111,12 +111,12 @@ class DB {
     const [type, initial = "NULL"] = structure.split(" ");
     const nullable = initial !== "NULL" ? "NOT NULL" : "";
     const info = [`"${field}"`, type, nullable, "DEFAULT", initial].join(" ");
-    const text = `ALTER TABLE "${table.replace(".", '"."')}" ADD COLUMN ${info}`;
+    const text = `ALTER TABLE "${table.replace(".", '"."')}" ADD COLUMN IF NOT EXISTS ${info}`;
     return this.query({ text }, client);
   }
 
   removeField(table: string, field: string, client?: PoolClient | pg.Client): Promise<any> {
-    const text = `ALTER TABLE "${table.replace(".", '"."')}" DROP COLUMN "${field}"`;
+    const text = `ALTER TABLE "${table.replace(".", '"."')}" DROP COLUMN if exists "${field}"`;
     return this.query({ text }, client);
   }
 

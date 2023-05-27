@@ -89,8 +89,15 @@ export default async function migration(client, db) {
 
   // создаем базовые шаги
   const prepareStep = await db.insertRow({
-    fields: "name, description, action",
+    fields: "name, description",
     values: ['Подготовка', 'Реакция на отклик, связь с кандидатом'],
+    tables: "flow.step",
+    client
+  });
+
+  const interviewHRStep = await db.insertRow({
+    fields: "name, description",
+    values: ['Собеседование с HR', 'Собеседование кандидата с представителем отдела кадров'],
     tables: "flow.step",
     client
   });
@@ -98,6 +105,13 @@ export default async function migration(client, db) {
   const homeworkStep = await db.insertRow({
     fields: "name, description, action",
     values: ['Тестовое задание', 'Отправка ТЗ и его проверка', homework], // вешаем экшен на шаг процесса (на колонку)
+    tables: "flow.step",
+    client
+  });
+
+  const interviewTechStep = await db.insertRow({
+    fields: "name, description",
+    values: ['Техническое собеседование', 'Собеседование кандидата с т техлидом команды разработки'],
     tables: "flow.step",
     client
   });
@@ -110,23 +124,23 @@ export default async function migration(client, db) {
   });
 
   // ID шагов из предыдущей миграции - навесим им действия
-  const interviewHRStep = 'f236cb65-63ef-4d32-bc96-0792dab66801';
-  await db.updateFieldByID({
-    table: "flow.step",
-    field: "action",
-    value: interview,
-    id: interviewHRStep,
-    client
-  });
+  // const interviewHRStep = 'f236cb65-63ef-4d32-bc96-0792dab66801';
+  // await db.updateFieldByID({
+  //   table: "flow.step",
+  //   field: "action",
+  //   value: interview,
+  //   id: interviewHRStep,
+  //   client
+  // });
 
-  const interviewTechStep = 'f236cb65-63ef-4d32-bc96-0792dab66801';
-  await db.updateFieldByID({
-    table: "flow.step",
-    field: "action",
-    value: interview,
-    id: interviewTechStep,
-    client
-  });
+  // const interviewTechStep = 'f236cb65-63ef-4d32-bc96-0792dab66801';
+  // await db.updateFieldByID({
+  //   table: "flow.step",
+  //   field: "action",
+  //   value: interview,
+  //   id: interviewTechStep,
+  //   client
+  // });
 
   // создаем дашборд
   const developersFlow = await db.insertRow({
