@@ -71,7 +71,7 @@ const CandidateCreate: React.FC = () => {
 
             <Divider />
 
-            <Title level={4}>Контакты кандидата</Title>
+            <Title level={4}>Контактые кандидата</Title>
             <div className="boxAndRadius candidateCreatePageContacts" >
                 <h5>Контакты</h5>
                 <InputField controller={controller({ name: "email" })} label={"Почта"} />
