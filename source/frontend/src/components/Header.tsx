@@ -56,6 +56,9 @@ const leftItems: MenuProps['items'] = [{
       }, {
         label: <Link to={routing.registration}>Страница регистрации</Link>,
         key: 'register',
+      }, {
+        label: <Link to={routing.processCreate}>Создание процесса</Link>,
+        key: 'process-create'
     }]
   }];
 
@@ -63,20 +66,16 @@ const onClick: MenuProps['onClick'] = ({ key }) => {
   message.info(`Click on item ${key}`);
 };
 
-const items: MenuProps['items'] = [
-  {
+const items: MenuProps['items'] = [{
     label: 'Профиль',
     key: '1',
-  },
-  {
+  }, {
     label: 'Параметры',
     key: '2',
-  },
-  {
+  }, {
     label: 'Выход из системы',
     key: '3',
-  }
-];
+}];
 
 const Header: FC = () => {
   const user = useUnit($user);
@@ -100,23 +99,4 @@ const Header: FC = () => {
   );
 }
 
-// const Menu1 = createRoutesView({
-//   routes: [
-//     { route: routing.login, view: Login },
-//     { route: routing.registration, view: Registration },
-//     { route: routing.dashboard, view: Dashboard },
-//     { route: routing.candidateCreate, view: CandidateCreate },
-//     // { route: Post.route, view: PostPage.view },
-//   ],
-//   otherwise() {
-//     return (
-//       <div className="menu">
-//         <CaretDownFilled style={{ color: 'purple' }} />
-//         <Menu style={{ width: '90%' }} mode="horizontal" items={leftItems} />
-//         <Menu style={{ width: '10%' }} mode="horizontal" items={rightItems} />
-//         {/* <CalendarItem /> */}
-//       </div>
-//     );
-//   },
-// });
 export default Header;

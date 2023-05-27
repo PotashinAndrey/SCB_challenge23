@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { Input, message, Upload, } from "antd";
 import type { UploadProps } from 'antd';
 import InboxOutlined from '@ant-design/icons/InboxOutlined';
@@ -7,7 +7,7 @@ import { Controller } from "effector-react-form";
 
 type InputProps = {
   controller: Controller;
-  label: React.ReactNode;
+  label: ReactNode;
 };
 
 const { TextArea } = Input;

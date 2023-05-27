@@ -5,27 +5,26 @@ import { Modal, Button } from 'antd';
 import CandidateInfo from "src/components/CandidateInfo";
 import CandidateStatusInfo from "src/components/CandidateStatusInfo";
 
+const hide = () => candidateProcessPopup.close();
+
 /** ApplicantProcessPopup -  */
 const InterviewPopup: FC = () => {
   const { open, close, visible } = useUnit(candidateProcessPopup);
-
 
   return (
     <Modal
       open={visible}
       width={800}
-      closable={true}
-      onCancel={() => candidateProcessPopup.close()}
+      closable
+      onCancel={hide}
       footer={[
+        <Button type="link" key="reject" onClick={hide}>Отказать</Button>,
         <Button type="primary" key="goOn" onClick={() => { }}>
           Взять на рассмотрение
-        </Button>,
-        <Button danger key="reject" onClick={() => candidateProcessPopup.close()}>
-          Отказать
-        </Button>,
-
+        </Button>
       ]}
     >
+      123
     </Modal>
   );
 };
