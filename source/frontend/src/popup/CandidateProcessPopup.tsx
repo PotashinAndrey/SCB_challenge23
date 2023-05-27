@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { useUnit } from "effector-react";
 import { candidateProcessPopup } from "../context/model/candidate";
 import { Modal, Button } from 'antd';
-import CandidateInfo from "src/components/CandidateInfo";
-import CandidateStatusInfo from "src/components/CandidateStatusInfo";
+import CandidateInfo from "../components/CandidateInfo";
+import CandidateStatusInfo from "../components/CandidateStatusInfo";
 
 /** ApplicantProcessPopup -  */
 const CandidateProcessPopup: FC = () => {
@@ -36,7 +36,7 @@ const CandidateProcessPopup: FC = () => {
             name={popupData.name}
             status={"test status"}
             department="Разработка"//todo
-            // histories={history} 
+            // histories={history}
             />
         </div>
       </div>

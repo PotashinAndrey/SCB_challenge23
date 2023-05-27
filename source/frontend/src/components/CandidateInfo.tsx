@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Divider } from 'antd';
 
 import "../style/CandidateInfo.css";
-import Amount from "src/ui/Amount";
+import Amount from "../ui/Amount";
 import { CandidateModel } from "@app/types/model/candidate";
 
 const CONTACT_TYPES = {

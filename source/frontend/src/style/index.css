@@ -1,6 +1,6 @@
 @import "./variables.css";
-@import "./atomic.css";
 @import "./ui.css";
+@import "./atomic.css";
 
 * {
   margin: 0;

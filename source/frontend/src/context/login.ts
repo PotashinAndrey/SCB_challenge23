@@ -3,7 +3,7 @@ import { createForm } from "effector-react-form";
 import { routing } from "./router";
 import api from "../scripts/api";
 import { UserModel } from "@app/types/model/user";
-import { loginService } from "src/service/users";
+import { loginService } from "../service/users";
 
 export const $user = createStore<UserModel>({} as UserModel);
 

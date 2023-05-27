@@ -7,11 +7,21 @@
   --rounded: calc(var(--base-unit) * 2);
   --gap: calc(var(--base-unit) * 3);
 
+  --margin-content-top: 120px;
+  --margin-content-bottom: 200px;
+
+  --background-primary: white;
   --background-secondary: hsl(0, 0%, 97%);
   --background-tertiary: hsl(203, 57%, 97%);
+
+  --border-color: #eee;
+  --border-size: 1px;
+  --border: var(--border-size) solid var(--border-color);
 
   --shadow-primary: 1px 2px 4px hsl(0, 0%, 83%);
 
   /* APP SIZES */
   --width-card: 280px;
+  --width-main: 860px;
+  --width-aside: 360px;
 }

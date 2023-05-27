@@ -1,12 +1,12 @@
 import { FC, useEffect } from "react";
 import { Avatar, Button, List } from 'antd';
-import Paper from "src/ui/Paper";
+import Paper from "../ui/Paper";
 import { useUnit } from "effector-react";
 import { vacanciesListData, vacanciesPageOpen } from "../context/model/vacancy";
 
 import type { VacancyModel } from "@app/types/model/vacancy";
 import { vacancyCreatePopup } from "../context/model/vacancy";
-import { departamentListData } from "src/context/model/department";
+import { departamentListData } from "../context/model/department";
 import { UUID } from "crypto";
 import { DepartmentModel } from "@app/types/model/department";
 

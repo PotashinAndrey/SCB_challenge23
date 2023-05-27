@@ -10,8 +10,8 @@ import { RadioField } from '../form/radio';
 import { DatePickerField } from "../form/datePicker";
 
 import "../style/CandidateCreate.css";
-import { InputTagField } from "src/form/inputTag";
-import api from "src/scripts/api";
+import { InputTagField } from "../form/inputTag";
+import api from "../scripts/api";
 
 const SEX = [{
     name: "Муж.",
@@ -56,7 +56,7 @@ const CandidateCreate: React.FC = () => {
     const { controller, handleSubmit } = useForm({ form: candidateCreateForm });
     const [skillsList, setSkillsList] = useState<Array<TTagItem>>([]);
     const [tagsList, setTagsList] = useState<Array<TTagItem>>([]);
-    
+
     useEffect(() => {
         api('skills/list').then((result) => {
             // @ts-ignore
@@ -80,7 +80,7 @@ const CandidateCreate: React.FC = () => {
 
             <RadioField controller={controller({ name: "sex" })} label={"Пол"} options={SEX} />
             <DatePickerField controller={controller({ name: "birthdate" })} label={"День Рожденья"} placeholder="Выберете дату" />
-            
+
             <Divider />
             <Title level={4}>Профессиональные навыки</Title>
 
