@@ -1,7 +1,7 @@
 import { CandidateModel } from "@app/types/model/candidate";
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
-import { candidatesList, createCandidate, candidateByID } from "../service/candidates";
+import { candidatesList, createCandidate, candidateByID, applyCandidate } from "../service/candidates";
 
 const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
@@ -34,6 +34,18 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
       return {
           ...values,
           id
+      };
+    } catch (error) {
+      //
+    }
+  });
+
+  fastify.post("/apply", async (request, reply) => {
+    try {
+      const values = JSON.parse(request.body as string) as CandidateModel;
+      const applyResult = await applyCandidate(values.id, db);
+      return {
+          ...applyResult
       };
     } catch (error) {
       //
