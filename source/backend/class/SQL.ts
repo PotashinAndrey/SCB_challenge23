@@ -14,8 +14,11 @@ export default class SQL {
   static requestInsert(request: RequestInsertDB): string { // QueryConfig?
     if ("text" in request) return request.text;
 
+    const fields = `"` + request.fields.replace('"', "").replace(/,\s+/g, `", "`) + `"`;
+    const tables = `"` + request.tables.replace('"', "").replace(/\./g, `"."`) + `"`;
+
     const values = request.values?.map((e, i) => "$" + (i + 1)).join(", ");
-    let text: string = `insert into ${request.tables} (${request.fields}) values (${values})`;
+    let text: string = `insert into ${tables} (${fields}) values (${values})`;
     // if ((request.where || []).length > 0) text += " where " + request.where;
     if (request.returning) text += " returning " + request.returning;
 
