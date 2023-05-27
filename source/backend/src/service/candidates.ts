@@ -1,15 +1,26 @@
 import type DB from "../../class/DB";
 import type { UUID } from "node:crypto";
 import { skillById } from "./skills";
-import { createTask } from "./tasks";
+import { createTask, tasksList } from "./tasks";
 import { CandidateModel } from "@app/types/model/candidate";
 
-export const candidatesList = async (db: DB): Promise<Array<any>> => {
+export const candidatesList = async (db: DB): Promise<Array<CandidateModel>> => {
     return db.select<any>({
         fields: "*",
         tables: "service.applicants"
     });
 }
+
+export const candidatesInProcessList = async (db: DB): Promise<Array<CandidateModel>> => {
+    const appliedCandidetes = await tasksList({}, db);
+    const allCandiates = await candidatesList(db);
+
+    console.log("appliedCandidetes", appliedCandidetes)
+
+    return (allCandiates || []).filter(e => {
+        return (appliedCandidetes || []).map(({ applicant }) => applicant).includes(e.id)
+    })
+}   
 
 export const createCandidate = async (values: CandidateModel, db: DB): Promise<UUID> => {
     const { name, birthdate, description, email, experience, file, link, notes, phone, photo, position, salary, sex, skills, tags, telegram, vacancy, vk, grade } = values;

@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { Children } from "react";
 // import { useState } from "react";
 // import Modal from "antd/es/modal/Modal";
@@ -9,6 +9,7 @@ import BoardColumn from "./BoardColumn";
 // import "../style/Board.css";
 // import CandidateCreate from "../pages/CandidateCreate";
 import Paper from "../ui/Paper";
+import { appliedCandidetes } from "../context/model/applicant";
 
 const columns: Array<BoardColumnModelType> = [{
   name: "solo",
@@ -50,16 +51,26 @@ const columns: Array<BoardColumnModelType> = [{
   }]
 }];
 
+const columns2 = [{
+  key: "new",
+  name: "Новые кандидаты"
+},
+{
+  key: "interview",
+  name: "На интервью"
+},
+{
+  key: "test",
+  name: "Тестовое задание"
+},
+{
+  key: "done",
+  name: "Оформление"
+}]
 
-// type BoardProps = {
-//   columns: Array<BoardColumnModelType>;
-// }
 
 const Board: FC = () => {
-  // const { columns } = props;
-  // const [open, setOpen] = useState(false);
-
-  // const handleClose = () => setOpen(false);
+  useEffect(appliedCandidetes, []);
 
   return (
     <div className="flex gap-3">
@@ -67,28 +78,6 @@ const Board: FC = () => {
     </div>
   );
 
-        {/* <div className="board-header">
-                <div className="board-header-search-filters">
-                  {columns.map(column => (
-                  <BoardColumn
-                    // search={search}
-                    key={column.name}
-                    column={column}
-                    // items={column.items}
-                    // name={column.name}
-                    // total={column.totalItemsNumber}
-                    // current={column.displayedItemsNumber}
-                  />
-                ))}
-                </div>
-            </div> */}
-
-      {/* <div className="board-component"> */}
-
-      {/* </div> */}
-      {/* <Modal title="Добавление кандидата" open={open} onOk={handleCreate} onCancel={handleClose} width={700}>
-                <CandidateCreate />
-            </Modal> */}
 }
 
 export default Board;
