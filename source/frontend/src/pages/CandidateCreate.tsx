@@ -88,8 +88,8 @@ const CandidateCreate: React.FC = () => {
             <InputField controller={controller({ name: "salary" })} label={"Зарплата"} />
             <InputField controller={controller({ name: "experience" })} label={"Опыт"} />
 
-            <InputTagField controller={controller({ name: "tags" })} label={"Теги"} data={tagsList} />
-            <InputTagField controller={controller({ name: "skills" })} label={"Навыки"} data={skillsList} />
+            <InputTagField controller={controller({ name: "tags" })} label={"Теги"} data={tagsList as any} />
+            <InputTagField controller={controller({ name: "skills" })} label={"Навыки"} data={skillsList as any} />
 
             <Divider />
             <Title level={4}>Стороние резюме</Title>

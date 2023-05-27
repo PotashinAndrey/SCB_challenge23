@@ -22,7 +22,7 @@ const ApplicantProcessPopup: FC = () => {
       onCancel={() => candidateProcessPopup.close()}
       footer={[
         <Button type="primary" key="goOn" onClick={() => { }}>
-          Назначить собеседование
+          Взять на рассмотрение
         </Button>,
         <Button danger key="reject" onClick={() => { }}>
           Отказать
