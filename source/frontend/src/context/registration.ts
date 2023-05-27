@@ -1,6 +1,7 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { createForm } from "effector-react-form";
 import api from "../scripts/api";
+import { routing } from "./router";
 
 export const $user = createStore({});
 
@@ -25,3 +26,8 @@ sample({
   // fn: data => data
   target: $user
 });
+
+sample({
+  clock: registrationFx.done,
+  target: routing.dashboard.open
+})
