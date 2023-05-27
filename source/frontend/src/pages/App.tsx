@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { createRoutesView, Link } from 'atomic-router-react';
 import { routing } from '../context/router';
 import Header from '../components/Header';
@@ -15,7 +15,6 @@ import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
 import CandidateProcessPopup from '../popup/CandidateProcessPopup';
 import VacancyCreate from '../popup/VacancyCreate';
 import Candidates from 'src/components/Candidates';
-import api from 'src/scripts/api';
 
 const RoutesView = createRoutesView({
   routes: [

@@ -1,7 +1,7 @@
 import type DB from "../../class/DB";
 import type { UUID } from "node:crypto";
 import { VacancyListFilter, VacancyModel } from "@app/types/model/vacancy";
-import { departmentsList } from "./departments";
+import { departmentById, departmentsList } from "./departments";
 
 const vacanciesByDepartment = (departmentId: UUID, db: DB): Promise<Array<VacancyModel>> => {
   return db.select<VacancyModel>({
@@ -35,6 +35,10 @@ export const vacanciesList = async (filter: VacancyListFilter, db: DB) => {
   }
   if (!didRequests) {
     results = await allVacancies(db);
+  }
+  for (let j = 0; j < results.length; j++) {
+    // @ts-ignore
+    results[j].department = await departmentById(results[j].department, db);
   }
   return results;
 };

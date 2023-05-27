@@ -21,3 +21,12 @@ export const companiesList = async (db: DB): Promise<Array<CompanyModel>> => {
         tables: "company.companies"
     });
 }
+
+export const companyById = async (id: UUID, db: DB): Promise<CompanyModel> => {
+    return db.selectRow<CompanyModel>({
+        fields: "*",
+        tables: "company.companies",
+        where: "id = $1",
+        values: [id]
+    });
+}
