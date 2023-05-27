@@ -14,7 +14,7 @@ export const DatePickerField: FC<InputProps> = ({ controller, label, placeholder
 
     return (
       <div className="input-wrap input-wrap_select">
-        <label>{label}</label>
+        <label style={{marginRight: "10px"}}>{label}</label>
         {/* <Select {...input} value={input.value || ''} className="input" /> */}
         <DatePicker {...input} placeholder={placeholder}  />
       </div>

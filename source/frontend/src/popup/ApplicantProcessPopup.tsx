@@ -1,19 +1,20 @@
 import type { FC } from "react";
 import { useUnit } from "effector-react";
-import { Modal, Button } from 'antd';
-import { applicantProcessPopup } from "../context/model/applicant";
+import { Modal, Button, Spin } from 'antd';
+import { applicantProcessPopup as candidateProcessPopup, applicantData } from "../context/model/applicant";
 import CandidateStatusInfo from '../components/CandidateStatusInfo';
 import CandidateInfo from "../components/CandidateInfo";
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
-  const { open, close, visible } = useUnit(applicantProcessPopup);
+  const { open, close, visible } = useUnit(candidateProcessPopup);
+  const { store, loading } = useUnit(applicantData);
 
   return (
     <Modal
         open={visible}
         width={900}
-        onCancel={() => applicantProcessPopup.close()}
+        onCancel={() => candidateProcessPopup.close()}
         footer={[
             <Button type="primary" key="goOn" onClick={() => { }}>
                 Назначить собеседование
@@ -29,7 +30,9 @@ const ApplicantProcessPopup: FC = () => {
       <div className="candidate-modal">
         <div className="candidateInfoBlock">
             {/* <CandidateInfo /> */}
-            123
+            <Spin spinning={loading}>
+              <pre>{JSON.stringify(store, null, 2)}</pre>
+            </Spin>
         </div>
         {/* <div>
             <CandidateStatusInfo />

@@ -7,10 +7,11 @@ export type TextQueryType = { text: string }
 export type BaseQueryType = {
   fields: string;
   tables: string;
+  where?: string;
 };
 
 export type RequestSelectDB = BaseDBRequestClient & BaseQueryValues & (BaseQueryType | TextQueryType);
-export type RequestInsertDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & { returning?: string }) | TextQueryType)
+export type RequestInsertDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & { returning?: string }) | TextQueryType); // conditionValues?: Array<any>;
 
 export type RequestRelationDB = {
   source: `${string}.${string}` | `${string}.${string}.${string}`;

@@ -1,10 +1,9 @@
-import { FC } from "react";
-import { Avatar, List } from 'antd';
+import type { FC } from "react";
+import { Avatar, List, Button } from 'antd';
 import Paper from "src/ui/Paper";
-import { applicantProcessPopup } from "src/context/model/applicant";
 import { candidateProcessPopup } from "src/context/model/candidate";
-// import api from "src/scripts/api";
-
+import { routing } from "src/context/router";
+import { Link } from "atomic-router-react";
 
 const items = [
     {
@@ -36,7 +35,7 @@ const Candidates: FC = () => {
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                     description={
                         <>
-                            {item.title} 
+                            {item.title}
                             <br/>
                             Отдел: {item.department}
                             <br/>
@@ -46,6 +45,9 @@ const Candidates: FC = () => {
                 </List.Item>
                 )}
             />
+            <Link to={routing.candidateCreate}>
+                <Button>Добавить кандидата</Button>
+            </Link>
         </Paper>
   );
 }
