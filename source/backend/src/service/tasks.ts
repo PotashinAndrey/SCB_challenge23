@@ -5,7 +5,7 @@ import { departmentById, departmentsList } from "./departments";
 import { TaskModel } from "@app/types/model/task";
 
 export const tasksList = async (filter: VacancyListFilter, db: DB) => {
-  let results = await db.select<VacancyModel>({
+  let results = await db.select<TaskModel>({
     fields: '*',
     tables: 'flow.tasks'
   });
