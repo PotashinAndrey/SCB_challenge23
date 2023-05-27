@@ -7,13 +7,15 @@ import CandidateInfo from "../components/CandidateInfo";
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
-  const { open, close, visible } = useUnit(candidateProcessPopup);
+  const { open, close, visible, popupData } = useUnit(candidateProcessPopup);
   const { store, loading } = useUnit(applicantData);
+
+  console.log("popupData", popupData)
 
   return (
     <Modal
         open={visible}
-        width={900}
+        width={700}
         onCancel={() => candidateProcessPopup.close()}
         footer={[
             <Button type="primary" key="goOn" onClick={() => { }}>
@@ -32,6 +34,7 @@ const ApplicantProcessPopup: FC = () => {
             {/* <CandidateInfo /> */}
             <Spin spinning={loading}>
               <pre>{JSON.stringify(store, null, 2)}</pre>
+              adwawdaw
             </Spin>
         </div>
         {/* <div>

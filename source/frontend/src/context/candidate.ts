@@ -2,6 +2,7 @@ import { createEffect, createEvent, createStore, sample } from "effector";
 import { createForm } from "effector-react-form";
 import api from "../scripts/api";
 import { createCandidateService } from "../service/candidate";
+import { routing } from "./router";
 
 export const $newCandidate = createStore({});
 
@@ -25,4 +26,9 @@ sample({
     clock: candidateCreateFx.doneData,
     // fn: data => data
     target: $newCandidate
+});
+
+sample({
+  clock: candidateCreateFx.doneData,
+  target: routing.candidateList.open
 });

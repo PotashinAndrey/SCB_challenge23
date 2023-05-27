@@ -6,7 +6,7 @@ import { useUnit } from "effector-react";
 import type { CandidateModel } from "@app/types/model/candidate";
 
 import Paper from "../ui/Paper";
-import { candidateProcessPopup } from "../context/model/candidate";
+import { applicantProcessPopup } from "../context/model/applicant";
 import { routing } from "../context/router";
 import { applicantData, applicantesPageOpen, applicantListData } from "../context/model/applicant";
 
@@ -17,8 +17,8 @@ const Candidates: FC = () => {
   useEffect(applicantesPageOpen, []);
 
     const handeItemClick = (item: CandidateModel) => {
-        candidateProcessPopup.setPopupData(item)
-        candidateProcessPopup.open();
+        applicantProcessPopup.setPopupData(item)
+        applicantProcessPopup.open();
     }
 
   return (
