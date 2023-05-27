@@ -1,13 +1,15 @@
-import pg, { Query } from "pg";
-import type { QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from "pg";
 import crypto from "node:crypto";
+import type { UUID } from "node:crypto";
+import pg from "pg";
+import type { QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from "pg";
 import { promises as fs } from "fs";
-import config from '../../../config';
 import type { RequestInsertDB, RequestSelectDB, RequestRelationDB } from "@app/types/DB";
+import config from '../../../config';
+import SQL from "./SQL";
 
 const { Pool, Client } = pg;
 
-export default class DB {
+class DB {
   config: PoolConfig;
 
   pool?: pg.Pool;
@@ -16,32 +18,40 @@ export default class DB {
   constructor() { this.config = config.database }
 
   async select<T = any>(request: RequestSelectDB): Promise<Array<T>> {
-    const text = "text" in request ? request.text : `select ${request.fields} from ${request.tables}`;
+    let text: string = SQL.requestSelect(request);
     const query = { text, values: request.values };
     const result = await this.query(query, request.client);
     return result.rows as Array<T>;
   }
 
   async selectArray<T = any>(request: RequestSelectDB): Promise<Array<Array<T>>> {
-    const text = "text" in request ? request.text : `select ${request.fields} from ${request.tables}`;
+    let text: string = SQL.requestSelect(request);
     const query = { text, values: request.values, rowMode: 'array' };
     const result = await this.query(query, request.client);
     return result.rows as Array<Array<T>>;
   }
 
-  selectByID() {
-
+  selectRow<T = any>(request: RequestSelectDB): Promise<T> {
+    return this.select(request).then(r => r[0]);
   }
 
   insert(request: RequestInsertDB): Promise<any> {
-    const text = "text" in request
-      ? request.text
-      : `insert into ${request.tables} (${request.fields}) values (${request.values?.map((e, i) => "$" + (i + 1)).join(", ")})`;
+    // const text = "text" in request
+    //   ? request.text
+    //   : `insert into ${request.tables} (${request.fields}) values (${request.values?.map((e, i) => "$" + (i + 1)).join(", ")})`;
+    // const query = {
+    //   text: "returning" in request ? text + " returning " + request.returning : text,
+    //   values: request.values
+    // };
     const query = {
-      text: "returning" in request ? text + " returning " + request.returning : text,
-      values: request.values
+      text: SQL.requestInsert(request),
+      values: request.values // "text" in request ? undefined : [...(request.values || []), ...(request.conditionValues || [])]
     };
     return this.query(query, request.client);
+  }
+
+  insertRow(request: RequestInsertDB): Promise<UUID> {
+    return this.insert({ ...request, returning: "id" }).then(r => r.rows[0].id);
   }
 
   update() {
@@ -228,3 +238,5 @@ export default class DB {
 
   static get uuid() { return crypto.randomUUID() }
 }
+
+export default DB;

@@ -1,13 +1,14 @@
 import type { FC } from "react";
 import { useUnit } from "effector-react";
-import { Modal, Button } from 'antd';
-import { candidateProcessPopup } from "../context/model/candidate";
+import { Modal, Button, Spin } from 'antd';
+import { applicantProcessPopup as candidateProcessPopup, applicantData } from "../context/model/applicant";
 import CandidateStatusInfo from '../components/CandidateStatusInfo';
 import CandidateInfo from "../components/CandidateInfo";
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
   const { open, close, visible } = useUnit(candidateProcessPopup);
+  const { store, loading } = useUnit(applicantData);
 
   return (
     <Modal
@@ -29,7 +30,9 @@ const ApplicantProcessPopup: FC = () => {
       <div className="candidate-modal">
         <div className="candidateInfoBlock">
             {/* <CandidateInfo /> */}
-            123
+            <Spin spinning={loading}>
+              <pre>{JSON.stringify(store, null, 2)}</pre>
+            </Spin>
         </div>
         {/* <div>
             <CandidateStatusInfo />

@@ -1,0 +1,24 @@
+// import type { QueryConfig } from "pg";
+import type { RequestInsertDB, RequestSelectDB } from "@app/types/DB";
+
+export default class SQL {
+  static requestSelect(request: RequestSelectDB): string {
+    if ("text" in request) return request.text;
+
+    let text = `select ${request.fields} from ${request.tables}`;
+    if ((request.where || []).length > 0) text += " where " + request.where;
+
+    return text;
+  }
+
+  static requestInsert(request: RequestInsertDB): string { // QueryConfig?
+    if ("text" in request) return request.text;
+
+    const values = request.values?.map((e, i) => "$" + (i + 1)).join(", ");
+    let text: string = `insert into ${request.tables} (${request.fields}) values (${values})`;
+    // if ((request.where || []).length > 0) text += " where " + request.where;
+    if (request.returning) text += " returning " + request.returning;
+
+    return text;
+  }
+};
