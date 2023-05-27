@@ -19,13 +19,9 @@ const vacanciesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
 
   /** Получение списка вакансий */
   fastify.post("/list", async (request, reply) => {
-    try {
-    const filter = JSON.parse(request.body as string);
-      const items = await vacanciesList(filter, db);
-      return { items };
-    } catch (error) {
-      //
-    }
+    const filter = request.body ? JSON.parse(request.body as string) : {};
+    const items = await vacanciesList(filter, db);
+    return { items };
   });
   done();
 }

@@ -47,7 +47,7 @@ const RoutesView = createRoutesView({
 const App: FC = () => {
   useEffect(() => {
     try {
-      api("vacancies/list", {department: '6521d533-4973-413b-9376-c25ecb414941'}).then((result) => {
+      api("vacancies/list", {}).then((result) => {
         console.log(result);
       });
     } catch (error) {

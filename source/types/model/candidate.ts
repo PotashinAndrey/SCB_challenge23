@@ -2,21 +2,23 @@ import type { UUID } from "node:crypto";
 
 export type CandidateModel = {
     name: string;
-    vacancy: UUID; // id вакансии по которой создали кандидата
+    photo: string; // путь до фотки
+    sex: string;
+    birthDate: string;
     position: string;
+    grade: string;
     salary: string;
     experience: string;
-    tags: string[];
-    skills: string[];
-    sex: string;
     birthdate: string;
-    description: string;
+    tags: UUID[]; // Заполняется не напрямую
+    skills: UUID[]; // Заполняется не напрямую
+    link: string; // ссылка на страницу где-нибудь в хедхантере и тд
+    file: string, // путь до файла с резюме
     email: string;
     phone: string;
     telegram: string;
-    link: string; // ссылка на страницу где-нибудь в хедхантере и тд
-    file: string, // путь до файла с резюме
-    photo: string; // путь до фотки
     vk: string;
     notes: string;
+    description: string;
+    vacancy: UUID; // id вакансии по которой создали кандидата
 }

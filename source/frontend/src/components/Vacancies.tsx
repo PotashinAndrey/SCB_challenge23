@@ -5,6 +5,7 @@ import { useUnit } from "effector-react";
 import { vacanciesListData, vacanciesPageOpen } from "src/context/model/applicant";
 
 import type { VacancyModel } from "@app/types/model/vacancy";
+import api from "src/scripts/api";
 
 
 const items = [
