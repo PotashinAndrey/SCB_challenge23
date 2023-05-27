@@ -9,9 +9,7 @@ export const registrationForm = createForm();
 export const registrationFormSubmit = createEvent<any>();
 
 const registrationFx = createEffect(async (values: any) => {
-  console.log("fx", { values })
   const result = await api<any, any>("users/registration", values);
-  console.log("result fx", { result });
   return result;
 });
 

@@ -42,8 +42,6 @@ const history = [{
 const CandidateModal: FC<CandidateModalProps> = props => {
     const { isModalOpen, handleOk, handleClose } = props;
 
-    console.log(isModalOpen)
-
     return (
         <Modal
             open={isModalOpen}

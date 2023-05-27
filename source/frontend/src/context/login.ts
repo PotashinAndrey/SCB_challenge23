@@ -12,19 +12,14 @@ export const loginForm = createForm();
 export const loginFormSubmit = createEvent<any>();
 
 const loginFx = createEffect(async (values: any) => {
-  console.log("fx", { values })
   const result = loginService(values);
-  console.log("result fx", { result });
   return result;
 });
 
 sample({
   clock: loginFormSubmit,
   source: loginForm.$values,
-  fn: (source, clock) => {
-    console.log("sample", { source })
-    return source;
-  },
+  fn: (source, clock) => source,
   target: loginFx
 });
 
