@@ -1,9 +1,10 @@
 import type { UUID } from "node:crypto";
+import { DepartmentModel } from "./department";
 
 export type VacancyModel = {
     id?: UUID; // UUID
     name: string;
-    department: UUID; // UUID
+    department: DepartmentModel; // UUID
     description: string;
 }
 

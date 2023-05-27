@@ -37,7 +37,7 @@ const Vacancies: FC = () => {
                     <List.Item.Meta
                     avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
                     title={item.name}
-                    description={`Отдел: ${findDepartmentName(item.department)}, опыт работы: ${item.description}`}
+                    description={`Отдел: ${item.department.name}, опыт работы: ${item.description}`}
                     />
                 </List.Item>
                 )}
