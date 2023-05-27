@@ -1,8 +1,9 @@
-import type { FC } from "react";
+import { FC } from "react";
 import { Avatar, List } from 'antd';
 import Paper from "src/ui/Paper";
 import { applicantProcessPopup } from "src/context/model/applicant";
 import { candidateProcessPopup } from "src/context/model/candidate";
+// import api from "src/scripts/api";
 
 
 const items = [
@@ -18,7 +19,12 @@ const items = [
     }
 ];
 
+interface iCandidateItem {
+
+}
+
 const Candidates: FC = () => {
+
   return (
         <Paper>
             <List
