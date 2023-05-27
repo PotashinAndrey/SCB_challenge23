@@ -29,7 +29,7 @@ export const vacanciesList = async (filter: VacancyListFilter, db: DB) => {
   }
   if (filter?.department) {
     results = didRequests ?
-              results.filter((item: VacancyModel) => item.department === filter.department) :
+              results.filter((item: VacancyModel) => item.department.id === filter.department) :
               await vacanciesByDepartment(filter.department, db);
     didRequests = true;
   }
