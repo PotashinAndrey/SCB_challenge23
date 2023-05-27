@@ -1,3 +1,4 @@
+import { UUID } from "crypto";
 import api from "../scripts/api";
 
 export const applicantLoad = (): Promise<any> => {
@@ -8,6 +9,6 @@ export const applicantsListLoad = (): Promise<any> => {
   return api("candidates/list");
 }
 
-export const applicantApply = (): Promise<any> => {
-  return api("candidates/apply");
+export const applicantApply = (id: UUID): Promise<any> => {
+  return api("candidates/apply", { id });
 }

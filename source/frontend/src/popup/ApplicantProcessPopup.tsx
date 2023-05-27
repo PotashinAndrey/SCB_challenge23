@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useUnit } from "effector-react";
 import { Modal, Button, Typography, Divider } from 'antd';
-import { applicantProcessPopup as candidateProcessPopup, applicantData } from "../context/model/applicant";
+import { applicantProcessPopup as candidateProcessPopup, applicantData, candidateApply } from "../context/model/applicant";
 import CandidateStatusInfo from '../components/CandidateStatusInfo';
 import CandidateInfo from "../components/CandidateInfo";
 
@@ -21,7 +21,7 @@ const ApplicantProcessPopup: FC = () => {
       width={700}
       onCancel={() => candidateProcessPopup.close()}
       footer={[
-        <Button type="primary" key="goOn" onClick={() => { }}>
+        <Button type="primary" key="goOn" onClick={() => candidateApply(popupData.id)}>
           Взять на рассмотрение
         </Button>,
         <Button danger key="reject" onClick={() => { }}>
