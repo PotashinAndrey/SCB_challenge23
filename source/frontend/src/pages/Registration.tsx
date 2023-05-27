@@ -1,11 +1,10 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useUnit } from "effector-react";
 import { Button, Checkbox, Input, Typography } from 'antd';
 import { useForm } from 'effector-react-form';
 
 import { registrationForm, registrationFormSubmit, $user } from '../context/registration';
 
-import "../style/Registration.css";
 import { InputField } from '../form/input';
 import { useEffect } from 'react';
 

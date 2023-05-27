@@ -24,7 +24,7 @@ const Candidates: FC = () => {
       loading={loading}
       dataSource={(store?.items || []) as Array<CandidateModel>}
       renderItem={(item, index) => (
-        <List.Item>
+        <List.Item onClick={() => handeItemClick(item)}>
           <List.Item.Meta
             avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} size={60} />}
             title={item.name}

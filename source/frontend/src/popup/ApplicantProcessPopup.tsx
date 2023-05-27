@@ -4,6 +4,7 @@ import { Modal, Button, Typography, Divider } from 'antd';
 import { applicantProcessPopup as candidateProcessPopup, applicantData, candidateApply } from "../context/model/applicant";
 import CandidateStatusInfo from '../components/CandidateStatusInfo';
 import CandidateInfo from "../components/CandidateInfo";
+import { UUID } from "node:crypto";
 
 const { Title, Text } = Typography;
 
@@ -14,6 +15,11 @@ const ApplicantProcessPopup: FC = () => {
 
   const contactsData = popupData.email || popupData.phone || popupData.vk || popupData.telegram;
   const notesAndDescription = popupData.notes || popupData.description;
+  
+  const handleCandidateApply = (id: UUID) => {
+    candidateApply(id);
+    close();
+  }
 
   return (
     <Modal
@@ -21,7 +27,7 @@ const ApplicantProcessPopup: FC = () => {
       width={700}
       onCancel={() => candidateProcessPopup.close()}
       footer={[
-        <Button type="primary" key="goOn" onClick={() => candidateApply(popupData.id)}>
+        <Button type="primary" key="goOn" onClick={() => handleCandidateApply(popupData.id)}>
           Взять на рассмотрение
         </Button>,
         <Button danger key="reject" onClick={() => { }}>

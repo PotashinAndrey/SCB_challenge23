@@ -5,6 +5,7 @@ export const routing = {
   login: createRoute(),
   registration: createRoute(),
   dashboard: createRoute(),
+  processCreate: createRoute(),
   candidate: createRoute(),
   candidateCreate: createRoute(),
   candidateList: createRoute(),
@@ -16,6 +17,7 @@ export const routing = {
 
 export const routes = [
   { path: '/home', route: routing.dashboard },
+  { path: '/process-create', route: routing.processCreate },
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
   { path: '/candidate', route: routing.candidate },

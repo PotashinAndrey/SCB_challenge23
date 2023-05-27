@@ -3,6 +3,7 @@ import { useUnit } from "effector-react";
 import { Modal, Button, Select } from 'antd';
 import { $interviewPopupDate, applicantData, applicantListData, interviewPopup } from "../context/model/applicant";
 
+
 /** ApplicantProcessPopup -  */
 const InterviewPopup: FC = () => {
   const { open, close, visible } = useUnit(interviewPopup);

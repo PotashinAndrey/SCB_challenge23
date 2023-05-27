@@ -9,6 +9,10 @@ export const applicantsListLoad = (): Promise<any> => {
   return api("candidates/list")
 }
 
-export const applicantApply = (id: UUID): Promise<any> => {
-  return api("candidates/apply", { id });
+export const candidatesInProcessList = (): Promise<any> => {
+  return api("candidates/in-process/list");
+}
+
+export const applicantApply = (candidateId: UUID): Promise<any> => {
+  return api("candidates/apply", { candidateId });
 }

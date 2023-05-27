@@ -1,7 +1,8 @@
 import { createEffect, sample, createEvent } from "effector";
 import factoryPopupBehaviour from "../factory/popup";
-import { vacancyListLoad } from "../../service/vacancy";
 import factoryExteralData from "../factory/external";
+import { vacancyListLoad } from "../../service/vacancy";
+
 
 export const vacancyCreatePopup = factoryPopupBehaviour();
 

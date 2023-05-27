@@ -1,7 +1,7 @@
 import { CandidateModel } from "@app/types/model/candidate";
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
-import { candidatesList, createCandidate, candidateByID, applyCandidate } from "../service/candidates";
+import { candidatesList, createCandidate, candidateByID, applyCandidate, candidatesInProcessList } from "../service/candidates";
 import { UUID } from "crypto";
 
 const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
@@ -11,6 +11,15 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
   fastify.post("/list", async (request, reply) => {
     try {
       const items = await candidatesList(db);
+      return { items };
+    } catch (error) {
+      //
+    }
+  });
+
+  fastify.post("/in-process/list", async (request, reply) => {
+    try {
+      const items = await candidatesInProcessList(db);
       return { items };
     } catch (error) {
       //
@@ -43,11 +52,11 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
 
   fastify.post("/apply", async (request, reply) => {
     try {
-      const { id } = JSON.parse(request.body as string) as { id: UUID };
+      const { candidateId } = JSON.parse(request.body as string) as { candidateId: UUID };
 
-      if (id) return;
+      if (!candidateId) return;
 
-      const applyResult = await applyCandidate(id, db);
+      const applyResult = await applyCandidate(candidateId, db);
       return {
         ...applyResult
       };

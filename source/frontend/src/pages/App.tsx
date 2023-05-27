@@ -11,17 +11,15 @@ import CandidateCreate from './CandidateCreate';
 import CalendarPage from "./Calendar";
 import Vacancies from './Vacancies';
 import Departments from './Departments';
-
-import ApplicantProcessPopup from '../popup/ApplicantProcessPopup';
-import CandidateProcessPopup from '../popup/CandidateProcessPopup';
-import VacancyCreate from '../popup/VacancyCreate';
-import InterviewPopup from '../popup/InterviewPopup';
+import ProcessCreate from './ProcessCreate';
+import PopupsList from './PopupsList';
 
 const RoutesView = createRoutesView({
   routes: [
     { route: routing.login,           view: Login },
     { route: routing.registration,    view: Registration },
     { route: routing.dashboard,       view: Dashboard },
+    { route: routing.processCreate,   view: ProcessCreate },
     { route: routing.candidateList,   view: Candidates },
     { route: routing.candidateCreate, view: CandidateCreate },
     { route: routing.calendar,        view: CalendarPage },
@@ -37,6 +35,7 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.login}>Login</Link></p>
         <p><Link to={routing.registration}>Registration</Link></p>
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
+        <p><Link to={routing.processCreate}>Создание процесса</Link></p>
         <p><Link to={routing.candidateList}>Candidates list</Link></p>
         <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>
         <p><Link to={routing.calendar}>Calendar</Link></p>
@@ -52,11 +51,7 @@ const App: FC = () => {
     <div className="application">
       <Header />
       <RoutesView />
-      {/* Popups */}
-      <ApplicantProcessPopup />
-      <CandidateProcessPopup/>
-      <InterviewPopup/>
-      <VacancyCreate/>
+      <PopupsList />
     </div>
   );
 }

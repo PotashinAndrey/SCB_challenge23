@@ -1,7 +1,7 @@
 import { createEffect, sample, createEvent, createStore } from "effector";
 import factoryPopupBehaviour from "../factory/popup";
 import factoryExteralData from "../factory/external";
-import { applicantApply, applicantLoad, applicantsListLoad } from "../../service/applicant";
+import { applicantApply, applicantLoad, applicantsListLoad, candidatesInProcessList } from "../../service/applicant";
 import { UUID } from "crypto";
 import type { CandidateModel } from "@app/types/model/candidate";
 import type { Dayjs } from 'dayjs';
@@ -38,8 +38,8 @@ sample({
 
 export const candidateApply = createEvent<any>();
 
-const candidateAllpyFx = createEffect(async (id: UUID) => {
-  const result = applicantApply(id);
+const candidateAllpyFx = createEffect(async (candidateId: UUID) => {
+  const result = applicantApply(candidateId);
   return result;
 });
 
@@ -48,3 +48,15 @@ sample({
   target: candidateAllpyFx
 });
 
+
+export const appliedCandidetes = createEvent<any>();
+
+const appliedCandidetesFx = createEffect(async () => {
+  const result = candidatesInProcessList();
+  return result;
+});
+
+sample({
+  clock: appliedCandidetes,
+  target: appliedCandidetesFx
+});
