@@ -4,12 +4,11 @@ export type CandidateModel = {
     name: string;
     photo: string; // путь до фотки
     sex: string;
-    birthDate: string;
+    birthdate: string;
     position: string;
     grade: string;
     salary: string;
     experience: string;
-    birthdate: string;
     tags: UUID[]; // Заполняется не напрямую
     skills: UUID[]; // Заполняется не напрямую
     link: string; // ссылка на страницу где-нибудь в хедхантере и тд
