@@ -8,7 +8,9 @@ export type BoardCardModelType = {
 
 export type BoardColumnModelType = {
   name: string;
-  total: number;
-  count: number;
-  items?: Array<BoardCardModelType>;
+  action?: string;
+  order: number;
+  process_description?: string;
+  step: string;
+  step_description?: string;
 }

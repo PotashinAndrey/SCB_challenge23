@@ -11,6 +11,9 @@ import companiesApi from './src/api/companies';
 import departmentsApi from './src/api/departments';
 import vacanciesApi from './src/api/vacancies';
 import processesApi from './src/api/processes';
+import stepsApi from './src/api/step';
+import actionsApi from './src/api/actions';
+import dashboardApi from './src/api/dashboard';
 import skillsApi from './src/api/skills';
 
 const fastify = Fastify({ logger: true })
@@ -33,6 +36,9 @@ fastify.register(companiesApi, { prefix: "/api/companies", db });
 fastify.register(departmentsApi, { prefix: "/api/departments", db });
 fastify.register(vacanciesApi, { prefix: "/api/vacancies", db });
 fastify.register(processesApi, { prefix: "/api/processes", db });
+fastify.register(stepsApi, { prefix: "/api/steps", db });
+fastify.register(actionsApi, { prefix: "/api/actions", db });
+fastify.register(dashboardApi, { prefix: "/api/dashboard", db });
 fastify.register(skillsApi, { prefix: "/api/skills", db })
 
 const start = async () => {

@@ -8,6 +8,8 @@ export default class SQL {
     let text = `select ${request.fields} from ${request.tables}`;
     if ((request.where || []).length > 0) text += " where " + request.where;
 
+    if ((request.spetialText)) text += " " + request.spetialText.trim();
+
     return text;
   }
 

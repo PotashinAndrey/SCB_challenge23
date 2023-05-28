@@ -24,7 +24,7 @@ sample({
 /** @section открытие дашборда */
 export const $dashboardID = createStore<UUID>("" as UUID);
 export const dashboardLoadFx = createEffect<UUID, any>(dashboardLoad);
-export const dashboardData = factoryExteralData(dashboardLoadFx);
+export const dashboardData = factoryExteralData(dashboardLoadFx, []);
 
 sample({
   clock: routing.dashboard.updated,

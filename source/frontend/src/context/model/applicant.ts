@@ -50,7 +50,7 @@ sample({
 
 // ?
 export const appliedCandidetesFx = createEffect(async () => {
-  const result = candidatesInProcessList();
+  const result = await candidatesInProcessList();
   return result;
 });
 

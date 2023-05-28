@@ -9,6 +9,7 @@ export type BaseQueryType = {
   fields: string;
   tables: string;
   where?: string;
+  spetialText?: string;
 };
 
 export type RequestSelectDB = BaseDBRequestClient & BaseQueryValues & (BaseQueryType | TextQueryType);

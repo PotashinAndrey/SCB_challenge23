@@ -7,21 +7,11 @@ import "../style/BoardColumn.css";
 
 interface BoardColumnProps {
   column: BoardColumnModelType;
-  // name: string;
-  // total: number;
-  // current: number;
-  // items: Array<BoardCardItemType>;
-  // search?: string;
-  // filters?: {
-  //     status?: string;
-  //     step?: string;
-  //     department?: string;
-  // }
 }
 
 const BoardColumn: FC<BoardColumnProps> = props => {
   const { column } = props;
-  const { name, items = [], count, total } = column;
+  const { name } = column;
 
   const onDragOverHandler = (event: any) => {
     event.preventDefault();
@@ -36,13 +26,11 @@ const BoardColumn: FC<BoardColumnProps> = props => {
     <div className="column-component boxAndRadius" onDrop={handleDrop} onDragOver={onDragOverHandler}>
       <h4 className="column-header">
         <span>{name}</span>
-        <span>{`${count} / ${total}`}</span>
+        {/* <span>{`${count} / ${total}`}</span> */}
       </h4>
-      {items?.length && <div className="column-content">
-        {/* {items.filter(e => e.name.toLocaleLowerCase().includes((search || "").toLocaleLowerCase())).map(e => ( */}
+      {/* {items?.length && <div className="column-content">
           {Children.toArray(items.map(e => <BoardTask task={e} />))}
-        {/* ))} */}
-      </div>}
+      </div>} */}
     </div>
   );
 }
