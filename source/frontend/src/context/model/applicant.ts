@@ -14,6 +14,8 @@ import { routing } from "../router";
 /** попап в списке кандидатов */
 export const applicantProcessPopup = factoryPopupBehaviour<UUID>();
 export const interviewPopup = factoryPopupBehaviour<Dayjs>();
+export const techTaskPopup = factoryPopupBehaviour();
+export const techTaskRatePopup = factoryPopupBehaviour();
 export const calendarPopup = factoryPopupBehaviour();
 export const calendarPageOpen = createEvent<any>();
 export const applicantLoadFx = createEffect(applicantLoad);

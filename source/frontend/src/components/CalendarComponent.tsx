@@ -48,8 +48,8 @@ const CalendarItem: FC = () => {
       const dayString = day.format('DD/MM/YYYY');
     
       return store.items.filter((item)=> {
-        const timestamp = item.timestamp;
-        const date = new Date(timestamp * 1000);
+        const timestamp = new Date(item.timestamp).getTime();
+        const date = new Date(timestamp);
         const dateMonth = date.getMonth()+1;
         const dateMonthZero =  dateMonth < 10 ? '0' + dateMonth.toString() : dateMonth.toString();
         const dateString = date.getDate().toString() + '/' + dateMonthZero + '/' + date.getFullYear().toString()
@@ -63,7 +63,7 @@ const CalendarItem: FC = () => {
       const dayString = day.get('M');
     
       return store.items.filter((item)=> {
-        const timestamp = item.timestamp;
+        const timestamp = new Date(item.timestamp).getTime();
         const date = new Date(timestamp * 1000);
         const dateMonth = date.getMonth()+1;
         return dayString === dateMonth
@@ -88,7 +88,7 @@ const CalendarItem: FC = () => {
           <ul className="events">
             {(listData || []).map((item) => (
               <li key={item.name}>
-                <Badge status={"success"} text={item.name + item.timestamp} />
+                <Badge status={"success"} text={item.name} />
               </li>
             ))}
           </ul>
@@ -137,7 +137,7 @@ const CalendarItem: FC = () => {
                   return { children:
                     <Descriptions column={1} size="small">
                       <Descriptions.Item label="Время">
-                        {getTimeByDate(item.timestamp)}
+                        {getTimeByDate(new Date(item.timestamp).getTime())}
                       </Descriptions.Item>
                       <Descriptions.Item label="Кандидат">{item.name}</Descriptions.Item>
                     </Descriptions>}

@@ -3,7 +3,7 @@ import "../style/CandidateStatusInfo.css";
 import { Button, MenuProps } from 'antd';
 import { PropsWithClassName } from "@app/types/ui";
 import { Divider, Space, Tag, Dropdown, Steps } from 'antd';
-import { calendarPopup } from "src/context/model/applicant";
+import { calendarPopup, techTaskPopup, techTaskRatePopup } from "src/context/model/applicant";
 
 type CandidateStatusInfoProps = PropsWithClassName & {
     name: string,
@@ -108,9 +108,30 @@ const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
                 >
                     Действия
                 </Divider>
-                <Button type="primary" key="goOn" onClick={() => calendarPopup.open()}>
-                    Назначить собеседование
-                </Button>,
+                <Divider
+                    orientation="left"
+                    orientationMargin="0"
+                >
+                    <Button type="primary" key="goOn" onClick={() => calendarPopup.open()}>
+                        Назначить собеседование
+                    </Button>
+                </Divider>
+                <Divider
+                    orientation="left"
+                    orientationMargin="0"
+                >
+                    <Button type="primary" key="goOn" onClick={() => techTaskPopup.open()}>
+                       Выслать техническое задание
+                    </Button>
+                </Divider>
+                <Divider
+                    orientation="left"
+                    orientationMargin="0"
+                >
+                    <Button type="primary" key="goOn" onClick={() => techTaskRatePopup.open()}>
+                    Оценить техническое задание
+                    </Button>
+                </Divider>
                
             </div>
         </div>
