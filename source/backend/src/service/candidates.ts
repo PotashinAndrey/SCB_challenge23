@@ -107,3 +107,11 @@ export const applyCandidate = async (model: CandidateProcessModel, db: DB) => {
   // TODO: Сделать update кандидата. removed: true
   return { task };
 };
+
+export const historyAppend = async (tasksId: UUID, id: string, db: DB) => {
+  return await db.insertRow({
+    tables: "flow.history",
+    fields: "task, to",
+    values: [tasksId, id]
+  });
+}
