@@ -1,11 +1,13 @@
 import { createRoute, createHistoryRouter } from 'atomic-router';
 import { createHashHistory } from 'history';
+import type { UUID } from 'node:crypto';
 
 export const routing = {
   login: createRoute(),
   registration: createRoute(),
-  dashboard: createRoute(),
+  dashboard: createRoute<{ dashboard?: UUID }>(),
   processCreate: createRoute(),
+  processesList: createRoute(),
   candidate: createRoute(),
   candidateCreate: createRoute(),
   candidateList: createRoute(),
@@ -16,8 +18,9 @@ export const routing = {
 }
 
 export const routes = [
-  { path: '/home', route: routing.dashboard },
+  { path: '/home/:dashboard?', route: routing.dashboard },
   { path: '/process-create', route: routing.processCreate },
+  { path: '/processes', route: routing.processesList },
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
   { path: '/candidate', route: routing.candidate },

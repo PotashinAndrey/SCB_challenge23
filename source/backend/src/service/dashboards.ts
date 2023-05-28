@@ -3,12 +3,32 @@ import type { UUID } from "node:crypto";
 import { departmentById } from "./departments";
 import { DashboardModel } from "@app/types/model/dashboard";
 
-export const dashboardList = async (filter: object, db: DB) => {
+export const dashboardsList = async (db: DB) => { // dashboard/get
+  let results = await db.select({
+    fields: '*',
+    tables: 'flow.dashboard'
+  });
+
+  return results;
+};
+
+export const dashboardById = async (id: UUID, db: DB) => { // dashboard/get
+  let results = await db.selectRow({
+    fields: '*',
+    tables: 'flow.dashboard',
+    where: "id = $1",
+    values: [id]
+  });
+
+  return results;
+};
+
+export const tasksList = async (filter: object, db: DB) => { // dashboard/get
   let results = await db.select<DashboardModel>({
     fields: '*',
     tables: 'flow.tasks'
   });
-  
+
   return results;
 };
 

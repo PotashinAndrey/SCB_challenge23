@@ -1,6 +1,5 @@
 import type { ServerProtocol } from "@app/types/config";
 
-// declare const __API_HOST__: string;
 declare const __API_PORT__: number;
 
 const api = async <S, T>(method: string, data?: S): Promise<T> => {
@@ -11,7 +10,7 @@ const api = async <S, T>(method: string, data?: S): Promise<T> => {
     const port = __API_PORT__ || (protocol === "http" ? 80 : 443);
     const url = `${protocol}://${host}:${port}/api/${method}`;
 
-    console.log("api", { url }, data);
+    // console.log("api", url, data);
 
     const response = await fetch(url, {
       method: "post",

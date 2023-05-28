@@ -21,7 +21,7 @@ sample({
 });
 
 sample({
-  clock: applicantLoadFx.doneData, 
+  clock: applicantLoadFx.doneData,
   target: applicantData.$store
 });
 
@@ -48,15 +48,9 @@ sample({
   target: candidateAllpyFx
 });
 
-
-export const appliedCandidetes = createEvent<any>();
-
-const appliedCandidetesFx = createEffect(async () => {
+// ?
+export const appliedCandidetesFx = createEffect(async () => {
   const result = candidatesInProcessList();
   return result;
 });
 
-sample({
-  clock: appliedCandidetes,
-  target: appliedCandidetesFx
-});

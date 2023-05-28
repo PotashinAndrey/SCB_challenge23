@@ -10,6 +10,7 @@ import candidatesApi from "./src/api/candidates"
 import companiesApi from './src/api/companies';
 import departmentsApi from './src/api/departments';
 import vacanciesApi from './src/api/vacancies';
+import processesApi from './src/api/processes';
 import skillsApi from './src/api/skills';
 
 const fastify = Fastify({ logger: true })
@@ -31,6 +32,7 @@ fastify.register(candidatesApi, { prefix: "/api/candidates", db });
 fastify.register(companiesApi, { prefix: "/api/companies", db });
 fastify.register(departmentsApi, { prefix: "/api/departments", db });
 fastify.register(vacanciesApi, { prefix: "/api/vacancies", db });
+fastify.register(processesApi, { prefix: "/api/processes", db });
 fastify.register(skillsApi, { prefix: "/api/skills", db })
 
 const start = async () => {

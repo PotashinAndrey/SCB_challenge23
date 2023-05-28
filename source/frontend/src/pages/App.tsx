@@ -12,6 +12,7 @@ import CalendarPage from "./Calendar";
 import Vacancies from './Vacancies';
 import Departments from './Departments';
 import ProcessCreate from './ProcessCreate';
+import Processes from './Processes';
 import PopupsList from './PopupsList';
 
 const RoutesView = createRoutesView({
@@ -20,6 +21,7 @@ const RoutesView = createRoutesView({
     { route: routing.registration,    view: Registration },
     { route: routing.dashboard,       view: Dashboard },
     { route: routing.processCreate,   view: ProcessCreate },
+    { route: routing.processesList,   view: Processes },
     { route: routing.candidateList,   view: Candidates },
     { route: routing.candidateCreate, view: CandidateCreate },
     { route: routing.calendar,        view: CalendarPage },
@@ -35,6 +37,7 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.login}>Login</Link></p>
         <p><Link to={routing.registration}>Registration</Link></p>
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
+        <p><Link to={routing.processesList}>Список процессов</Link></p>
         <p><Link to={routing.processCreate}>Создание процесса</Link></p>
         <p><Link to={routing.candidateList}>Candidates list</Link></p>
         <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>

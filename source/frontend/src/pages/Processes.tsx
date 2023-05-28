@@ -1,23 +1,23 @@
 import type { FC } from "react";
-import { useEffect } from "react";
 import { Avatar, Button, List, Descriptions } from 'antd';
 import { useUnit } from "effector-react";
-import type { VacancyModel } from "@app/types/model/vacancy";
+import { routing } from "../context/router";
+import { processesListData } from "../context/model/process";
 import PageList from "../ui/PageList";
-import { vacanciesListData, vacancyCreatePopup } from "../context/model/vacancy";
 
 const Vacancies: FC = () => {
-  const { store, loading } = useUnit(vacanciesListData);
+  const { store, loading } = useUnit(processesListData);
 
   return (
     <PageList
-      caption="Наши вакансии"
-      description="Эти вакансии также размещаются на всех популярных площадках"
+      caption="Процессы найма сотрудников"
+      description="Обзор всех процессов найма сотрудников"
       loading={loading}
-      dataSource={(store?.items || []) as Array<VacancyModel>}
+      dataSource={(store?.items || []) as Array<any>}
       renderItem={(item, index) => (
-        <List.Item>
-          <List.Item.Meta
+        <List.Item onClick={() => routing.dashboard.open({ dashboard: item.id })}>
+          <pre>{JSON.stringify(item, null, 2)}</pre>
+          {/* <List.Item.Meta
             avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} size={60} />}
             title={item.name}
             description={(
@@ -26,11 +26,11 @@ const Vacancies: FC = () => {
                 <Descriptions.Item label="Описание">{item.description}</Descriptions.Item>
               </Descriptions>
             )}
-          />
+          /> */}
         </List.Item>
       )}
     >
-      <Button type="primary" onClick={() => vacancyCreatePopup.open()}>Добавить вакансию</Button>
+      <Button type="primary" onClick={() => routing.processCreate.open()}>Добавить процесс найма</Button>
     </PageList>
   );
 }

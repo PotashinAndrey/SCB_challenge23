@@ -59,6 +59,9 @@ const leftItems: MenuProps['items'] = [{
       }, {
         label: <Link to={routing.processCreate}>Создание процесса</Link>,
         key: 'process-create'
+    }, {
+      label: <Link to={routing.processesList}>Список процессов</Link>,
+      key: 'processes'
     }]
   }];
 
