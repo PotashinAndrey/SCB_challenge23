@@ -1,6 +1,9 @@
 import { createRoute, createHistoryRouter } from 'atomic-router';
+import { createEvent, sample } from 'effector';
 import { createHashHistory } from 'history';
 import type { UUID } from 'node:crypto';
+
+export const appStated = createEvent();
 
 export const routing = {
   login: createRoute(),
@@ -33,5 +36,25 @@ export const routes = [
 ];
 
 export const router = createHistoryRouter({ routes });
-router.setHistory(createHashHistory());
 
+sample({
+  clock: appStated,
+  fn: () => createHashHistory(),
+  target: router.setHistory
+});
+
+sample({
+  clock: router.initialized,
+  // clock: router.$path,
+  fn: (...args) => {
+    console.log("ROUTING INIT", args);
+  }
+})
+
+// sample({
+//   // clock: router.initialized,
+//   clock: router.$path,
+//   fn: (...args) => {
+//     console.log("ROUTING PATH", args);
+//   }
+// })

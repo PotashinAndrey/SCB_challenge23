@@ -5,8 +5,6 @@ import { routing } from "../router";
 import { processesListLoad, dashboardLoad } from "../../service/process";
 import { UUID } from "node:crypto";
 
-console.error("CALL FILE");
-
 /** @section список процессов (дашбордов) */
 export const processesListLoadFx = createEffect(processesListLoad);
 export const processesListData = factoryExteralData(processesListLoadFx);

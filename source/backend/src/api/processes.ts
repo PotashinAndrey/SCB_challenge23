@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
-import { dashboardsList, dashboardById } from "../service/dashboards";
+import { dashboardsList, dashboardById, processByDashboardId } from "../service/dashboards";
 
 const processesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
@@ -12,11 +12,13 @@ const processesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
     return { items };
   });
 
-  /** Получение списка процессов (дашбордов) */
+  /** Получение процесса (дашборда) */
   fastify.post("/get", async (request, reply) => {
     const { id = "" } = request.body ? JSON.parse(request.body as string) : {};
     if (!id) return {};
-    return await dashboardById(id, db);
+    const dashboard = await dashboardById(id, db);
+    const steps = await processByDashboardId(id, db);
+    return { dashboard, steps }
   });
 
   done();

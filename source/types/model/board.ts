@@ -7,10 +7,10 @@ export type BoardCardModelType = {
 }
 
 export type BoardColumnModelType = {
+  id: UUID;
   name: string;
-  action?: string;
   order: number;
+  action?: string;
   process_description?: string;
-  step: string;
   step_description?: string;
 }

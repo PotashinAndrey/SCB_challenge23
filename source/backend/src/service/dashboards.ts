@@ -23,15 +23,21 @@ export const processList = async (db: DB) => { // dashboard/get
 
 // // + SELECT * from flow.process where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' order by "order" ASC
 export const processByDashboardId = async (id: UUID, db: DB) => { // dashboard/get
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.process',
-    where: "dashboard = $1",
+  return db.select({
+    fields: `step as id, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action"`,
+    tables: 'flow.process, flow.step',
+    where: "dashboard = $1 and flow.step.id = flow.process.step",
     values: [id],
-    spetialText: 'order by "order" ASC'
+    order: '"order" asc'
   });
+  // + SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
+  // let results = await db.select<any>({
+  //   text: `SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = $1 and flow.step.id = flow.process.step order by "order" ASC`,
+  //   values: [id]
+  // });
 
-  return results;
+  // tasksList
+  // return results;
 };
 
 export const stepsList = async (db: DB) => {
@@ -65,23 +71,12 @@ export const actionsList = async (db: DB) => {
 };
 
 export const dashboardById = async (id: UUID, db: DB) => { // dashboard/get
-  // let results = await db.selectRow({
-  //   fields: '*',
-  //   tables: 'flow.dashboard',
-  //   where: "id = $1",
-  //   values: [id]
-  // });
-
-  // + SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
-  let results = await db.select<any>({
-    text: `SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '${id}' and flow.step.id = flow.process.step order by "order" ASC`
+  return db.selectRow({
+    fields: '*',
+    tables: 'flow.dashboard',
+    where: "id = $1",
+    values: [id]
   });
-
-
-
-  // tasksList
-
-  return results;
 };
 
 export const tasksList = async (filter: object, db: DB) => { // dashboard/get
