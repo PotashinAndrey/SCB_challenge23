@@ -43,7 +43,7 @@ class DB {
     return this.query(query, request.client);
   }
 
-  insertRow(request: RequestInsertDB): Promise<UUID> {
+  insertRow(request: RequestInsertDB): Promise<UUID> { // todo: Omit<returning>
     return this.insert({ ...request, returning: "id" }).then(r => r.rows[0].id);
   }
 

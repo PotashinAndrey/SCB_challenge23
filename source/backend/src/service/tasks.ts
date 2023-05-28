@@ -4,21 +4,21 @@ import { VacancyListFilter, VacancyModel } from "@app/types/model/vacancy";
 import { departmentById, departmentsList } from "./departments";
 import { TaskModel } from "@app/types/model/task";
 
-export const tasksList = async (filter: VacancyListFilter, db: DB) => {
-  let results = await db.select<TaskModel>({
-    fields: '*',
-    tables: 'flow.tasks'
-  });
-  
-  return results;
-};
+// // ?
+// export const tasksList = async (filter: VacancyListFilter, db: DB) => {
+//   let results = await db.select<TaskModel>({
+//     fields: '*',
+//     tables: 'flow.tasks'
+//   });
 
-export const createTask = async (values: TaskModel, db: DB) => {
+//   return results;
+// };
+
+export const createTask = (values: TaskModel, db: DB): Promise<UUID> => {
   const { dashboard, applicant } = values;
-  return await db.insert({
-      fields: "dashboard, applicant",
-      tables: "flow.tasks",
-      values: [dashboard, applicant],
-      returning: "id"
+  return db.insertRow({
+    fields: "dashboard, applicant",
+    tables: "flow.tasks",
+    values: [dashboard, applicant]
   });
 };
