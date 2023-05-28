@@ -90,7 +90,7 @@ const BoardTask: FC<BoardTaskProps> = props => {
           //     <MessageOutlined />
           //   </Badge>
           // </Space>,
-          <Amount mode="from" value={3e5} />,
+          <Amount mode={Math.random() < 0.5 ? "from" : "to"} value={task.salary} />,
           // <SettingOutlined />,
           // <EllipsisOutlined />,
           // <AlipayCircleOutlined />
@@ -111,9 +111,9 @@ const BoardTask: FC<BoardTaskProps> = props => {
         />
 
         <div className="mt-4">
-          <Tag color="yellow">seniour</Tag>
-          <Tag color="volcano">frontend</Tag>
-          <Tag>удалёнка</Tag>
+          <Tag color="yellow">{task.grade}</Tag>
+          <Tag color="volcano">{Math.random() < 0.5 ? "frontend" : "iOS"}</Tag>
+          <Tag>{Math.random() < 0.5 ? "удалёнка" : "в офисе"}</Tag>
 
           <Divider />
 
@@ -121,7 +121,7 @@ const BoardTask: FC<BoardTaskProps> = props => {
           <Descriptions column={1} size="small">
             {/* <Descriptions.Item label="Инфо">26 лет</Descriptions.Item>
             <Descriptions.Item label="Образование">Высшее</Descriptions.Item> */}
-            <Descriptions.Item label="Опыт">4 года 4 месяца</Descriptions.Item>
+            <Descriptions.Item label="Опыт">{task.experience}</Descriptions.Item>
             {/* <Descriptions.Item label="Локация">Уфа, Россия</Descriptions.Item> */}
             {/* <Descriptions.Item label="Образование">УГАТУ</Descriptions.Item> */}
             {/* <Descriptions.Item label="Live">Hangzhou, Zhejiang</Descriptions.Item>
@@ -131,8 +131,8 @@ const BoardTask: FC<BoardTaskProps> = props => {
             </Descriptions.Item> */}
           </Descriptions>
 
-          <Tag>автоматизация</Tag>
-          <Tag>react</Tag>
+          <Tag>{Math.random() < 0.5 ? "хакатоны" : "олимпиады"}</Tag>
+          <Tag>{Math.random() < 0.5 ? "архитектура" : "react"}</Tag>
 
           <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
         </div>
