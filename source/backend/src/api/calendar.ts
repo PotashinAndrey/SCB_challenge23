@@ -7,7 +7,7 @@ const calendarApi = (fastify: FastifyInstance, options: { db: DB }, done: () => 
   const { db } = options;
 
   /** регистрация пользователя */
-  fastify.post("/events/list", async (request, reply) => {
+  fastify.post("/list", async (request, reply) => {
     try {
       const items = await eventsList(db);
       return { items };
@@ -17,8 +17,8 @@ const calendarApi = (fastify: FastifyInstance, options: { db: DB }, done: () => 
   });
 
   /** авторизация пользователя */
-  fastify.post("/events/append", async (request, reply) => {
-    console.log("/events/append", request.body);
+  fastify.post("/append", async (request, reply) => {
+    console.log("/append", request.body);
     const eventData = JSON.parse(request.body as string) as CalendarEventModel;
     const id = await eventCreate(eventData, db);
     return {
