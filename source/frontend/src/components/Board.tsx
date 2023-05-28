@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { useEffect, Children } from "react";
 import { useUnit } from "effector-react";
+import { Spin } from "antd";
 // import { useState } from "react";
 // import Modal from "antd/es/modal/Modal";
 import { dashboardData } from "../context/model/process";
@@ -27,9 +28,11 @@ const Board: FC = () => {
   // console.log(columnsData)
 
   return (
-    <div className="flex gap-3">
-      {Children.toArray((store.steps || []).map((column: BoardColumnModelType) => <BoardColumn column={column} />))}
-    </div>
+    <Spin spinning={loading}>
+      <div className="flex gap-3">
+        {Children.toArray((store.steps || []).map((column: BoardColumnModelType) => <BoardColumn column={column} />))}
+      </div>
+    </Spin>
   );
 
 }

@@ -1,6 +1,8 @@
-import type { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { Children } from 'react';
+import { useStoreMap } from 'effector-react';
 import { Typography } from 'antd';
+import { $dashboardDataTasks } from "../context/model/process";
 import type { BoardColumnModelType } from "@app/types/model/board";
 import BoardTask from "./BoardTask";
 
@@ -34,6 +36,13 @@ const BoardColumn: FC<BoardColumnProps> = props => {
   const { column } = props;
   const { name } = column;
 
+  const tasks = useStoreMap({
+    store: $dashboardDataTasks,
+    fn: dashboardDataTasks => dashboardDataTasks.filter((t: any) => t.step === column.id),
+    keys: [column],
+    defaultValue: []
+  });
+
   const onDragOverHandler = (event: any) => {
     event.preventDefault();
   }
@@ -49,7 +58,13 @@ const BoardColumn: FC<BoardColumnProps> = props => {
         <Text>{name}</Text>
         {/* <span>{`${count} / ${total}`}</span> */}
       </h4>
-      {items?.length && <div className="column-content">
+
+      <div className="column-content">
+        {Children.toArray(tasks.map((t: any) => <BoardTask task={{ id: t.task, name: t.name, step: "lime tag" }} />))}
+      </div>
+
+      {/* todo: убрать это */}
+      {!tasks.length && items?.length && <div className="column-content">
         {Children.toArray(items.map(e => <BoardTask task={e} />))}
       </div>}
     </div>

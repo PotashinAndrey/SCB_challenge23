@@ -10,7 +10,7 @@ export const dashboardsList = async (db: DB) => {
 /** Список колонок дашборда */
 export const processByDashboardId = async (id: UUID, db: DB) => { // dashboard/get
   return db.select({
-    fields: `step as id, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action"`,
+    fields: `"process".id as id, step as "process", "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action"`,
     tables: 'flow.process, flow.step',
     where: "dashboard = $1 and flow.step.id = flow.process.step",
     values: [id],
@@ -53,7 +53,7 @@ export const tasksList = (dashboardID: UUID, db: DB) => { // dashboard/get
 export const dashboardHistory = (dashboardID: UUID, db: DB): Promise<Array<{ timestamp: any, task: UUID, from: UUID, to: UUID, action: string }>> => { // dashboard/get
   return db.select({
     fields: 'history."timestamp", tasks.id as task, history."from" as "from", history."to" as "to", history."action" as "action"',
-    tables: 'flow.history, flow.tasks',
+    tables: 'flow.history, flow.tasks, flow.process',
     // where: "tasks.dashboard = $1 and history.task = tasks.id and tasks.removed = false",
     where: `tasks.dashboard = $1 and
       history.task = tasks.id and
