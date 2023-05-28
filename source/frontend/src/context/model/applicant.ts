@@ -1,11 +1,12 @@
 import { createEffect, sample, createEvent, createStore } from "effector";
 import factoryPopupBehaviour from "../factory/popup";
 import factoryExteralData from "../factory/external";
-import { applicantApply, applicantLoad, applicantsListLoad, candidatesInProcessList } from "../../service/applicant";
+import { applicantApply, applicantLoad, applicantsListLoad, calendarListLoad, candidatesInProcessList, interviewCreate } from "../../service/applicant";
 import type { UUID } from "crypto";
 import type { Dayjs } from 'dayjs';
 import type { CandidateModel } from "@app/types/model/candidate";
 import type { CandidateProcessModel } from "@app/types/model/candidateProcess";
+import { CalendarEventModel } from "@app/types/model/calendar";
 import { routing } from "../router";
 
 // export const applicantesPageOpen = createEvent<any>();
@@ -13,11 +14,15 @@ import { routing } from "../router";
 /** попап в списке кандидатов */
 export const applicantProcessPopup = factoryPopupBehaviour<UUID>();
 export const interviewPopup = factoryPopupBehaviour<Dayjs>();
+export const calendarPopup = factoryPopupBehaviour();
+export const calendarPageOpen = createEvent<any>();
 export const applicantLoadFx = createEffect(applicantLoad);
 export const applicantListLoadFx = createEffect(applicantsListLoad);
 export const applicantData = factoryExteralData(applicantLoadFx, {});
 export const applicantListData = factoryExteralData<void, {items: CandidateModel[]}>(applicantListLoadFx, {items: []});
 export const $interviewPopupDate = createStore<Dayjs | null>(null)
+export const calendarListLoadFx = createEffect(calendarListLoad);
+export const calendarListData = factoryExteralData<void, {items: CalendarEventModel[]}>(calendarListLoadFx, {items: []});
 
 /** попап в дашборде */
 export const candidateProcessPopup = factoryPopupBehaviour<UUID>();
@@ -43,7 +48,18 @@ sample({
     target: applicantListData.$store
 });
 
+sample({
+    clock: calendarPageOpen,
+    target: calendarListLoadFx
+});
+
+sample({
+    clock: calendarListLoadFx.doneData,
+    target: calendarListData.$store
+});
+
 export const candidateApply = createEvent<any>();
+
 
 const candidateAllpyFx = createEffect(async (model: CandidateProcessModel) => {
   const result = applicantApply(model);
@@ -53,6 +69,18 @@ const candidateAllpyFx = createEffect(async (model: CandidateProcessModel) => {
 sample({
   clock: candidateApply,
   target: candidateAllpyFx
+});
+
+export const createInterview = createEvent<any>();
+
+const createInterviewFx = createEffect(async (model: CalendarEventModel) => {
+    const result = interviewCreate(model);
+    return result;
+});
+  
+sample({
+    clock: createInterview,
+    target: createInterviewFx
 });
 
 // ?

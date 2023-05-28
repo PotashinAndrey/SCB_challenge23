@@ -4,7 +4,6 @@ import factoryExteralData from "../factory/external";
 import { routing } from "../router";
 import { processesListLoad, dashboardLoad } from "../../service/process";
 import { UUID } from "node:crypto";
-import { candidateProcessPopup } from "./candidate";
 import { applicantProcessPopup } from "./applicant";
 
 /** @section список процессов (дашбордов) */

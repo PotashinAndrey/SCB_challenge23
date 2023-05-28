@@ -1,8 +1,9 @@
 import type { FC } from "react";
 import "../style/CandidateStatusInfo.css";
-import type { MenuProps } from 'antd';
+import { Button, MenuProps } from 'antd';
 import { PropsWithClassName } from "@app/types/ui";
 import { Divider, Space, Tag, Dropdown, Steps } from 'antd';
+import { calendarPopup } from "src/context/model/applicant";
 
 type CandidateStatusInfoProps = PropsWithClassName & {
     name: string,
@@ -99,6 +100,18 @@ const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
                     <li></li>
                     <li></li>
                 </ul> */}
+            </div>
+            <div className="candidate-status__bot">
+                <Divider
+                    orientation="left"
+                    orientationMargin="0"
+                >
+                    Действия
+                </Divider>
+                <Button type="primary" key="goOn" onClick={() => calendarPopup.open()}>
+                    Назначить собеседование
+                </Button>,
+               
             </div>
         </div>
     );
