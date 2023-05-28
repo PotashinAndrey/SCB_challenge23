@@ -60,7 +60,7 @@ const BoardColumn: FC<BoardColumnProps> = props => {
       </h4>
 
       <div className="column-content">
-        {Children.toArray(tasks.map((t: any) => <BoardTask task={{ id: t.task, name: t.name, step: "lime tag" }} />))}
+        {Children.toArray(tasks.map((t: any) => <BoardTask task={t} />))}
       </div>
 
       {/* todo: убрать это */}

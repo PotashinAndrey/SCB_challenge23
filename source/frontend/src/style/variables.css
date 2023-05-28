@@ -21,7 +21,8 @@
   --shadow-primary: 1px 2px 4px hsl(0, 0%, 83%);
 
   /* APP SIZES */
-  --width-card: 280px;
   --width-main: 860px;
+  --width-card: 280px;
+  --width-modal: 540px;
   --width-aside: 360px;
 }

@@ -146,6 +146,10 @@
   width: var(--width-card);
 }
 
+.w-modal {
+  width: var(--width-modal);
+}
+
 .w-main {
   width: var(--width-main);
 }

@@ -2,8 +2,8 @@ import { UUID } from "crypto";
 import api from "../scripts/api";
 import type { CandidateProcessModel } from "@app/types/model/candidateProcess";
 
-export const applicantLoad = (): Promise<any> => {
-  return api("candidates/get");
+export const applicantLoad = (id: UUID): Promise<any> => {
+  return api("candidates/get", { id });
 }
 
 export const applicantsListLoad = (): Promise<any> => {

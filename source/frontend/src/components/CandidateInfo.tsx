@@ -1,74 +1,80 @@
 import type { FC } from "react";
-import { Divider } from 'antd';
-
-import "../style/CandidateInfo.css";
+import { Typography, Divider, Descriptions, Avatar } from 'antd';
+import { PropsWithClassName } from "@app/types/ui";
 import Amount from "../ui/Amount";
-import { CandidateModel } from "@app/types/model/candidate";
+import Caption from "../ui/Caption";
 
-const CONTACT_TYPES = {
-    email: "Почта",
-    phone: "Телефон",
-    telegram: "Телеграм",
-    vk: "ВКонтакте",
+const { Text } = Typography;
+
+type CandidateInfoProps = PropsWithClassName & {
+  candidate: any;
 }
 
-type CandidateContact = "email" | "phone" | "telegram" | "vk";
+const CandidateInfo: FC<CandidateInfoProps> = props => {
+  const { candidate, className } = props;
+  const contactsData = candidate.email || candidate.phone || candidate.vk || candidate.telegram;
+  const notesAndDescription = candidate.notes || candidate.description;
 
-
-const ContactItem: FC<{ value: string, type: CandidateContact }> = props => {
-    const { value, type } = props;
-
-    return (
-        <div>
-            <span className="ContactItemType">{`${CONTACT_TYPES[type]}: `}</span>
-            <span>{value}</span>
+  return (
+    <div className={className}>
+      <div className="flex margin padding mb-8">
+        <Avatar size={72} src={"https://xsgames.co/randomusers/avatar.php?g=pixel&key=1&" + Math.random()} />
+        <div className="ml-8">
+          <Caption>{candidate.name}</Caption>
+          <Text>{candidate.position}</Text>
         </div>
-    );
-}
+      </div>
 
-const CandidateInfo: FC<CandidateModel & { className: string }> = props => {
-    console.log(props)
-    const { name, position, description, birthdate, salary, sex, email, telegram, vk, phone, notes, className } = props;
+      <Caption level={4}>Профессиональные навыки</Caption>
+      <Descriptions column={1} size="small">
+        <Descriptions.Item label="Желаемая позиция">{candidate.position}</Descriptions.Item>
+        <Descriptions.Item label="Желаемая зарплата"><Amount value={candidate.salary} /></Descriptions.Item>
+        <Descriptions.Item label="Опыт работы">{candidate.experience}</Descriptions.Item>
+      </Descriptions>
 
-    const contacts = phone || email || vk || telegram;
+      <Divider />
 
-    return (
-        <div className={`candidateInfoComponent ${className}`}>
-            <h2 className="candidateInfoName">{name}</h2>
-            <div className="candidateInfoRoleAndSalary flex">
-                <span>{position}</span>
-                {/* <span>{salary} Руб.</span> */}
-                <Amount value={Number(salary) || 0} />
-            </div>
-            <Divider />
-            <div className="candidateInfoDescription">
-                <div className="candidateInfoBirthAndSex">
-                    <span>Дата рождения: {new Date(birthdate).toDateString()}</span>
-                    <span>Пол: {sex === "male" ? "Мужской" : "Женский"}</span>
-                </div>
-                <Divider />
-                <div className="candidateInfoDescriptionText">
-                    <h4>Описание:</h4>
-                    <span>{description}</span>
-                </div>
-            </div>
-            {contacts && (<>
-                <Divider />
-                <div className="candidateInfoContacts">
-                    <h4>Контакты:</h4>
-                    {email && (<ContactItem type="email" value={email} />)}
-                    {phone && (<ContactItem type="email" value={phone} />)}
-                    {telegram && (<ContactItem type="email" value={telegram} />)}
-                    {vk && (<ContactItem type="email" value={vk} />)}
-                </div>
-            </>)}
-            <Divider />
-            {notes && <div className="candidateInfoNotes">
-                <h4>Заметки:</h4>
-                <span>{notes}</span>
-            </div>}
-        </div>
-    );
+      <Caption level={4}>Общая информация</Caption>
+      <Descriptions column={1} size="small">
+        <Descriptions.Item label="Пол">{candidate.sex === "male" ? "Мужской" : "Женский"}</Descriptions.Item>
+        <Descriptions.Item label="Дата рождения">{new Date(candidate.birthdate).toLocaleDateString()}</Descriptions.Item>
+      </Descriptions>
+
+      {Boolean(contactsData) && (
+        <>
+          <Divider />
+          <Caption level={4}>Контактные данные кандидата</Caption>
+          <Descriptions column={1} size="small">
+            <Descriptions.Item label="Почта">{candidate.email}</Descriptions.Item>
+            <Descriptions.Item label="Телефон">{candidate.phone}</Descriptions.Item>
+            <Descriptions.Item label="Телеграм">{candidate.telegram}</Descriptions.Item>
+            <Descriptions.Item label="ВКонтакте">{candidate.vk}</Descriptions.Item>
+          </Descriptions>
+        </>
+      )}
+
+      {Boolean(candidate.link) && (
+        <>
+          <Divider />
+          <Caption level={4}>Стороние резюме</Caption>
+          <Descriptions column={1} size="small">
+            <Descriptions.Item label="HeadHunter"><a href={candidate.link}>{candidate.link}</a></Descriptions.Item>
+          </Descriptions>
+        </>
+      )}
+
+      {Boolean(notesAndDescription) && (
+        <>
+          <Divider />
+          <Caption level={4}>Описание и заметки</Caption>
+          <Descriptions column={1} size="small">
+            <Descriptions.Item label="Заметки">{candidate.notes}</Descriptions.Item>
+            <Descriptions.Item label="Описание">{candidate.description}</Descriptions.Item>
+          </Descriptions>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default CandidateInfo;

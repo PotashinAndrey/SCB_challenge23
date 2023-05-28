@@ -1,20 +1,20 @@
 import type { FC } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Avatar, List, Button, Descriptions } from 'antd';
 import { useUnit } from "effector-react";
 import type { CandidateModel } from "@app/types/model/candidate";
 import PageList from "../ui/PageList";
-import { applicantProcessPopup, applicantData, applicantesPageOpen, applicantListData } from "../context/model/applicant";
+import { applicantProcessPopup, applicantData, applicantListData } from "../context/model/applicant";
 import { routing } from "../context/router";
 
 const Candidates: FC = () => {
   const { store, loading } = useUnit(applicantListData);
 
-  useEffect(applicantesPageOpen, []);
+  // useEffect(applicantesPageOpen, []); // !
 
   const handeItemClick = (item: CandidateModel) => {
-    applicantProcessPopup.setPopupData(item)
-    applicantProcessPopup.open();
+    // applicantProcessPopup.setPopupData(item)
+    applicantProcessPopup.open(item.id); // item
   }
 
   return (

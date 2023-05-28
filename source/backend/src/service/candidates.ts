@@ -58,19 +58,28 @@ export const candidateByID = async (id: UUID, db: DB): Promise<CandidateModel> =
     where: "id = $1",
     values: [id]
   });
-  let extCandidateSkills = [];
-  let extCandidateTags = [];
-  for (const skillId of candidate.skills) {
-    extCandidateSkills.push(await skillById(skillId, db));
-  }
-  for (const tagId of candidate.tags) {
-    extCandidateTags.push(await skillById(tagId, db));
-  }
-  return {
-    ...candidate,
-    skills: extCandidateSkills,
-    tags: extCandidateTags
-  } as unknown as CandidateModel;
+  return candidate;
+  // TODO: нет же этих полей!
+  // let extCandidateSkills = [];
+  // let extCandidateTags = [];
+  // console.log(1, { candidate })
+  // for (const skillId of candidate.skills) {
+  //   const skill = await skillById(skillId, db);
+  //   extCandidateSkills.push(skill);
+  // }
+  // console.log(2, { candidate, extCandidateSkills })
+
+  // for (const tagId of candidate.tags) {
+  //   const tag = await skillById(tagId, db);
+  //   extCandidateTags.push(tag);
+  // }
+  // console.log(3, { candidate, extCandidateSkills, extCandidateTags })
+
+  // return {
+  //   ...candidate,
+  //   skills: extCandidateSkills,
+  //   tags: extCandidateTags
+  // } as unknown as CandidateModel;
 }
 
 export const applyCandidate = async (model: CandidateProcessModel, db: DB) => {

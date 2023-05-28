@@ -1,44 +1,41 @@
 import type { FC } from "react";
 import { useUnit } from "effector-react";
-import { candidateProcessPopup } from "../context/model/candidate";
+import { candidateProcessPopup, applicantData } from "../context/model/applicant";
 import { Modal, Button } from 'antd';
 import CandidateInfo from "../components/CandidateInfo";
 import CandidateStatusInfo from "../components/CandidateStatusInfo";
 
 /** ApplicantProcessPopup -  */
 const CandidateProcessPopup: FC = () => {
-  const { open, close, visible, popupData } = useUnit(candidateProcessPopup);
+  const { open, close, visible } = useUnit(candidateProcessPopup);
+  const { store: candidate } = useUnit(applicantData);
 
-  console.log(popupData)
+  // console.log(popupData)
 
   return (
     <Modal
       open={visible}
-      width={800}
+      width={928}
       closable={true}
-      onCancel={() => candidateProcessPopup.close()}
+      onCancel={close}
       footer={[
+        <Button type="link" key="reject" onClick={close}>
+          Закрыть
+        </Button>,
         <Button type="primary" key="goOn" onClick={() => { }}>
           Продолжить назначение
-        </Button>,
-        <Button danger key="reject" onClick={() => candidateProcessPopup.close()}>
-          Отказать
-        </Button>,
-
+        </Button>
       ]}
     >
-      <div className="candidateInfoPopup">
-        <div className="candidateInfoBlock">
-          <CandidateInfo {...popupData} />
-        </div>
-        <div>
-          <CandidateStatusInfo
-            name={popupData.name}
-            status={"test status"}
-            department="Разработка"//todo
-            // histories={history}
-            />
-        </div>
+      <div className="flex gap margin padding">
+        <CandidateInfo candidate={candidate} className="w-modal" />
+        <CandidateStatusInfo
+          className="w-aside"
+          name={candidate.name}
+          status={"test status"}
+          department="Разработка" // todo
+          // histories={history}
+        />
       </div>
     </Modal>
   );

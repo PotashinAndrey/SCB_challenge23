@@ -1,9 +1,10 @@
 import type { FC } from "react";
 import "../style/CandidateStatusInfo.css";
 import type { MenuProps } from 'antd';
+import { PropsWithClassName } from "@app/types/ui";
 import { Divider, Space, Tag, Dropdown, Steps } from 'antd';
 
-interface CandidateStatusInfoProps {
+type CandidateStatusInfoProps = PropsWithClassName & {
     name: string,
     status: string,
     department: string,
@@ -11,7 +12,7 @@ interface CandidateStatusInfoProps {
 }
 
 const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
-    const { name, status, department, histories } = props;
+    const { name, status, department, histories, className } = props;
 
     const items: MenuProps['items'] = [
         {
@@ -21,7 +22,7 @@ const CandidateStatusInfo: FC<CandidateStatusInfoProps> = props => {
     ];
 
     return (
-        <div className="candidate-status">
+        <div className={"candidate-status " + className}>
             <div className="candidate-status__top">
                 <p className="candidate-status__name">
                     {name}

@@ -3,7 +3,7 @@ import { CandidateProcessModel } from "@app/types/model/candidateProcess";
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
 import { candidatesList, createCandidate, candidateByID, applyCandidate, candidatesInProcessList } from "../service/candidates";
-import { UUID } from "crypto";
+import type { UUID } from "node:crypto";
 
 const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
@@ -30,10 +30,13 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
   fastify.post("/get", async (request, reply) => {
     try {
       const data = JSON.parse(request.body as string);
+      console.log("API", data);
       const applicant = await candidateByID(data.id, db);//todo
 
       return applicant;
     } catch (error) {
+      console.error("API ERROR", error);
+      throw error;
       //
     }
   });
