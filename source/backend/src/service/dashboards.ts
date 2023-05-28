@@ -3,25 +3,11 @@ import type { UUID } from "node:crypto";
 import { departmentById } from "./departments";
 import { DashboardModel } from "@app/types/model/dashboard";
 
-export const dashboardsList = async (db: DB) => { // dashboard/get
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.dashboard'
-  });
-
-  return results;
+export const dashboardsList = async (db: DB) => {
+  return await db.select({ fields: '*', tables: 'flow.dashboard' });
 };
 
-export const processList = async (db: DB) => { // dashboard/get
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.process'
-  });
-
-  return results;
-};
-
-// // + SELECT * from flow.process where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' order by "order" ASC
+/** Список колонок дашборда */
 export const processByDashboardId = async (id: UUID, db: DB) => { // dashboard/get
   return db.select({
     fields: `step as id, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action"`,
@@ -30,34 +16,7 @@ export const processByDashboardId = async (id: UUID, db: DB) => { // dashboard/g
     values: [id],
     order: '"order" asc'
   });
-  // + SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
-  // let results = await db.select<any>({
-  //   text: `SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = $1 and flow.step.id = flow.process.step order by "order" ASC`,
-  //   values: [id]
-  // });
-
-  // tasksList
-  // return results;
-};
-
-export const stepsList = async (db: DB) => {
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.step'
-  });
-
-  return results;
-};
-
-export const stepById = async (id: UUID, db: DB) => {
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.step',
-    where: "id = $1",
-    values: [id]
-  });
-
-  return results;
+  // SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
 };
 
   // + массив actions
@@ -79,13 +38,45 @@ export const dashboardById = async (id: UUID, db: DB) => { // dashboard/get
   });
 };
 
-export const tasksList = async (filter: object, db: DB) => { // dashboard/get
-  let results = await db.select<DashboardModel>({
+/** Список задач на дашборде */
+export const tasksList = (dashboardID: UUID, db: DB) => { // dashboard/get
+  return db.select<DashboardModel>({
+    fields: 'tasks.id as task, applicants.id as applicant, name, grade, salary, experience, telegram, photo',
+    tables: 'flow.tasks, service.applicants',
+    where: "dashboard = $1 and tasks.applicant = applicants.id and tasks.removed = false and service.applicants.removed = false",
+    values: [dashboardID]
+  });
+  // select tasks.id as task, applicants.id as applicant, name, grade, salary, experience, telegram, photo from flow.tasks, service.applicants where dashboard = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.applicant = applicants.id and tasks.removed = false and service.applicants.removed = false
+};
+
+// export const history = async
+
+// ?
+export const stepsList = async (db: DB) => {
+  let results = await db.select({
     fields: '*',
-    tables: 'flow.tasks'
+    tables: 'flow.step'
   });
 
   return results;
+};
+
+export const stepById = async (id: UUID, db: DB) => {
+  let results = await db.select({
+    fields: '*',
+    tables: 'flow.step',
+    where: "id = $1",
+    values: [id]
+  });
+
+  return results;
+};
+
+export const processList = async (db: DB) => {
+  return await db.select({
+    fields: '*',
+    tables: 'flow.process'
+  });
 };
 
 export const createDashboard = async (values: DashboardModel, db: DB) => {
