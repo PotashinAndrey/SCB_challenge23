@@ -4,15 +4,15 @@ import { VacancyListFilter, VacancyModel } from "@app/types/model/vacancy";
 import { departmentById, departmentsList } from "./departments";
 import { TaskModel } from "@app/types/model/task";
 
-// // ?
-// export const tasksList = async (filter: VacancyListFilter, db: DB) => {
-//   let results = await db.select<TaskModel>({
-//     fields: '*',
-//     tables: 'flow.tasks'
-//   });
+/** @deprecated - сделать через роутинг открытие дашборда */
+export const tasksList = async (filter: VacancyListFilter, db: DB) => {
+  let results = await db.select<TaskModel>({
+    fields: '*',
+    tables: 'flow.tasks'
+  });
 
-//   return results;
-// };
+  return results;
+};
 
 export const createTask = (values: TaskModel, db: DB): Promise<UUID> => {
   const { dashboard, applicant } = values;
