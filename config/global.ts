@@ -1,7 +1,7 @@
 const config = {
   database: {
     type: "postgres",
-    user: "melogo",
+    user: "postgres",
     database: "scbhack", // database name
     password: "password",
     port: 5432,
