@@ -1,12 +1,14 @@
 import type { FC } from "react";
+import type { UUID } from "node:crypto";
 import { useUnit } from "effector-react";
-import { Modal, Button, Typography, Divider } from 'antd';
+import { Modal, Button, Typography, Divider, Descriptions, Avatar, Space } from 'antd';
+import Caption from "../ui/Caption";
+import Amount from "../ui/Amount";
 import { applicantProcessPopup as candidateProcessPopup, applicantData, candidateApply } from "../context/model/applicant";
 import CandidateStatusInfo from '../components/CandidateStatusInfo';
 import CandidateInfo from "../components/CandidateInfo";
-import { UUID } from "node:crypto";
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
@@ -15,7 +17,7 @@ const ApplicantProcessPopup: FC = () => {
 
   const contactsData = popupData.email || popupData.phone || popupData.vk || popupData.telegram;
   const notesAndDescription = popupData.notes || popupData.description;
-  
+
   const handleCandidateApply = (id: UUID) => {
     candidateApply(id);
     close();
@@ -25,59 +27,92 @@ const ApplicantProcessPopup: FC = () => {
     <Modal
       open={visible}
       width={700}
+      // title="Соискатель"
       onCancel={() => candidateProcessPopup.close()}
-      footer={[
-        <Button type="primary" key="goOn" onClick={() => handleCandidateApply(popupData.id)}>
-          Взять на рассмотрение
-        </Button>,
-        <Button danger key="reject" onClick={() => { }}>
-          Отказать
-        </Button>,
-        <Button key="back" onClick={close}>
-          Закрыть
-        </Button>,
-      ]}
+      footer={(
+        <div className="flex space-between mt-8">
+          <Button type="link" danger key="reject" onClick={() => { }}>
+            Отказать
+          </Button>
+          <div>
+            <Button key="back" type="link" onClick={close}>
+              Закрыть
+            </Button>
+            <Button type="primary" key="goOn" onClick={() => handleCandidateApply(popupData.id)}>
+              Взять на рассмотрение
+            </Button>
+          </div>
+        </div>
+      )}
     >
       <div className="candidate-modal">
-        <Title level={2}>{popupData.name}</Title>
+        {/* <Title level={2}>{}</Caption>
+
+        <Divider /> */}
+
+        <div className="flex margin padding mb-8">
+          <Avatar size={72} src={"https://xsgames.co/randomusers/avatar.php?g=pixel&key=1&" + Math.random()} />
+          <div className="ml-8">
+            <Caption>{popupData.name}</Caption>
+            <Text>{popupData.position}</Text>
+          </div>
+        </div>
+
+        <Caption level={4}>Профессиональные навыки</Caption>
+        <Descriptions column={1} size="small">
+          <Descriptions.Item label="Желаемая позиция">{popupData.position}</Descriptions.Item>
+          <Descriptions.Item label="Желаемая зарплата"><Amount value={popupData.salary} /></Descriptions.Item>
+          <Descriptions.Item label="Опыт работы">{popupData.experience}</Descriptions.Item>
+        </Descriptions>
 
         <Divider />
 
-        <Title level={3}>Профессиональные навыки</Title>
-        <InfoString text="Позиция: " value={popupData.position} />
-        <InfoString text="Зарплата: " value={popupData.salary} />
-        <InfoString text="Опыт: " value={popupData.experience} />
+        <Caption level={4}>Общая информация</Caption>
+        <Descriptions column={1} size="small">
+          <Descriptions.Item label="Пол">{popupData.sex === "male" ? "Мужчина" : "Женщина"}</Descriptions.Item>
+          <Descriptions.Item label="Дата рождения">{new Date(popupData.birthdate).toLocaleDateString()}</Descriptions.Item>
+        </Descriptions>
 
-        <Divider />
+        {Boolean(contactsData) && (
+          <>
+            <Divider />
+            <Caption level={4}>Контактные данные кандидата</Caption>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="Почта">{popupData.email}</Descriptions.Item>
+              <Descriptions.Item label="Телефон">{popupData.phone}</Descriptions.Item>
+              <Descriptions.Item label="Телеграм">{popupData.telegram}</Descriptions.Item>
+              <Descriptions.Item label="ВКонтакте">{popupData.vk}</Descriptions.Item>
+            </Descriptions>
+          </>
+        )}
 
-        <Title level={3}>Общая информация</Title>
-        <InfoString text="Пол: " value={popupData.sex === "male" ? "Мужчина" : "Женщина"} />
-        <InfoString text="Дата роджения: " value={new Date(popupData.birthdate).toDateString()} />
+        {Boolean(popupData.link) && (
+          <>
+            <Divider />
+            <Caption level={4}>Стороние резюме</Caption>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="HeadHunter"><a href={popupData.link}>{popupData.link}</a></Descriptions.Item>
+            </Descriptions>
+          </>
+        )}
 
-        <Divider />
+        {Boolean(notesAndDescription) && (
+          <>
+            <Divider />
+            <Caption level={4}>Описание и заметки</Caption>
+            <Descriptions column={1} size="small">
+              <Descriptions.Item label="Заметки">{popupData.notes}</Descriptions.Item>
+              <Descriptions.Item label="Описание">{popupData.description}</Descriptions.Item>
+            </Descriptions>
+          </>
+        )}
 
-        {contactsData && <Title level={3}>Контактые кандидата</Title>}
-        <InfoString text="Почта: " value={popupData.email} />
-        <InfoString text="Телефон: " value={popupData.phone} />
-        <InfoString text="Телеграм: " value={popupData.telegram} />
-        <InfoString text="ВКонтакте: " value={popupData.vk} />
-
-        {popupData.link && <Divider />}
-
-        {popupData.link &&<Title level={3}>Стороние резюме</Title>}
-        {popupData.link && <p><Text>Ссылка на стороннее резюме: <a href={popupData.link}>{popupData.link}</a></Text></p>}
-
-        {popupData.link && <Divider />}
-
-        {notesAndDescription && <Title level={3}>Описание и заметки</Title>}
-        <InfoString text="Заметки: " value={popupData.notes} />
-        <InfoString text="Описание: " value={popupData.description} />
       </div>
     </Modal>
   );
 };
 
-const InfoString: FC<{text?: string, value?: string}> = ({text, value}) => {
+const InfoString: FC<{ text?: string, value?: string }> = ({ text, value }) => {
   if (!value) return null;
 
   return (<p><Text>{`${text}${value}`}</Text></p>);

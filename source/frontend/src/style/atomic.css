@@ -97,6 +97,26 @@
   margin-right: calc(var(--base-unit) * 4);
 }
 
+.mr-8 {
+  margin-right: calc(var(--base-unit) * 8);
+}
+
+.ml-1 {
+  margin-left: var(--base-unit);
+}
+
+.ml-2 {
+  margin-left: calc(var(--base-unit) * 2);
+}
+
+.ml-4 {
+  margin-left: calc(var(--base-unit) * 4);
+}
+
+.ml-8 {
+  margin-left: calc(var(--base-unit) * 8);
+}
+
 .w-100 {
   width: 100%;
 }
