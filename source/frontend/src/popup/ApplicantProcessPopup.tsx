@@ -4,7 +4,7 @@ import { useUnit } from "effector-react";
 import { Modal, Button, Typography, Divider, Descriptions, Avatar, Select } from 'antd';
 import Caption from "../ui/Caption";
 import Amount from "../ui/Amount";
-import { applicantProcessPopup as candidateProcessPopup, applicantData, candidateApply } from "../context/model/applicant";
+import { applicantProcessPopup, applicantData, candidateApply } from "../context/model/applicant";
 import { DepartmentModel } from "@app/types/model/department";
 import { processesListData } from "src/context/model/process";
 
@@ -13,7 +13,7 @@ const { Title, Text, Paragraph } = Typography;
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
-  const { open, close, visible, popupData } = useUnit(candidateProcessPopup);
+  const { open, close, visible, popupData } = useUnit(applicantProcessPopup);
   const { store, loading } = useUnit(processesListData);
   const [selectedProcess, setSelectedProcess] = useState<string>();
 
@@ -41,7 +41,7 @@ const ApplicantProcessPopup: FC = () => {
       open={visible}
       width={700}
       // title="Соискатель"
-      onCancel={() => candidateProcessPopup.close()}
+      onCancel={() => applicantProcessPopup.close()}
       footer={(
         <div className="flex space-between mt-8">
           <Button type="link" danger key="reject" onClick={() => { }}>

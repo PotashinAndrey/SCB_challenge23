@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
-import { dashboardsList, dashboardById, processByDashboardId, tasksList } from "../service/dashboards";
+import { dashboardsList, dashboardById, processByDashboardId, tasksList, dashboardHistory } from "../service/dashboards";
 
 const processesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
@@ -19,7 +19,8 @@ const processesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
     const dashboard = await dashboardById(id, db);
     const steps = await processByDashboardId(id, db);
     const tasks = await tasksList(id, db);
-    return { dashboard, steps, tasks }
+    const history = await dashboardHistory(id, db);
+    return { dashboard, steps, tasks, history }
   });
 
   done();

@@ -40,7 +40,7 @@ export const dashboardById = async (id: UUID, db: DB) => { // dashboard/get
 
 /** Список задач на дашборде */
 export const tasksList = (dashboardID: UUID, db: DB) => { // dashboard/get
-  return db.select<DashboardModel>({
+  return db.select({
     fields: 'tasks.id as task, applicants.id as applicant, name, grade, salary, experience, telegram, photo',
     tables: 'flow.tasks, service.applicants',
     where: "dashboard = $1 and tasks.applicant = applicants.id and tasks.removed = false and service.applicants.removed = false",
@@ -49,7 +49,20 @@ export const tasksList = (dashboardID: UUID, db: DB) => { // dashboard/get
   // select tasks.id as task, applicants.id as applicant, name, grade, salary, experience, telegram, photo from flow.tasks, service.applicants where dashboard = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.applicant = applicants.id and tasks.removed = false and service.applicants.removed = false
 };
 
-// export const history = async
+/** Истории перемещений задач */
+export const dashboardHistory = (dashboardID: UUID, db: DB): Promise<Array<{ timestamp: any, task: UUID, from: UUID, to: UUID, action: string }>> => { // dashboard/get
+  return db.select({
+    fields: 'history."timestamp", tasks.id as task, history."from" as "from", history."to" as "to", history."action" as "action"',
+    tables: 'flow.history, flow.tasks',
+    // where: "tasks.dashboard = $1 and history.task = tasks.id and tasks.removed = false",
+    where: `tasks.dashboard = $1 and
+      history.task = tasks.id and
+      (flow.history.to = process.id or flow.history.from = process.id) and
+      process.dashboard = tasks.dashboard and
+      process.removed = false and tasks.removed = false`,
+    values: [dashboardID]
+  });
+}
 
 // ?
 export const stepsList = async (db: DB) => {

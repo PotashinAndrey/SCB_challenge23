@@ -4,15 +4,15 @@ import factoryExteralData from "../factory/external";
 import { routing } from "../router";
 import { processesListLoad, dashboardLoad } from "../../service/process";
 import { UUID } from "node:crypto";
-import CandidateProcessPopup from "src/popup/CandidateProcessPopup";
 import { candidateProcessPopup } from "./candidate";
+import { applicantProcessPopup } from "./applicant";
 
 /** @section список процессов (дашбордов) */
 export const processesListLoadFx = createEffect(processesListLoad);
 export const processesListData = factoryExteralData(processesListLoadFx);
 
 sample({
-  clock: [routing.processesList.opened, candidateProcessPopup.open],
+  clock: [routing.processesList.opened, applicantProcessPopup.open],
   target: processesListLoadFx
 });
 

@@ -73,15 +73,15 @@ export const candidateByID = async (id: UUID, db: DB): Promise<CandidateModel> =
   } as unknown as CandidateModel;
 }
 
-export const applyCandidate = async (id: UUID, db: DB) => {
+export const applyCandidate = async (model: CandidateProcessModel, db: DB) => {
   const task = await createTask({
-    applicant: id,
+    applicant: model.candidateId,
     // FIXME Сейчас захардкожен дашборд разработки.
     // Наверное нужна выпадашка на интерфейсе с возможностью выбора дашборда.
-    dashboard: 'f236cb65-63ef-4d32-bc96-0792dab66801'
+    dashboard: model.processId
   }, db);
 
-  const process = await processByDashboardId(id, db);
+  const process = await processByDashboardId(model.processId, db);
   const firstColumn = process.find(e => e.order === 0);
 
   // TODO: валидация тут
