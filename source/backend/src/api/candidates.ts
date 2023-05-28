@@ -1,4 +1,5 @@
 import { CandidateModel } from "@app/types/model/candidate";
+import { CandidateProcessModel } from "@app/types/model/candidateProcess";
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
 import { candidatesList, createCandidate, candidateByID, applyCandidate, candidatesInProcessList } from "../service/candidates";
@@ -52,11 +53,11 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
 
   fastify.post("/apply", async (request, reply) => {
     try {
-      const { candidateId } = JSON.parse(request.body as string) as { candidateId: UUID };
+      const candidateProcessModel = JSON.parse(request.body as string) as CandidateProcessModel ;
 
-      if (!candidateId) return;
+      if (!candidateProcessModel) return;
 
-      const applyResult = await applyCandidate(candidateId, db);
+      const applyResult = await applyCandidate(candidateProcessModel, db);
       return {
         ...applyResult
       };

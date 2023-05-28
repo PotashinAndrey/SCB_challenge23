@@ -3,6 +3,7 @@ import type { UUID } from "node:crypto";
 import { skillById } from "./skills";
 import { createTask, tasksList } from "./tasks";
 import { CandidateModel } from "@app/types/model/candidate";
+import { CandidateProcessModel } from "@app/types/model/candidateProcess";
 
 export const candidatesList = async (db: DB): Promise<Array<CandidateModel>> => {
     return db.select<any>({
@@ -71,13 +72,13 @@ export const candidateByID = async (id: UUID, db: DB): Promise<CandidateModel> =
     } as unknown as CandidateModel;
 }
 
-export const applyCandidate = async (id: UUID, db: DB) => {
+export const applyCandidate = async (candidateProcess: CandidateProcessModel, db: DB) => {
     // TODO: Сделать update кандидата. removed: true
     const newTask = (await createTask({
-        applicant: id,
+        applicant: candidateProcess.candidateId,
         // FIXME Сейчас захардкожен дашборд разработки.
         // Наверное нужна выпадашка на интерфейсе с возможностью выбора дашборда.
-        dashboard: 'f236cb65-63ef-4d32-bc96-0792dab66801'
+        dashboard: candidateProcess.processId
     }, db));
     return newTask;
 };

@@ -5,6 +5,7 @@ import { applicantApply, applicantLoad, applicantsListLoad, candidatesInProcessL
 import { UUID } from "crypto";
 import type { CandidateModel } from "@app/types/model/candidate";
 import type { Dayjs } from 'dayjs';
+import { CandidateProcessModel } from "@app/types/model/candidateProcess";
 
 export const applicantesPageOpen = createEvent<any>();
 export const applicantProcessPopup = factoryPopupBehaviour();
@@ -38,8 +39,8 @@ sample({
 
 export const candidateApply = createEvent<any>();
 
-const candidateAllpyFx = createEffect(async (candidateId: UUID) => {
-  const result = applicantApply(candidateId);
+const candidateAllpyFx = createEffect(async (model: CandidateProcessModel) => {
+  const result = applicantApply(model);
   return result;
 });
 

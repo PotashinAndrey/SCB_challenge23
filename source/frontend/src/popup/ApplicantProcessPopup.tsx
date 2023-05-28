@@ -1,27 +1,40 @@
-import type { FC } from "react";
+import { FC, useState } from "react";
 import type { UUID } from "node:crypto";
 import { useUnit } from "effector-react";
-import { Modal, Button, Typography, Divider, Descriptions, Avatar, Space } from 'antd';
+import { Modal, Button, Typography, Divider, Descriptions, Avatar, Select } from 'antd';
 import Caption from "../ui/Caption";
 import Amount from "../ui/Amount";
 import { applicantProcessPopup as candidateProcessPopup, applicantData, candidateApply } from "../context/model/applicant";
-import CandidateStatusInfo from '../components/CandidateStatusInfo';
-import CandidateInfo from "../components/CandidateInfo";
+import { DepartmentModel } from "@app/types/model/department";
+import { processesListData } from "src/context/model/process";
 
 const { Title, Text, Paragraph } = Typography;
+
 
 /** ApplicantProcessPopup -  */
 const ApplicantProcessPopup: FC = () => {
   const { open, close, visible, popupData } = useUnit(candidateProcessPopup);
-  const { store, loading } = useUnit(applicantData);
+  const { store, loading } = useUnit(processesListData);
+  const [selectedProcess, setSelectedProcess] = useState<string>();
 
   const contactsData = popupData.email || popupData.phone || popupData.vk || popupData.telegram;
   const notesAndDescription = popupData.notes || popupData.description;
 
+  const departmentsOptions = store?.items.map((item: DepartmentModel) => {
+    return {
+        label: item.name,
+        value: item.id
+    }
+    });
+
   const handleCandidateApply = (id: UUID) => {
-    candidateApply(id);
+    candidateApply({
+        candidateId: id, 
+        processId: selectedProcess
+    });
     close();
   }
+
 
   return (
     <Modal
@@ -106,6 +119,13 @@ const ApplicantProcessPopup: FC = () => {
             </Descriptions>
           </>
         )}
+
+        <Select
+          defaultValue="Выбор процесса"
+          style={{ width: 230 }}
+          onChange={(value) => {setSelectedProcess(value)}}
+          options={departmentsOptions}
+        />
 
       </div>
     </Modal>
