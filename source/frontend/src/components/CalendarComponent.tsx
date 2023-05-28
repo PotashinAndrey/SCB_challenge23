@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Badge, Calendar, Timeline, Descriptions } from 'antd';
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
 import dayjs from 'dayjs';
@@ -12,36 +12,15 @@ import { Button, Dropdown, message, Space, Tooltip } from 'antd';
 import Paper from "src/ui/Paper";
 
 import "../style/ColumnItem.css";
-import { applicantProcessPopup, interviewPopup } from "src/context/model/applicant";
+import { applicantProcessPopup, calendarListData, calendarPageOpen, interviewPopup } from "src/context/model/applicant";
+import { useUnit } from "effector-react";
+import { CalendarEventModel } from "@app/types/model/calendar";
 
 interface iCalendarData {
   id: number,
   content: string,
   date: number
 }
-
-const data:iCalendarData[] = [
-    {
-        id: 0,
-        content: "Иванов Иван",
-        date: 1685037923,
-    },
-    {
-      id: 1,
-      content: "Помидоркин Константин",
-      date: 1685037820,
-    },
-    {
-        id: 2,
-        content: "Матвеева Анна",
-        date: 1684778723,
-    },
-    {
-      id: 3,
-      content: "Киров Андрей",
-      date: 1685214350,
-  }
-];
 
 const items: MenuProps['items'] = [
   {
@@ -56,37 +35,41 @@ const items: MenuProps['items'] = [
   }
 ];
 
-const getItemsByDate = (day: Dayjs) => {
-  const dayString = day.format('DD/MM/YYYY');
-
-  return data.filter((item)=> {
-    const timestamp = item.date;
-    const date = new Date(timestamp * 1000);
-    const dateMonth = date.getMonth()+1;
-    const dateMonthZero =  dateMonth < 10 ? '0' + dateMonth.toString() : dateMonth.toString();
-    const dateString = date.getDate().toString() + '/' + dateMonthZero + '/' + date.getFullYear().toString()
-    return dateString === dayString
-  })
-}
-
-const getItemsByMonth = (day: Dayjs) => {
-  const dayString = day.get('M');
-
-  return data.filter((item)=> {
-    const timestamp = item.date;
-    const date = new Date(timestamp * 1000);
-    const dateMonth = date.getMonth()+1;
-    return dayString === dateMonth
-  })
-}
 
 
 const CalendarItem: FC = () => {
+    const { store, loading } = useUnit(calendarListData);
     const [value, setValue] = useState(() => dayjs('2017-01-25'));
     const [selectedValue, setSelectedValue] = useState(() => dayjs('2017-01-25'));
-    const [todayList, setTodayList] = useState<iCalendarData[]>(getItemsByDate(dayjs()));
     
+    useEffect(calendarPageOpen, []);
 
+    const getItemsByDate = (day: Dayjs) => {
+      const dayString = day.format('DD/MM/YYYY');
+    
+      return store.items.filter((item)=> {
+        const timestamp = item.timestamp;
+        const date = new Date(timestamp * 1000);
+        const dateMonth = date.getMonth()+1;
+        const dateMonthZero =  dateMonth < 10 ? '0' + dateMonth.toString() : dateMonth.toString();
+        const dateString = date.getDate().toString() + '/' + dateMonthZero + '/' + date.getFullYear().toString()
+        return dateString === dayString
+      })
+    }
+
+    const [todayList, setTodayList] = useState<CalendarEventModel[]>(getItemsByDate(dayjs()));
+    
+    const getItemsByMonth = (day: Dayjs) => {
+      const dayString = day.get('M');
+    
+      return store.items.filter((item)=> {
+        const timestamp = item.timestamp;
+        const date = new Date(timestamp * 1000);
+        const dateMonth = date.getMonth()+1;
+        return dayString === dateMonth
+      })
+    }
+    
     const onSelect = (newValue: Dayjs) => {
         setValue(newValue);
         setSelectedValue(newValue);
@@ -104,8 +87,8 @@ const CalendarItem: FC = () => {
         return (
           <ul className="events">
             {listData.map((item) => (
-              <li key={item.content}>
-                <Badge status={"success"} text={item.content} />
+              <li key={item.name}>
+                <Badge status={"success"} text={item.name + item.timestamp} />
               </li>
             ))}
           </ul>
@@ -123,9 +106,9 @@ const CalendarItem: FC = () => {
 
       return (
         <ul className="events">
-          {listData.map((item) => (
-            <li key={item.content}>
-              <Badge status={"success"} text={item.content} />
+          {store.items.map((item) => (
+            <li key={item.name}>
+              <Badge status={"success"} text={item.name} />
             </li>
           ))}
         </ul>
@@ -146,28 +129,30 @@ const CalendarItem: FC = () => {
     return (
       <Paper className="flex">
           <Calendar style={{width: '860px'}} onSelect={onSelect} cellRender={cellRender} onPanelChange={onPanelChange}/>
-          <Timeline
-            style={{width: '250px'}}
-            items={
-              todayList?.map((item) => {
-                return { children:
-                  <Descriptions column={1} size="small">
-                    <Descriptions.Item label="Время">
-                      {getTimeByDate(item.date)}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Кандидат">{item.content}</Descriptions.Item>
-                  </Descriptions>}
-              })
-          }
-          />
-          <Dropdown menu={menuProps}>
-            <Button>
-              <Space>
-                Добавить событие
-                <DownOutlined />
-              </Space>
-            </Button>
-          </Dropdown>
+          <div className="margin">
+            <Timeline
+              style={{width: '250px'}}
+              items={
+                todayList?.map((item) => {
+                  return { children:
+                    <Descriptions column={1} size="small">
+                      <Descriptions.Item label="Время">
+                        {getTimeByDate(item.timestamp)}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Кандидат">{item.name}</Descriptions.Item>
+                    </Descriptions>}
+                })
+            }
+            />
+            <Dropdown menu={menuProps}>
+              <Button>
+                <Space>
+                  Добавить событие
+                  <DownOutlined />
+                </Space>
+              </Button>
+            </Dropdown>
+          </div>
       </Paper>
     )
 }

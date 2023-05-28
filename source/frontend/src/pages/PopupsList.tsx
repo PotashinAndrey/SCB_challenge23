@@ -5,6 +5,7 @@ import CandidateProcessPopup from '../popup/CandidateProcessPopup';
 import VacancyCreate from '../popup/VacancyCreate';
 import InterviewPopup from '../popup/InterviewPopup';
 import ProcessCreateStepAppendPopup from "../popup/ProcessCreateStepAppendPopup";
+import CalendarPopup from "src/popup/CalendarPopup";
 
 /** PopupsList -  */
 const PopupsList: FC = () => {
@@ -15,6 +16,7 @@ const PopupsList: FC = () => {
       <InterviewPopup/>
       <VacancyCreate/>
       <ProcessCreateStepAppendPopup />
+      <CalendarPopup/>
     </>
   );
 };
