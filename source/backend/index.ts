@@ -15,6 +15,7 @@ import stepsApi from './src/api/step';
 import actionsApi from './src/api/actions';
 import dashboardApi from './src/api/dashboard';
 import skillsApi from './src/api/skills';
+import tasksApi from './src/api/tasks';
 
 const fastify = Fastify({ logger: true })
 const db = await new DB().connect();
@@ -40,6 +41,7 @@ fastify.register(stepsApi, { prefix: "/api/steps", db });
 fastify.register(actionsApi, { prefix: "/api/actions", db });
 fastify.register(dashboardApi, { prefix: "/api/dashboard", db });
 fastify.register(skillsApi, { prefix: "/api/skills", db })
+fastify.register(tasksApi, { prefix: "/api/tasks", db })
 
 const start = async () => {
   try {

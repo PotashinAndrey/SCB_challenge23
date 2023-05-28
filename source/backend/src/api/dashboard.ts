@@ -15,9 +15,10 @@ const dashboardApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
     });
 
     fastify.post("/history-append", async (request, reply) => {
-        const { id = "", tasksId = "" } = request.body ? JSON.parse(request.body as string) : {};
-        if (!id) return {};
-        return await historyAppend(tasksId as UUID, id, db);
+        const { columnId = "", taskId = "" } = request.body ? JSON.parse(request.body as string) : {};
+        console.log("\n\n ", request.body, columnId, taskId, "\n\n");
+        if (!columnId || !taskId) return {};
+        return await historyAppend(taskId as UUID, columnId, db);
     })
 
     done();

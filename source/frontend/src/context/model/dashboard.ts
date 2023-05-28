@@ -1,6 +1,6 @@
 import { createEffect, sample, createEvent } from "effector";
 import factoryExteralData from "../factory/external";
-import { getDashboardById } from "../../service/dashboard";
+import { getDashboardById, appendHistory } from "../../service/dashboard";
 
 
 export const dashboardPageOpen = createEvent<any>();

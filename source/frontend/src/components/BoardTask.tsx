@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useCallback } from "react";
 import { Tag, Card, Avatar, Tabs, Divider, Tooltip, Badge, Space, Typography, Descriptions } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, AlipayCircleOutlined, AntDesignOutlined, UserOutlined, MessageOutlined } from '@ant-design/icons';
 import Amount from "../ui/Amount";
@@ -52,14 +53,16 @@ const onChange = (key: string) => {
 const BoardTask: FC<BoardTaskProps> = props => {
   const { task } = props;
   const { name, id, applicant } = task;
+  console.log("task task", task)
 
   const tagText = task.step; // !
 
   // const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleDragStart = (ev: any) => {
-    ev.dataTransfer.setData("itemId", id);
-  }
+  const handleDragStart = useCallback((ev: any) => {
+    console.log("id drqagstart", task.task)
+    ev.dataTransfer.setData("taskId", task.task);
+  }, [task])
 
   // const handleClik = () => {
   //   setModalOpen(false);
@@ -137,17 +140,6 @@ const BoardTask: FC<BoardTaskProps> = props => {
     </Badge.Ribbon>
     // </>
   );
-
-  {/* <div
-    onClick={() => setModalOpen(true)}
-    draggable
-    onDragStart={handleDragStart}
-    className="column-item-component boxAndRadius"
-  >
-    <p className="column-item-header">{title}</p>
-    <Tag color="yellow">{tagText}</Tag>
-  </div> */}
-  {/* <CandidateModal isModalOpen={isModalOpen} handleClose={handleClik} /> */}
 }
 
 export default BoardTask;

@@ -22,3 +22,14 @@ export const createTask = (values: TaskModel, db: DB): Promise<UUID> => {
     values: [dashboard, applicant]
   });
 };
+
+
+// export const updateTask = (taskId: UUID, order: number, db: DB): Promise<any> => {
+//   return db.updateFieldByID({
+//     fields: "dashboard, applicant",
+//     tables: "flow.tasks",
+//   });
+  //@ts-ignore
+  // return new Promise("604419ba-4228-4127-b5dd-3cc78a9b34c3");
+// };
+//

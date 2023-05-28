@@ -19,6 +19,8 @@ const Board: FC = () => {
   const { store, error, loading } = useUnit(dashboardData);
   // const { store } = useUnit(dashboardColumnsData);
   console.log("store", store) // !
+  console.log("store?.dashboard?.id", store?.dashboard?.id) // !
+  
 
   // useEffect(() => {
   //   appliedCandidetesFx();
@@ -30,7 +32,7 @@ const Board: FC = () => {
   return (
     <Spin spinning={loading}>
       <div className="flex gap-3">
-        {Children.toArray((store.steps || []).map((column: BoardColumnModelType) => <BoardColumn column={column} />))}
+        {Children.toArray((store.steps || []).map((column: BoardColumnModelType) => <BoardColumn dashboardId={store?.dashboard?.id} column={column} />))}
       </div>
     </Spin>
   );

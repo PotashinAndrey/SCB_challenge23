@@ -3,6 +3,7 @@ import factoryPopupBehaviour from "../factory/popup";
 import factoryExteralData from "../factory/external";
 import { routing } from "../router";
 import { processesListLoad, dashboardLoad } from "../../service/process";
+import { appendHistory } from "../../service/dashboard";
 import { UUID } from "node:crypto";
 // import { candidateProcessPopup } from "./candidate";
 import { applicantProcessPopup } from "./applicant";
@@ -65,6 +66,19 @@ sample({
   },
   target: $dashboardDataTasks
 })
+
+export const appendHistoryFx = createEffect(appendHistory);
+
+
+sample({
+  clock: appendHistoryFx.done,
+  fn: ({params}) => {
+
+      return params.dashboardId;
+  },  
+  target: dashboardLoadFx
+});
+
 
 
 /** @section добавление нового процесса (дашборда) */

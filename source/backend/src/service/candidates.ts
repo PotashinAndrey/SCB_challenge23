@@ -108,10 +108,12 @@ export const applyCandidate = async (model: CandidateProcessModel, db: DB) => {
   return { task };
 };
 
-export const historyAppend = async (tasksId: UUID, id: string, db: DB) => {
-  return await db.insertRow({
+export const historyAppend = async (taskId: UUID, columnId: string, db: DB) => {
+  const id = await db.insertRow({
     tables: "flow.history",
     fields: "task, to",
-    values: [tasksId, id]
+    values: [taskId, columnId]
   });
+
+  return {id}
 }
