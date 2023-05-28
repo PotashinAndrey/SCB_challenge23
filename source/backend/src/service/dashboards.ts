@@ -20,6 +20,13 @@ export const dashboardById = async (id: UUID, db: DB) => { // dashboard/get
     values: [id]
   });
 
+  // // + SELECT * from flow.process where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' order by "order" ASC
+  // + SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
+
+  // + массив actions
+
+  // tasksList
+
   return results;
 };
 
