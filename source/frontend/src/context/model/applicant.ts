@@ -39,6 +39,12 @@ sample({
 });
 
 sample({
+  clock: interviewPopup.open,
+  target: $interviewPopupDate
+});
+
+
+sample({
   clock: [routing.candidateList.opened, interviewPopup.open],
   target: applicantListLoadFx
 });

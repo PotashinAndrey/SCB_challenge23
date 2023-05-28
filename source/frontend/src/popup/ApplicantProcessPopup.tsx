@@ -14,7 +14,7 @@ const ApplicantProcessPopup: FC = () => {
   const { store: candidate } = useUnit(applicantData);
   const [selectedProcess, setSelectedProcess] = useState<string>();
 
-  const departmentsOptions = store?.items.map((item: DepartmentModel) => {
+  const departmentsOptions = (store?.items || []).map((item: DepartmentModel) => {
     return {
       label: item.name,
       value: item.id

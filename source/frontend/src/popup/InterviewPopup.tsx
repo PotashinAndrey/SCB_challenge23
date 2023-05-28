@@ -28,10 +28,10 @@ const InterviewPopup: FC = () => {
             // author: UUID;
             type: '37f1a346-7745-4e00-9ebf-38ce293d59b9',
             name: 'Собеседование с HR',
-            timestamp: +interviewPopupDate,
+            timestamp: interviewPopupDate.format('YYYY-MM-DD'),
             description: 'будет происходить online в Zoom'
           })
-          close;
+          close();
       }
   }
 

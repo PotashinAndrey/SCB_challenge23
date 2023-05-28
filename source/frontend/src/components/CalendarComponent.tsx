@@ -86,7 +86,7 @@ const CalendarItem: FC = () => {
 
         return (
           <ul className="events">
-            {listData.map((item) => (
+            {(listData || []).map((item) => (
               <li key={item.name}>
                 <Badge status={"success"} text={item.name + item.timestamp} />
               </li>
@@ -106,7 +106,7 @@ const CalendarItem: FC = () => {
 
       return (
         <ul className="events">
-          {store.items.map((item) => (
+          {(store.items || []).map((item) => (
             <li key={item.name}>
               <Badge status={"success"} text={item.name} />
             </li>
@@ -133,7 +133,7 @@ const CalendarItem: FC = () => {
             <Timeline
               style={{width: '250px'}}
               items={
-                todayList?.map((item) => {
+                (todayList || []).map((item) => {
                   return { children:
                     <Descriptions column={1} size="small">
                       <Descriptions.Item label="Время">
