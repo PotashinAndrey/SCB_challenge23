@@ -134,7 +134,7 @@ const BoardTask: FC<BoardTaskProps> = props => {
           <Tag>{Math.random() < 0.5 ? "хакатоны" : "олимпиады"}</Tag>
           <Tag>{Math.random() < 0.5 ? "архитектура" : "react"}</Tag>
 
-          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+          <Tabs defaultActiveKey={Math.random() < 0.5 ? "1" : "2"} items={items} onChange={onChange} />
         </div>
       </Card>
     </Badge.Ribbon>

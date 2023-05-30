@@ -34,8 +34,8 @@ sample({
 
 sample({
   clock: routing.dashboard.opened,
-  filter: ({ params }) => params.dashboard !== undefined,
-  fn: ({ params }) => params.dashboard || ("" as UUID),
+  // filter: ({ params }) => params.dashboard !== undefined,
+  fn: ({ params }) => params.dashboard || ("9e05e3e5-017b-4698-9abd-583ffb7dd510" as UUID),
   target: $dashboardID
 });
 
@@ -75,7 +75,7 @@ sample({
   fn: ({params}) => {
 
       return params.dashboardId;
-  },  
+  },
   target: dashboardLoadFx
 });
 

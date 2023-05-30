@@ -7,7 +7,7 @@ import type { Dayjs } from 'dayjs';
 import type { CandidateModel } from "@app/types/model/candidate";
 import type { CandidateProcessModel } from "@app/types/model/candidateProcess";
 import { CalendarEventModel } from "@app/types/model/calendar";
-import { routing } from "../router";
+import { router, routing } from "../router";
 
 // export const applicantesPageOpen = createEvent<any>();
 
@@ -79,19 +79,23 @@ sample({
   target: candidateAllpyFx
 });
 
+sample({
+  clock: candidateAllpyFx.doneData,
+  target: routing.dashboard.open
+});
+
 export const createInterview = createEvent<any>();
 
 const createInterviewFx = createEffect(async (model: CalendarEventModel) => {
     const result = interviewCreate(model);
     return result;
 });
-  
+
 sample({
     clock: createInterview,
     target: createInterviewFx
 });
 
-// ?
 export const appliedCandidetesFx = createEffect(async () => {
   const result = await candidatesInProcessList();
   return result;

@@ -62,7 +62,8 @@ const candidatesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =
 
       const applyResult = await applyCandidate(candidateProcessModel, db);
       return {
-        ...applyResult
+        ...applyResult,
+        dashboard: candidateProcessModel.processId
       };
     } catch (error) {
       //
