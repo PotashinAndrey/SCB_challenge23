@@ -12,25 +12,14 @@ function factoryPopupBehaviour<S = void>(initial = false): PopupBehaviour<S> {
   const close = createEvent<void>();
   const $visible = createStore<boolean>(initial);
 
-  // const $popupData = createStore<any>({});
-  // const setPopupData = createEvent<S>();
-  // const getPopupData = createEvent<void>();
-
   $visible
     .on(open, () => true)
     .on(close, () => false);
 
-  // $popupData
-  //   .on(setPopupData, (store, data) => {
-  //     return {...store, ...data};
-  //   })
-
   const unitShape = (): PopupBehaviourShape<S> => ({
     visible: $visible,
-    // popupData: $popupData,
     open,
-    close,
-    // setPopupData
+    close
   });
 
   return { $visible, open, close, "@@unitShape": unitShape };
