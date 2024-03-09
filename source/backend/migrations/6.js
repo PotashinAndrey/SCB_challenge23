@@ -17,7 +17,6 @@ export default async function migration(client, db) {
     task: "uuid",
     from: "uuid",
     to: "uuid",
-    action: "text" // если что-то произошло с экшеном в рамках шага
   }, client);
 
   db.createRelation({

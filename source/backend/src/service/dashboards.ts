@@ -20,16 +20,6 @@ export const processByDashboardId = async (id: UUID, db: DB) => {
   // SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
 };
 
-// + массив actions
-export const actionsList = async (db: DB) => {
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.actions',
-  });
-
-  return results;
-};
-
 export const dashboardById = async (id: UUID, db: DB) => {
   // dashboard/get
   return db.selectRow({

@@ -10,40 +10,6 @@
   */
 export default async function migration(client, db) {
 
-  // действие, которое надо совершить на столбике дашборда
-  await db.createTable("flow.actions", "id", {
-    id: "uuid public.uuid_generate_v4()",
-    name: "text",
-    description: "text",
-    kind: "text", // calendar | exercise | internal - событие в календаре или тестовое или внутреннее для компании или ?
-    type: "text", // questionnaire | call | interview | task | check - анкета / звонок / собес / задание / какая-то проверка / ?
-    created: "timestamp now()",
-    required: "bool true", // обязательное
-    removed: "bool false"
-  }, client);
-
-  // базовые действия
-  const interview = await db.insertRow({
-    fields: "name, kind, type, required, description",
-    values: ['Собеседование', 'calendar', "interview", true, "общение с канидатом лично или по видеосвязи"],
-    tables: "flow.actions",
-    client
-  });
-
-  const homework = await db.insertRow({
-    fields: "name, kind, type, required, description",
-    values: ['Тестовое задание', 'exercise', "task", true, "кандидату отправляется тестовое задание, которое он должен выполнить в течение трех дней"],
-    tables: "flow.actions",
-    client
-  });
-
-  const safeguard = await db.insertRow({
-    fields: "name, kind, type, required, description",
-    values: ['Проверка СБ', 'internal', "check", true, "проверка кандидата службой безопасности перед наймом на работу"],
-    tables: "flow.actions",
-    client
-  });
-
   // увы, нужна связь many - many (идея в том что в steps будут лежать все возможные шаги)
   await db.removeRelation({
     source: "flow.dashboard.id",
@@ -59,12 +25,6 @@ export default async function migration(client, db) {
 
   await db.createField("flow.step", "description", "text", client);
   await db.createField("flow.step", "action", "uuid", client);
-
-  // связь между шагами и действием внутри них
-  await db.createRelation({
-    source: "flow.actions.id",
-    target: "flow.step.action"
-  }, client);
 
   // таблица (many-many) для связи дашбордов и списка шагов
   await db.createTable("flow.process", "id", {
