@@ -1,6 +1,10 @@
 import { UUID } from "crypto";
 import api from "../scripts/api";
 
+export const getDashboardsList = (): Promise<any> => {
+    return api("dashboard/list");
+}
+
 export const getDashboardById = (id: UUID): Promise<any> => {
     return api("dashboard/get", { id });
 }

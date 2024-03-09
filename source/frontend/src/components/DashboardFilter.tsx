@@ -4,6 +4,8 @@ import { Input, Button, Select, Space } from 'antd';
 const { Search } = Input;
 
 import Paper from "../ui/Paper";
+import { useStore } from "effector-react";
+import { $currentDashboard, $dashboardsList, setCurrentdashboard } from "src/context/model/dashboard";
 
 // interface DashboardFilterProps {
 //   : ;
@@ -12,54 +14,16 @@ import Paper from "../ui/Paper";
 
 /** DashboardFilter -  */
 const DashboardFilter: FC = () => {
-  const [search, setSearch] = useState("");
-  const handleSearch = (e: any) => {
-    setSearch((e.target.value))
-  }
-
-  const handleAdd = () => {
-    // setOpen(true);
-  }
-
-  const handleCreate = () => {
-
-  }
+  const dasboardsList = useStore($dashboardsList)
+  const selectedDashboard = useStore($currentDashboard)
 
   return (
     <Paper className="flex dashboard-header">
       <Space>
-        <Button onClick={handleAdd} type="primary">Добавить</Button>
-        <Search
-          className="board-component-search"
-          placeholder="Поиск..."
-          onInput={handleSearch}
-          style={{ width: 200 }}
         />
-        <Filters />
       </Space>
     </Paper>
   );
 };
 
 export default DashboardFilter;
-
-const Filters: FC = () => {
-
-  const projectOptions = [
-    { value: '', label: 'Департамент' },
-    { value: 'development', label: 'Разработка' },
-    { value: 'support', label: 'Поддержка' },
-    { value: 'managment', label: 'Менеджмент' }
-  ];
-
-  return (
-    <Space>
-      <Select
-        defaultValue=""
-        style={{ width: 140 }}
-        onChange={() => { }}
-        options={projectOptions}
-      />
-    </Space>
-  );
-}

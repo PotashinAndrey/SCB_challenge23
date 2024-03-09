@@ -39,8 +39,6 @@ const BoardColumn: FC<BoardColumnProps> = props => {
   const { column, dashboardId } = props;
   const { name } = column;
 
-  console.log(props)
-
   const tasks = useStoreMap({
     store: $dashboardDataTasks,
     fn: dashboardDataTasks => dashboardDataTasks.filter((t: any) => t.step === column.id),

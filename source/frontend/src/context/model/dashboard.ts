@@ -1,18 +1,20 @@
-import { createEffect, sample, createEvent } from "effector";
+import { createEffect, sample, createEvent, createStore } from "effector";
 import factoryExteralData from "../factory/external";
-import { getDashboardById, appendHistory } from "../../service/dashboard";
+import type { UUID } from "node:crypto";
+import { getDashboardsList } from "../../service/dashboard";
 
 
-export const dashboardPageOpen = createEvent<any>();
-export const dashboardDataLoadFx = createEffect(getDashboardById);
-export const dashboardColumnsData = factoryExteralData<any>(dashboardDataLoadFx, []);
+
+export const fetchDashboardsList = createEvent()
+export const setCurrentdashboard = createEvent<UUID | null>()
+export const fetchDashboardsListFx = createEffect(getDashboardsList)
+
+export const $currentDashboard = createStore<UUID | null>(null)
+    .on(fetchDashboardsListFx.doneData,(_state, data) => data[0]?.id ?? null)
+    .on(setCurrentdashboard, (_state, newDashboard) => newDashboard)
+export const $dashboardsList = createStore([]).on(fetchDashboardsListFx.doneData, (_state, data) => data)
 
 sample({
-    clock: dashboardPageOpen,
-    target: dashboardDataLoadFx
-});
-
-sample({
-    clock: dashboardDataLoadFx.doneData,
-    target: dashboardColumnsData.$store
+    clock: fetchDashboardsList,
+    target: fetchDashboardsListFx
 });
