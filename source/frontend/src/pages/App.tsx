@@ -6,10 +6,6 @@ import Header from '../components/Header';
 import Login from './Login';
 import Registration from './Registration';
 import Dashboard from './Dashboard';
-import Candidates from './Candidates';
-import CandidateCreate from './CandidateCreate';
-import CalendarPage from "./Calendar";
-import Vacancies from './Vacancies';
 import Departments from './Departments';
 import ProcessCreate from './ProcessCreate';
 import Processes from './Processes';
@@ -22,10 +18,6 @@ const RoutesView = createRoutesView({
     { route: routing.dashboard,       view: Dashboard },
     { route: routing.processCreate,   view: ProcessCreate },
     { route: routing.processesList,   view: Processes },
-    { route: routing.candidateList,   view: Candidates },
-    { route: routing.candidateCreate, view: CandidateCreate },
-    { route: routing.calendar,        view: CalendarPage },
-    { route: routing.vacancies,       view: Vacancies },
     { route: routing.departments,     view: Departments }
     // { route: Post.route, view: PostPage.view },
   ],
@@ -39,10 +31,6 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
         <p><Link to={routing.processesList}>Список процессов</Link></p>
         <p><Link to={routing.processCreate}>Создание процесса</Link></p>
-        <p><Link to={routing.candidateList}>Candidates list</Link></p>
-        <p><Link to={routing.candidateCreate}>Create Candidate</Link></p>
-        <p><Link to={routing.calendar}>Calendar</Link></p>
-        <p><Link to={routing.vacancies}>Vacancies</Link></p>
         <p><Link to={routing.departments}>Departments</Link></p>
       </div>
     );

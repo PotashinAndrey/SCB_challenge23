@@ -5,15 +5,13 @@ import { routing } from "../router";
 import { processesListLoad, dashboardLoad } from "../../service/process";
 import { appendHistory } from "../../service/dashboard";
 import { UUID } from "node:crypto";
-// import { candidateProcessPopup } from "./candidate";
-import { applicantProcessPopup } from "./applicant";
 
 /** @section список процессов (дашбордов) */
 export const processesListLoadFx = createEffect(processesListLoad);
 export const processesListData = factoryExteralData(processesListLoadFx);
 
 sample({
-  clock: [routing.processesList.opened, applicantProcessPopup.open],
+  clock: [routing.processesList.opened],
   target: processesListLoadFx
 });
 
@@ -83,17 +81,3 @@ sample({
 
 /** @section добавление нового процесса (дашборда) */
 export const processCreateStepAppendPopup = factoryPopupBehaviour();
-
-// export const vacanciesPageOpen = createEvent<any>();
-// export const vacanciesListLoadFx = createEffect(vacancyListLoad);
-// export const vacanciesListData = factoryExteralData(vacanciesListLoadFx);
-
-// sample({
-//     clock: vacanciesPageOpen,
-//     target: vacanciesListLoadFx
-// });
-
-// sample({
-//     clock: vacanciesListLoadFx.doneData,
-//     target: vacanciesListData.$store
-// });

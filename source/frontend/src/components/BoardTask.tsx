@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { Tag, Card, Avatar, Tabs, Divider, Tooltip, Badge, Space, Typography, Descriptions } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, AlipayCircleOutlined, AntDesignOutlined, UserOutlined, MessageOutlined } from '@ant-design/icons';
 import Amount from "../ui/Amount";
-import { candidateProcessPopup } from "../context/model/applicant";
 
 
 import type { BoardCardModelType } from "@app/types/model/board";
@@ -76,7 +75,7 @@ const BoardTask: FC<BoardTaskProps> = props => {
         // size="small"
         // title={name}
         // onClick={() => setModalOpen(true)}
-        onClick={() => candidateProcessPopup.open(applicant)}
+        onClick={() => console.log("TODO OPEN CREATE TASK POPUP")}
         onDragStart={handleDragStart}
         draggable
         // extra={<a>Открыть</a>}

@@ -11,7 +11,6 @@ import { routing } from "../context/router";
 // import CaretDownFilled from '@ant-design/icons/CaretDownFilled'
 // import '../../../../node_modules/antd/dist/reset.css'
 // import SmileOutlined from '@ant-design/icons/SmileOutlined';
-// import CalendarItem from "./Calendar";
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -19,33 +18,17 @@ const { Search } = Input;
 const onSearch = (value: string) => console.log(value);
 
 const leftItems: MenuProps['items'] = [{
-    key: "candidates",
-    label: "Кандидаты",
-    children: [{
-      label: <Link to={routing.candidateCreate}>Добавить кандидата</Link>,
-      key: 'candidates-create',
-    },{
-      label: <Link to={routing.candidateList}>Список кандидатов</Link>,
-      key: 'candidates-list',
-    }]
-  }, {
-    label: <Link to={routing.dashboard}>Процессы</Link>,
-    key: 'dashboard',
+    label: <Link to={routing.dashboard}>Дашборды</Link>,
+    key: 'Дашборды',
     // icon: <SmileOutlined />
   }, {
     key: "company",
-    label: "Компания",
+    label: "Команда",
     children: [{
-        key: "vacancies",
-        label: <Link to={routing.vacancies}>Вакансии</Link>
-      }, {
         key: "departments",
-        label: <Link to={routing.departments}>Отделы</Link>
+        label: <Link to={routing.departments}>Дашборды</Link>
       }
     ]
-  }, {
-    label: <Link to={routing.calendar}>Календарь событий</Link>,
-    key: "calendar"
   }, {
     label: (<Space><Text>Дополнительно</Text><DownOutlined /></Space>),
     key: 'more',

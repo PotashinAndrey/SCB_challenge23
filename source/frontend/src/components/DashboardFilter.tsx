@@ -52,13 +52,6 @@ const Filters: FC = () => {
     { value: 'managment', label: 'Менеджмент' }
   ];
 
-  const vacanciesOptions = [
-    { value: '', label: 'Вакансия' },
-    { value: 'junior', label: 'Джун' },
-    { value: 'middle', label: 'Мидл' },
-    { value: 'senior', label: 'Помидор' }
-  ];
-
   return (
     <Space>
       <Select
@@ -66,12 +59,6 @@ const Filters: FC = () => {
         style={{ width: 140 }}
         onChange={() => { }}
         options={departmentOptions}
-      />
-      <Select
-        defaultValue=""
-        style={{ width: 120 }}
-        onChange={() => { }}
-        options={vacanciesOptions}
       />
     </Space>
   );

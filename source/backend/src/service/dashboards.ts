@@ -114,3 +114,13 @@ export const dashboardByDepartment = async (id: UUID, db: DB) => {
     department: await departmentById(id, db)
   };
 }
+
+export const historyAppend = async (taskId: UUID, columnId: string, db: DB) => {
+  const id = await db.insertRow({
+    tables: "flow.history",
+    fields: "task, to",
+    values: [taskId, columnId]
+  });
+
+  return {id}
+}

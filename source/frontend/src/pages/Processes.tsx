@@ -5,7 +5,7 @@ import { routing } from "../context/router";
 import { processesListData } from "../context/model/process";
 import PageList from "../ui/PageList";
 
-const Vacancies: FC = () => {
+const Dashboards: FC = () => {
   const { store, loading } = useUnit(processesListData);
 
   return (
@@ -35,4 +35,4 @@ const Vacancies: FC = () => {
   );
 }
 
-export default Vacancies;
+export default Dashboards;

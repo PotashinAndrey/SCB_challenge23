@@ -1,7 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import type DB from "../../class/DB";
-import { dashboardById } from "../service/dashboards";
-import { historyAppend } from "../service/candidates";
+import { dashboardById, historyAppend } from "../service/dashboards";
 import { UUID } from "crypto";
 
 const dashboardApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {

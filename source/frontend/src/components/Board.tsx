@@ -9,25 +9,10 @@ import type { BoardColumnModelType } from "@app/types/model/board";
 
 import BoardColumn from "./BoardColumn";
 
-// import "../style/Board.css";
-// import CandidateCreate from "../pages/CandidateCreate";
-// import Paper from "../ui/Paper";
-// import { appliedCandidetesFx } from "../context/model/applicant";
-// import { dashboardPageOpen, dashboardColumnsData } from "../context/model/dashboard";
-
 const Board: FC = () => {
   const { store, error, loading } = useUnit(dashboardData);
-  // const { store } = useUnit(dashboardColumnsData);
   console.log("store", store) // !
   console.log("store?.dashboard?.id", store?.dashboard?.id) // !
-  
-
-  // useEffect(() => {
-  //   appliedCandidetesFx();
-  //   dashboardPageOpen("b536fdd7-d90a-4595-8fdc-d4b0f88158f7");
-  // }, []);
-
-  // console.log(columnsData)
 
   return (
     <Spin spinning={loading}>

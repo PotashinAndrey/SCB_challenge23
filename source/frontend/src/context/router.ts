@@ -11,12 +11,6 @@ export const routing = {
   dashboard: createRoute<{ dashboard?: UUID }>(),
   processCreate: createRoute(),
   processesList: createRoute(),
-  candidate: createRoute(),
-  candidateCreate: createRoute(),
-  candidateList: createRoute(),
-  candidates: createRoute(),
-  calendar: createRoute(),
-  vacancies: createRoute(),
   departments: createRoute()
 }
 
@@ -26,11 +20,6 @@ export const routes = [
   { path: '/processes', route: routing.processesList },
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
-  { path: '/candidate', route: routing.candidate },
-  { path: '/candidate-list', route: routing.candidateList },
-  { path: '/candidate-create', route: routing.candidateCreate },
-  { path: '/calendar', route: routing.calendar },
-  { path: '/vacancies', route: routing.vacancies },
   { path: '/departments', route: routing.departments }
   // { path: '/posts/:postId', route: postRoute },
 ];
