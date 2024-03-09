@@ -1,13 +1,13 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect } from 'react';
 
-import DashboardFilter from "../components/DashboardFilter";
-import Board from "../components/Board";
-import { fetchDashboardsList } from "src/context/model/dashboard";
+import DashboardFilter from '../components/DashboardFilter';
+import Board from '../components/Board';
+import { fetchDashboardsList } from 'src/context/model/dashboard';
 
 const Dashboard: FC = () => {
   useEffect(() => {
-    fetchDashboardsList()
-  }, [])
+    fetchDashboardsList();
+  }, []);
 
   return (
     <div>
@@ -15,6 +15,6 @@ const Dashboard: FC = () => {
       <Board />
     </div>
   );
-}
+};
 
 export default Dashboard;

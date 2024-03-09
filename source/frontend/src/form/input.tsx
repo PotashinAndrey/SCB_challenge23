@@ -1,9 +1,9 @@
-import type { FC, ReactNode } from "react";
-import { Input, message, Upload, } from "antd";
+import type { FC, ReactNode } from 'react';
+import { Input, message, Upload } from 'antd';
 import type { UploadProps } from 'antd';
 import InboxOutlined from '@ant-design/icons/InboxOutlined';
 
-import { Controller } from "effector-react-form";
+import { Controller } from 'effector-react-form';
 
 type InputProps = {
   controller: Controller;
@@ -64,9 +64,14 @@ export const DocsUploadField: FC<InputProps> = ({ controller, label }) => {
 
   return (
     <div className="input-wrap">
-      <label style={{display: "flex", flexDirection: "column", gap: "5px"}}>
+      <label style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
         <span>{label}</span>
-        <Dragger {...input} multiple onChange={uploadProps.onChange} onDrop={uploadProps.onDrop}>
+        <Dragger
+          {...input}
+          multiple
+          onChange={uploadProps.onChange}
+          onDrop={uploadProps.onDrop}
+        >
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>

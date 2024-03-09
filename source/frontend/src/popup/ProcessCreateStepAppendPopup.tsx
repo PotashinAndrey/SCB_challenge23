@@ -1,8 +1,8 @@
-import type { FC } from "react";
-import { useUnit } from "effector-react";
+import type { FC } from 'react';
+import { useUnit } from 'effector-react';
 import { Modal, Button, Typography } from 'antd';
-import { processCreateStepAppendPopup } from "../context/model/process";
-import { InputField } from "../form/input";
+import { processCreateStepAppendPopup } from '../context/model/process';
+import { InputField } from '../form/input';
 
 const { Paragraph } = Typography;
 const hide = () => processCreateStepAppendPopup.close();
@@ -27,9 +27,11 @@ const ProcessCreateStepAppendPopup: FC = () => {
       //   <Button type="link" key="reject" onClick={hide}>Отмена</Button>
       // ]}
     >
-      <Paragraph className="mb-8">Укажите название шага процесса, а также выберите действие, отвечающее за него</Paragraph>
+      <Paragraph className="mb-8">
+        Укажите название шага процесса, а также выберите действие, отвечающее за него
+      </Paragraph>
 
-                      {/* <InputField controller={controller({ name: "name" })} label={"Имя"} />
+      {/* <InputField controller={controller({ name: "name" })} label={"Имя"} />
                 <InputField controller={controller({ name: "email" })} label={"Электронная почта"} /> */}
     </Modal>
   );

@@ -1,10 +1,10 @@
-import type { UUID } from "node:crypto";
+import type { UUID } from 'node:crypto';
 
 export type BoardCardModelType = {
   id: UUID | string;
   name: string;
   step: string;
-}
+};
 
 export type BoardColumnModelType = {
   id: UUID;
@@ -13,4 +13,4 @@ export type BoardColumnModelType = {
   action?: string;
   process_description?: string;
   step_description?: string;
-}
+};

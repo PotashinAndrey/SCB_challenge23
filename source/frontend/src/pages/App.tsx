@@ -13,12 +13,12 @@ import PopupsList from './PopupsList';
 
 const RoutesView = createRoutesView({
   routes: [
-    { route: routing.login,           view: Login },
-    { route: routing.registration,    view: Registration },
-    { route: routing.dashboard,       view: Dashboard },
-    { route: routing.processCreate,   view: ProcessCreate },
-    { route: routing.processesList,   view: Processes },
-    { route: routing.projects,     view: Projects }
+    { route: routing.login, view: Login },
+    { route: routing.registration, view: Registration },
+    { route: routing.dashboard, view: Dashboard },
+    { route: routing.processCreate, view: ProcessCreate },
+    { route: routing.processesList, view: Processes },
+    { route: routing.projects, view: Projects },
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {
@@ -26,12 +26,24 @@ const RoutesView = createRoutesView({
       <div>
         <h2>Page not found!</h2>
 
-        <p><Link to={routing.login}>Login</Link></p>
-        <p><Link to={routing.registration}>Registration</Link></p>
-        <p><Link to={routing.dashboard}>Dashboard</Link></p>
-        <p><Link to={routing.processesList}>Список процессов</Link></p>
-        <p><Link to={routing.processCreate}>Создание процесса</Link></p>
-        <p><Link to={routing.projects}>Проекты</Link></p>
+        <p>
+          <Link to={routing.login}>Login</Link>
+        </p>
+        <p>
+          <Link to={routing.registration}>Registration</Link>
+        </p>
+        <p>
+          <Link to={routing.dashboard}>Dashboard</Link>
+        </p>
+        <p>
+          <Link to={routing.processesList}>Список процессов</Link>
+        </p>
+        <p>
+          <Link to={routing.processCreate}>Создание процесса</Link>
+        </p>
+        <p>
+          <Link to={routing.projects}>Проекты</Link>
+        </p>
       </div>
     );
   },
@@ -45,6 +57,6 @@ const App: FC = () => {
       <PopupsList />
     </div>
   );
-}
+};
 
 export default App;

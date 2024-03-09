@@ -1,9 +1,9 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 import { Avatar, Button, List, Descriptions } from 'antd';
-import { useUnit } from "effector-react";
-import { routing } from "../context/router";
-import { processesListData } from "../context/model/process";
-import PageList from "../ui/PageList";
+import { useUnit } from 'effector-react';
+import { routing } from '../context/router';
+import { processesListData } from '../context/model/process';
+import PageList from '../ui/PageList';
 
 const Dashboards: FC = () => {
   const { store, loading } = useUnit(processesListData);
@@ -30,9 +30,11 @@ const Dashboards: FC = () => {
         </List.Item>
       )}
     >
-      <Button type="primary" onClick={() => routing.processCreate.open()}>Добавить процесс найма</Button>
+      <Button type="primary" onClick={() => routing.processCreate.open()}>
+        Добавить процесс найма
+      </Button>
     </PageList>
   );
-}
+};
 
 export default Dashboards;

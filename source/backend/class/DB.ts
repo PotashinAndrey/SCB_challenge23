@@ -1,11 +1,22 @@
-import crypto from "node:crypto";
-import type { UUID } from "node:crypto";
-import pg from "pg";
-import type { QueryResult, QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from "pg";
-import { promises as fs } from "fs";
-import type { RequestInsertDB, RequestSelectDB, RequestRelationDB, RequestUpdateFieldByID } from "@app/types/DB";
+import crypto from 'node:crypto';
+import type { UUID } from 'node:crypto';
+import pg from 'pg';
+import type {
+  QueryResult,
+  QueryArrayResult,
+  PoolClient,
+  PoolConfig,
+  QueryConfig,
+} from 'pg';
+import { promises as fs } from 'fs';
+import type {
+  RequestInsertDB,
+  RequestSelectDB,
+  RequestRelationDB,
+  RequestUpdateFieldByID,
+} from '@app/types/DB';
 import config from '../../../config';
-import SQL from "./SQL";
+import SQL from './SQL';
 
 const { Pool, Client } = pg;
 
@@ -15,7 +26,9 @@ class DB {
   pool?: pg.Pool;
   client?: PoolClient;
 
-  constructor() { this.config = config.database }
+  constructor() {
+    this.config = config.database;
+  }
 
   async select<T = any>(request: RequestSelectDB): Promise<Array<T>> {
     let text: string = SQL.requestSelect(request);
@@ -32,46 +45,42 @@ class DB {
   }
 
   selectRow<T = any>(request: RequestSelectDB): Promise<T> {
-    return this.select(request).then(r => r[0]);
+    return this.select(request).then((r) => r[0]);
   }
 
   insert(request: RequestInsertDB): Promise<any> {
     const query = {
       text: SQL.requestInsert(request),
-      values: request.values // "text" in request ? undefined : [...(request.values || []), ...(request.conditionValues || [])]
+      values: request.values, // "text" in request ? undefined : [...(request.values || []), ...(request.conditionValues || [])]
     };
     return this.query(query, request.client);
   }
 
-  insertRow(request: RequestInsertDB): Promise<UUID> { // todo: Omit<returning>
-    return this.insert({ ...request, returning: "id" }).then(r => r.rows[0].id);
+  insertRow(request: RequestInsertDB): Promise<UUID> {
+    // todo: Omit<returning>
+    return this.insert({ ...request, returning: 'id' }).then((r) => r.rows[0].id);
   }
 
-  update() {
-
-  }
+  update() {}
 
   updateFieldByID<T extends {} = {}>(request: RequestUpdateFieldByID): Promise<T> {
     const query = {
       text: SQL.requestUpdateFiledByID(request),
-      values: [request.value, request.id]
+      values: [request.value, request.id],
     };
-    return this.query<T>(query, request.client).then(r => r.rows[0]);
+    return this.query<T>(query, request.client).then((r) => r.rows[0]);
   }
 
-  remove() {
+  remove() {}
 
-  }
+  removeByID() {}
 
-  removeByID() {
+  transaction() {}
 
-  }
-
-  transaction() {
-
-  }
-
-  async createRelation(request: RequestRelationDB, client?: PoolClient | pg.Client): Promise<any> {
+  async createRelation(
+    request: RequestRelationDB,
+    client?: PoolClient | pg.Client
+  ): Promise<any> {
     // const sourceSplitIndex = request.source.lastIndexOf(".");
     // const sourceTable = request.source.substring(0, sourceSplitIndex).replace(".", '"."');
     // const sourceField = request.source.substring(sourceSplitIndex + 1);
@@ -91,32 +100,49 @@ class DB {
     return await this.query({ text }, client);
   }
 
-  async removeRelation(request: RequestRelationDB, client?: PoolClient | pg.Client): Promise<any> {
+  async removeRelation(
+    request: RequestRelationDB,
+    client?: PoolClient | pg.Client
+  ): Promise<any> {
     const text = SQL.removeRelation(request); // `alter table "${targetTable}" drop constraint if exists "${name}"`;
     return this.query({ text }, client);
   }
 
-  createTable(name: string, primary: string, fields: Record<string, string>, client?: PoolClient) {
-    const columns = Object.keys(fields).map(key => {
-      const [type, initial = "NULL"] = fields[key].split(" ");
-      const nullable = initial !== "NULL" ? "NOT NULL" : "";
-      return [`"${key}"`, type, nullable, "DEFAULT", initial].join(" ");
+  createTable(
+    name: string,
+    primary: string,
+    fields: Record<string, string>,
+    client?: PoolClient
+  ) {
+    const columns = Object.keys(fields).map((key) => {
+      const [type, initial = 'NULL'] = fields[key].split(' ');
+      const nullable = initial !== 'NULL' ? 'NOT NULL' : '';
+      return [`"${key}"`, type, nullable, 'DEFAULT', initial].join(' ');
     });
-    const text = `CREATE TABLE IF NOT EXISTS "${name.replace(".", '"."')}" (${columns.join(", ")}, PRIMARY KEY ("${primary}"))`;
+    const text = `CREATE TABLE IF NOT EXISTS "${name.replace('.', '"."')}" (${columns.join(', ')}, PRIMARY KEY ("${primary}"))`;
     // console.log(text);
     return this.query({ text }, client);
   }
 
-  createField(table: string, field: string, structure: string, client?: PoolClient | pg.Client): Promise<any> {
-    const [type, initial = "NULL"] = structure.split(" ");
-    const nullable = initial !== "NULL" ? "NOT NULL" : "";
-    const info = [`"${field}"`, type, nullable, "DEFAULT", initial].join(" ");
-    const text = `ALTER TABLE "${table.replace(".", '"."')}" ADD COLUMN IF NOT EXISTS ${info}`;
+  createField(
+    table: string,
+    field: string,
+    structure: string,
+    client?: PoolClient | pg.Client
+  ): Promise<any> {
+    const [type, initial = 'NULL'] = structure.split(' ');
+    const nullable = initial !== 'NULL' ? 'NOT NULL' : '';
+    const info = [`"${field}"`, type, nullable, 'DEFAULT', initial].join(' ');
+    const text = `ALTER TABLE "${table.replace('.', '"."')}" ADD COLUMN IF NOT EXISTS ${info}`;
     return this.query({ text }, client);
   }
 
-  removeField(table: string, field: string, client?: PoolClient | pg.Client): Promise<any> {
-    const text = `ALTER TABLE "${table.replace(".", '"."')}" DROP COLUMN if exists "${field}"`;
+  removeField(
+    table: string,
+    field: string,
+    client?: PoolClient | pg.Client
+  ): Promise<any> {
+    const text = `ALTER TABLE "${table.replace('.', '"."')}" DROP COLUMN if exists "${field}"`;
     return this.query({ text }, client);
   }
 
@@ -131,14 +157,17 @@ class DB {
     return this.query({ text }, client);
   }
 
-  async query<S extends {} = {}>(query: QueryConfig, client?: PoolClient | pg.Client): Promise<QueryResult<S>> {
+  async query<S extends {} = {}>(
+    query: QueryConfig,
+    client?: PoolClient | pg.Client
+  ): Promise<QueryResult<S>> {
     try {
       return client
         ? await client.query<S>(query)
-        : await this.wrap<S>(client => client.query<S>(query));
+        : await this.wrap<S>((client) => client.query<S>(query));
     } catch (error) {
       console.log(query);
-      console.error("DB ERROR:", (error as Error).message);
+      console.error('DB ERROR:', (error as Error).message);
       throw error;
     }
   }
@@ -149,18 +178,19 @@ class DB {
 
     try {
       await client.connect();
-      await client.query("CREATE DATABASE " + this.config.database);
+      await client.query('CREATE DATABASE ' + this.config.database);
       return true;
     } catch (error) {
-      console.error("create DB Error inside", error);
+      console.error('create DB Error inside', error);
       return false;
     } finally {
       await client.end();
     }
-  };
+  }
 
   async initDatabase() {
-    await this.query({ text: `
+    await this.query({
+      text: `
       SET statement_timeout = 0;
       SET lock_timeout = 0;
       SET idle_in_transaction_session_timeout = 0;
@@ -173,8 +203,9 @@ class DB {
       SET row_security = off;
       SET default_tablespace = '';
       SET default_table_access_method = heap;
-    `});
-    await this.createExtension("uuid-ossp");
+    `,
+    });
+    await this.createExtension('uuid-ossp');
   }
 
   async connect(): Promise<DB> {
@@ -182,7 +213,7 @@ class DB {
     try {
       this.client = await this.pool!.connect();
     } catch (connectError) {
-      console.error("database not exist", this.config.database);
+      console.error('database not exist', this.config.database);
       // console.error(connectError); // DatabaseError // ?.["err"]?.["type"]
       const createDatabase = await this.createDatabase();
       if (createDatabase) {
@@ -195,7 +226,9 @@ class DB {
     return this;
   }
 
-  async wrap<T extends {} = {}>(fn: (client: PoolClient, db: DB) => Promise<QueryResult<T>>) {
+  async wrap<T extends {} = {}>(
+    fn: (client: PoolClient, db: DB) => Promise<QueryResult<T>>
+  ) {
     const client = await this.pool!.connect();
     try {
       return await fn(client, this);
@@ -208,44 +241,54 @@ class DB {
 
   async migration(folder: string, index: number) {
     console.log('применяем миграцию', index);
-    console.log(folder + '/'+ index +'.js');
-    const obj = await import('../migrations/'+ index +'.js');
+    console.log(folder + '/' + index + '.js');
+    const obj = await import('../migrations/' + index + '.js');
     const migration = obj.default;
     await this.wrap(migration);
-    await this.insert({ fields: "id", tables: "public.migrations", values: [index] });
+    await this.insert({ fields: 'id', tables: 'public.migrations', values: [index] });
     console.log(`миграция ${index} применена`);
   }
 
   async migrations(folder: string) {
     const files = await fs.readdir(folder);
     const migrations = files
-      .map(f => parseInt(f.replace(/\.js$/, "")))
-      .filter(f => !Number.isNaN(f))
+      .map((f) => parseInt(f.replace(/\.js$/, '')))
+      .filter((f) => !Number.isNaN(f))
       .sort();
-    console.log("все миграции", migrations);
+    console.log('все миграции', migrations);
 
-    const migratedQuery: RequestSelectDB = { fields: "id", tables: "public.migrations" };
+    const migratedQuery: RequestSelectDB = { fields: 'id', tables: 'public.migrations' };
     let migrated = [];
     try {
       migrated = await this.selectArray<number>(migratedQuery);
-    } catch (error) { // нет таблицы public.migrations
-      await this.createTable("public.migrations", "timestamp", { id: "int4", timestamp: "timestamp now()" });
+    } catch (error) {
+      // нет таблицы public.migrations
+      await this.createTable('public.migrations', 'timestamp', {
+        id: 'int4',
+        timestamp: 'timestamp now()',
+      });
       migrated = await this.selectArray<number>(migratedQuery);
     }
-    const applied = migrated.map(row => row[0]).sort();
-    console.log("применённые миграции", applied);
+    const applied = migrated.map((row) => row[0]).sort();
+    console.log('применённые миграции', applied);
 
-    const rest = migrations.filter(f => !applied.includes(f));
+    const rest = migrations.filter((f) => !applied.includes(f));
     // применение миграций
     for (let i = 0; i < rest.length; ++i) {
       await this.migration(folder, rest[i]);
     }
-    console.log(rest.length > 0 ? "все новые миграции применены" : "не требуется применять миграции");
+    console.log(
+      rest.length > 0 ? 'все новые миграции применены' : 'не требуется применять миграции'
+    );
   }
 
-  disconnect() { return this.pool?.end() }
+  disconnect() {
+    return this.pool?.end();
+  }
 
-  static get uuid() { return crypto.randomUUID() }
+  static get uuid() {
+    return crypto.randomUUID();
+  }
 }
 
 export default DB;

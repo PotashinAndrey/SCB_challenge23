@@ -36,7 +36,7 @@ export default class ObjectPath {
 
   insert(startIndex: number, ...list: Array<string | number>): ObjectPath {
     const path = this.path.slice(); // copy
-    const items = list.map(e => e.toString().split(".")).flat(1);
+    const items = list.map((e) => e.toString().split('.')).flat(1);
     path.splice(startIndex, 0, ...items);
     return new ObjectPath(...path);
   }
@@ -52,7 +52,7 @@ export default class ObjectPath {
   }
 
   has(list: Array<string | number>): boolean {
-    const items = ObjectPath.items(...list).join(".");
+    const items = ObjectPath.items(...list).join('.');
     return this.toString().includes(items);
   }
 
@@ -79,7 +79,7 @@ export default class ObjectPath {
   }
 
   toString(): string {
-    return this.path.join(".");
+    return this.path.join('.');
   }
 
   getObjectValue<R = undefined, T = any>(obj: T, defaultValue?: R): R {
@@ -97,7 +97,7 @@ export default class ObjectPath {
   /** @mutable */
   setObjectValue<R = any, T = any>(obj: T, value: R): void {
     const instance = obj instanceof Object;
-    if (!instance) throw new Error("Argument is not Object");
+    if (!instance) throw new Error('Argument is not Object');
 
     const { length } = this.path;
     let current = obj; // result;
@@ -105,7 +105,7 @@ export default class ObjectPath {
     for (let i = 0; i < length; i++) {
       const field = ObjectPath.key(this.path[i]);
       if (i === length - 1) {
-        if (Array.isArray(current) && typeof field !== "number") {
+        if (Array.isArray(current) && typeof field !== 'number') {
           throw new Error(`Trying to write string key to array: ${this.toString()}`);
         }
         current[field] = value;
@@ -117,7 +117,7 @@ export default class ObjectPath {
         const root = current[field] instanceof Object;
         if (!root) {
           const key = ObjectPath.key(next);
-          current[field] = typeof key === "number" ? [] : {};
+          current[field] = typeof key === 'number' ? [] : {};
         }
       }
 
@@ -143,11 +143,11 @@ export default class ObjectPath {
    */
   get indices(): Array<number> {
     return this.path
-      .filter(e => {
+      .filter((e) => {
         const numeric = Number.parseInt(e, 10);
         return !Number.isNaN(numeric) && numeric.toString().length === e.length;
       })
-      .map(e => Number.parseInt(e, 10));
+      .map((e) => Number.parseInt(e, 10));
   }
 
   static key(propertyName: string): string | number {
@@ -161,25 +161,27 @@ export default class ObjectPath {
     const keys = Object.keys(obj as any);
 
     const childs = keys
-      .filter(key => obj[key] instanceof Object)
+      .filter((key) => obj[key] instanceof Object)
       .map((key: string): Array<ObjectPath> => ObjectPath.all(obj[key], [key]));
 
-    const list = keys.map(key => new ObjectPath(key)).concat(...childs);
+    const list = keys.map((key) => new ObjectPath(key)).concat(...childs);
 
     if (!prefix) return list;
-    return list.map(path => path.prepend(...prefix));
+    return list.map((path) => path.prepend(...prefix));
   }
 
   /** Возвращает все конечные пути (до листьев) */
   static leafs<T>(obj: T): Array<ObjectPath> {
-    const paths = ObjectPath.all<T>(obj).map(p => p.toString());
-    return paths.filter((path, _index, list) => !list.find(p => p.startsWith(path + "."))).map(p => new ObjectPath(p));
+    const paths = ObjectPath.all<T>(obj).map((p) => p.toString());
+    return paths
+      .filter((path, _index, list) => !list.find((p) => p.startsWith(path + '.')))
+      .map((p) => new ObjectPath(p));
   }
 
   static items(...list: Array<string | number | undefined>): Array<string> {
     return list
-      .filter(e => e !== undefined)
-      .map(e => e!.toString().split("."))
+      .filter((e) => e !== undefined)
+      .map((e) => e!.toString().split('.'))
       .flat(1);
   }
 

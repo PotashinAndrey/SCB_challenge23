@@ -1,5 +1,5 @@
-import type { PoolClient, Client } from "pg";
-import type { UUID } from "node:crypto";
+import type { PoolClient, Client } from 'pg';
+import type { UUID } from 'node:crypto';
 
 export type BaseDBRequestClient = { client?: PoolClient | Client };
 export type BaseQueryValues = { values?: Array<any> }; // string | number
@@ -17,8 +17,12 @@ export type BaseQueryType = {
   where?: string;
 };
 
-export type RequestSelectDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & BaseOrderByType) | TextQueryType);
-export type RequestInsertDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & { returning?: string }) | TextQueryType);
+export type RequestSelectDB = BaseDBRequestClient &
+  BaseQueryValues &
+  ((BaseQueryType & BaseOrderByType) | TextQueryType);
+export type RequestInsertDB = BaseDBRequestClient &
+  BaseQueryValues &
+  ((BaseQueryType & { returning?: string }) | TextQueryType);
 
 export type RequestUpdateFieldByID = BaseDBRequestClient & {
   id: UUID;
@@ -32,4 +36,4 @@ export type RequestUpdateFieldByID = BaseDBRequestClient & {
 export type RequestRelationDB = {
   source: `${string}.${string}` | `${string}.${string}.${string}`;
   target: `${string}.${string}` | `${string}.${string}.${string}`;
-}
+};

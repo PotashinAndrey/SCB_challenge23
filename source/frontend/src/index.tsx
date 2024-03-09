@@ -1,5 +1,5 @@
-import { StrictMode } from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'atomic-router-react';
 import { router, appStated } from './context/router';
 

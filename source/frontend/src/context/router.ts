@@ -11,8 +11,8 @@ export const routing = {
   dashboard: createRoute<{ dashboard?: UUID }>(),
   processCreate: createRoute(),
   processesList: createRoute(),
-  projects: createRoute()
-}
+  projects: createRoute(),
+};
 
 export const routes = [
   { path: '/home/:dashboard?', route: routing.dashboard },
@@ -20,7 +20,7 @@ export const routes = [
   { path: '/processes', route: routing.processesList },
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
-  { path: '/projects', route: routing.projects }
+  { path: '/projects', route: routing.projects },
   // { path: '/posts/:postId', route: postRoute },
 ];
 
@@ -29,16 +29,16 @@ export const router = createHistoryRouter({ routes });
 sample({
   clock: appStated,
   fn: () => createHashHistory(),
-  target: router.setHistory
+  target: router.setHistory,
 });
 
 sample({
   clock: router.initialized,
   // clock: router.$path,
   fn: (...args) => {
-    console.log("ROUTING INIT", args);
-  }
-})
+    console.log('ROUTING INIT', args);
+  },
+});
 
 // sample({
 //   // clock: router.initialized,

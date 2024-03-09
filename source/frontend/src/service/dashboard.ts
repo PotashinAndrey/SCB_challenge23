@@ -1,14 +1,22 @@
-import { UUID } from "crypto";
-import api from "../scripts/api";
+import { UUID } from 'crypto';
+import api from '../scripts/api';
 
 export const getDashboardsList = (): Promise<any> => {
-    return api("dashboard/list");
-}
+  return api('dashboard/list');
+};
 
 export const getDashboardById = (id: UUID): Promise<any> => {
-    return api("dashboard/get", { id });
-}
+  return api('dashboard/get', { id });
+};
 
-export const appendHistory = ({ taskId, columnId, dashboardId }: {taskId: string, columnId: UUID, dashboardId: UUID}): Promise<any> => {
-    return api("dashboard/history-append", { taskId, columnId, dashboardId });
-}
+export const appendHistory = ({
+  taskId,
+  columnId,
+  dashboardId,
+}: {
+  taskId: string;
+  columnId: UUID;
+  dashboardId: UUID;
+}): Promise<any> => {
+  return api('dashboard/history-append', { taskId, columnId, dashboardId });
+};

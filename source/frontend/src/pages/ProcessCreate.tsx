@@ -1,11 +1,10 @@
-import type { FC, ReactNode, PropsWithChildren } from "react";
-import type { PropsWithClassName } from "@app/types/ui";
+import type { FC, ReactNode, PropsWithChildren } from 'react';
+import type { PropsWithClassName } from '@app/types/ui';
 import { Button, List, Spin, Typography } from 'antd';
-import cn from "classnames";
-import { processCreateStepAppendPopup } from "../context/model/process";
-import Paper from "../ui/Paper";
-import Caption from "../ui/Caption";
-
+import cn from 'classnames';
+import { processCreateStepAppendPopup } from '../context/model/process';
+import Paper from '../ui/Paper';
+import Caption from '../ui/Caption';
 
 const { Text } = Typography;
 
@@ -19,7 +18,7 @@ const ProcessCreate: FC = () => {
   // const { , test = "" } = props;
 
   const dataSource: Array<any> = [];
-  const renderItem = () => <></>
+  const renderItem = () => <></>;
 
   return (
     <div className="w-main margin-center mt-content mb-content">
@@ -29,9 +28,7 @@ const ProcessCreate: FC = () => {
       </div>
 
       <Paper className="primary bordered">
-        <Paper className="primary mb-4 bordered no-shadow">
-          дропдавн с отделами
-        </Paper>
+        <Paper className="primary mb-4 bordered no-shadow">дропдавн с отделами</Paper>
 
         <List
           size="large"
@@ -42,8 +39,14 @@ const ProcessCreate: FC = () => {
       </Paper>
 
       <div className="ta-c mt-8">
-        <p><Button type="primary" onClick={() => processCreateStepAppendPopup.open()}>Добавить шаг процесса найма</Button></p>
-        <p className="mt-4"><Button>Сохранить процесс</Button></p>
+        <p>
+          <Button type="primary" onClick={() => processCreateStepAppendPopup.open()}>
+            Добавить шаг процесса найма
+          </Button>
+        </p>
+        <p className="mt-4">
+          <Button>Сохранить процесс</Button>
+        </p>
       </div>
     </div>
   );

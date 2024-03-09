@@ -2,19 +2,19 @@ import { FC, useCallback, useMemo } from 'react';
 import { Children } from 'react';
 import { useStoreMap } from 'effector-react';
 import { Typography } from 'antd';
-import { $dashboardDataTasks } from "../context/model/process";
-import type { BoardColumnModelType } from "@app/types/model/board";
-import BoardTask from "./BoardTask";
+import { $dashboardDataTasks } from '../context/model/process';
+import type { BoardColumnModelType } from '@app/types/model/board';
+import BoardTask from './BoardTask';
 
-import "../style/BoardColumn.css";
+import '../style/BoardColumn.css';
 import { appendHistoryFx } from 'src/context/model/process';
 import { UUID } from 'crypto';
 
-const { Text } = Typography
+const { Text } = Typography;
 
 interface BoardColumnProps {
   column: BoardColumnModelType;
-  dashboardId? : UUID;
+  dashboardId?: UUID;
 }
 
 // const items = [{
@@ -35,30 +35,38 @@ interface BoardColumnProps {
 //   id: "someID7"
 // }];
 
-const BoardColumn: FC<BoardColumnProps> = props => {
+const BoardColumn: FC<BoardColumnProps> = (props) => {
   const { column, dashboardId } = props;
   const { name } = column;
 
   const tasks = useStoreMap({
     store: $dashboardDataTasks,
-    fn: dashboardDataTasks => dashboardDataTasks.filter((t: any) => t.step === column.id),
+    fn: (dashboardDataTasks) =>
+      dashboardDataTasks.filter((t: any) => t.step === column.id),
     keys: [column],
-    defaultValue: []
+    defaultValue: [],
   });
 
   const onDragOverHandler = (event: any) => {
     event.preventDefault();
-  }
+  };
 
-  const handleDrop = useCallback((event: any) => {
-    console.log("taskId", dashboardId, {dashboardId: dashboardId!})
-    const columnId = column.id;
-    const taskId = event.dataTransfer.getData("taskId");
-    appendHistoryFx({taskId, columnId, dashboardId: dashboardId!});
-  }, [column.id, dashboardId])
+  const handleDrop = useCallback(
+    (event: any) => {
+      console.log('taskId', dashboardId, { dashboardId: dashboardId! });
+      const columnId = column.id;
+      const taskId = event.dataTransfer.getData('taskId');
+      appendHistoryFx({ taskId, columnId, dashboardId: dashboardId! });
+    },
+    [column.id, dashboardId]
+  );
 
   return (
-    <div className="column-component boxAndRadius" onDrop={handleDrop} onDragOver={onDragOverHandler}>
+    <div
+      className="column-component boxAndRadius"
+      onDrop={handleDrop}
+      onDragOver={onDragOverHandler}
+    >
       <h4 className="column-header">
         <Text>{name}</Text>
         {/* <span>{`${count} / ${total}`}</span> */}
@@ -74,6 +82,6 @@ const BoardColumn: FC<BoardColumnProps> = props => {
       </div>} */}
     </div>
   );
-}
+};
 
 export default BoardColumn;
