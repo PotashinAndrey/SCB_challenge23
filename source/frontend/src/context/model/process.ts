@@ -6,7 +6,6 @@ import { processesListLoad, dashboardLoad } from "../../service/process";
 import { appendHistory } from "../../service/dashboard";
 import { UUID } from "node:crypto";
 // import { candidateProcessPopup } from "./candidate";
-import { applicantProcessPopup } from "./applicant";
 import { $currentDashboard } from "./dashboard";
 
 /** @section список процессов (дашбордов) */

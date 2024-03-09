@@ -1,25 +1,32 @@
+import { useMemo } from "react";
 import type { FC } from "react";
-import { useState } from "react";
-import { Input, Button, Select, Space } from 'antd';
-const { Search } = Input;
+import { useStore } from "effector-react";
+import { Button, Input, Select, Space } from 'antd';
+import { DashboardModel } from "@app/types/model/dashboard";
 
 import Paper from "../ui/Paper";
-import { useStore } from "effector-react";
 import { $currentDashboard, $dashboardsList, setCurrentdashboard } from "src/context/model/dashboard";
+
+const { Search } = Input;
 
 /** DashboardFilter -  */
 const DashboardFilter: FC = () => {
-  const dasboardsList = useStore($dashboardsList)
+  const dasboardsList = useStore<DashboardModel[]>($dashboardsList)
   const selectedDashboard = useStore($currentDashboard)
+
+  const dasboardsOptions = useMemo(() => dasboardsList.map(e => ({
+    value: e.id, label: e.name
+  })), [dasboardsList]);
 
   return (
     <Paper className="flex dashboard-header">
       <Space>
+        <Button onClick={() => {}} type="primary">Добавить</Button>
         <Select
           value={selectedDashboard}
           onChange={setCurrentdashboard}
           style={{width: '250px'}}
-          options={dasboardsList.map(item => ({value: item.id, label: item.name}))}
+          options={dasboardsOptions}
         />
       </Space>
     </Paper>
