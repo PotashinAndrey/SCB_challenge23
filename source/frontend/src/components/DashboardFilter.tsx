@@ -7,11 +7,6 @@ import Paper from "../ui/Paper";
 import { useStore } from "effector-react";
 import { $currentDashboard, $dashboardsList, setCurrentdashboard } from "src/context/model/dashboard";
 
-// interface DashboardFilterProps {
-//   : ;
-//   test?: string;
-// }
-
 /** DashboardFilter -  */
 const DashboardFilter: FC = () => {
   const dasboardsList = useStore($dashboardsList)
@@ -20,6 +15,11 @@ const DashboardFilter: FC = () => {
   return (
     <Paper className="flex dashboard-header">
       <Space>
+        <Select
+          value={selectedDashboard}
+          onChange={setCurrentdashboard}
+          style={{width: '250px'}}
+          options={dasboardsList.map(item => ({value: item.id, label: item.name}))}
         />
       </Space>
     </Paper>
