@@ -1,1 +1,5 @@
-export default {};
+export default {
+  database: { 
+    password: "1"
+  }
+};

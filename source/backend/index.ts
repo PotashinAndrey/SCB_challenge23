@@ -6,7 +6,7 @@ import DB from "./class/DB";
 
 import usersApi from "./src/api/users";
 import companiesApi from './src/api/companies';
-import departmentsApi from './src/api/departments';
+import projectsApi from './src/api/projects';
 import processesApi from './src/api/processes';
 import stepsApi from './src/api/step';
 import actionsApi from './src/api/actions';
@@ -29,7 +29,7 @@ fastify.addHook("preHandler", async (request, reply) => {
 
 fastify.register(usersApi, { prefix: "/api/users", db });
 fastify.register(companiesApi, { prefix: "/api/companies", db });
-fastify.register(departmentsApi, { prefix: "/api/departments", db });
+fastify.register(projectsApi, { prefix: "/api/projects", db });
 fastify.register(processesApi, { prefix: "/api/processes", db });
 fastify.register(stepsApi, { prefix: "/api/steps", db });
 fastify.register(actionsApi, { prefix: "/api/actions", db });

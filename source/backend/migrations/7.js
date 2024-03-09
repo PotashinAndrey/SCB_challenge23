@@ -10,7 +10,7 @@
   */
  export default async function migration(client, db) {
     await db.insert({
-        fields: "id, department, name",
+        fields: "id, project, name",
         values: ['f236cb65-63ef-4d32-bc96-0792dab66801', '6521d533-4973-413b-9376-c25ecb414941', 'Дашборд отдела разработки'],
         tables: "flow.dashboard",
         client

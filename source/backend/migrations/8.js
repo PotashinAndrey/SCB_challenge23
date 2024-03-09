@@ -144,7 +144,7 @@ export default async function migration(client, db) {
 
   // создаем дашборд
   const developersFlow = await db.insertRow({
-    fields: "department, name, description",
+    fields: "project, name, description",
     values: ['6521d533-4973-413b-9376-c25ecb414941', "найм разработчиков в ЛК", "процесс найма разработчиков (frontend, backend, mobile) в продукт ЛК"],
     tables: "flow.dashboard",
     client

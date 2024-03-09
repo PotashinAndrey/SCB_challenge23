@@ -45,7 +45,7 @@ export default DashboardFilter;
 
 const Filters: FC = () => {
 
-  const departmentOptions = [
+  const projectOptions = [
     { value: '', label: 'Департамент' },
     { value: 'development', label: 'Разработка' },
     { value: 'support', label: 'Поддержка' },
@@ -58,7 +58,7 @@ const Filters: FC = () => {
         defaultValue=""
         style={{ width: 140 }}
         onChange={() => { }}
-        options={departmentOptions}
+        options={projectOptions}
       />
     </Space>
   );

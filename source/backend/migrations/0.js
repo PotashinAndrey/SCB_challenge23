@@ -71,7 +71,7 @@ export default async function migration(client, db) {
   }, client);
 
   // отделы компании
-  await db.createTable("company.departments", "id", {
+  await db.createTable("company.projects", "id", {
     id: "uuid public.uuid_generate_v4()",
     name: "text",
     removed: "bool false"
@@ -81,7 +81,7 @@ export default async function migration(client, db) {
   await db.createTable("company.structure", "id", {
     id: "uuid public.uuid_generate_v4()",
     employee: "uuid",
-    department: "uuid",
+    project: "uuid",
     removed: "bool false"
   }, client);
 
@@ -91,14 +91,14 @@ export default async function migration(client, db) {
   }, client);
 
   await db.createRelation({
-    source: "company.departments.id",
-    target: "company.structure.department"
+    source: "company.projects.id",
+    target: "company.structure.project"
   }, client);
 
   // вакансии компании
   await db.createTable("company.vacancies", "id", {
     id: "uuid public.uuid_generate_v4()",
-    department: "uuid", // отдел разместивший вакансию ? вынести в другую таблицу
+    project: "uuid",
     name: "text",
     description: "text",
     removed: "bool false"
@@ -113,7 +113,7 @@ export default async function migration(client, db) {
   await db.createTable("flow.dashboard", "id", {
     id: "uuid public.uuid_generate_v4()",
     name: "text",
-    department: "uuid",
+    project: "uuid",
     removed: "bool false"
   }, client);
 

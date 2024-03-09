@@ -1,6 +1,6 @@
 import type DB from "../../class/DB";
 import type { UUID } from "node:crypto";
-import { departmentById } from "./departments";
+import { projectById } from "./projects";
 import { DashboardModel } from "@app/types/model/dashboard";
 
 export const dashboardsList = async (db: DB) => {
@@ -93,25 +93,25 @@ export const processList = async (db: DB) => {
 };
 
 export const createDashboard = async (values: DashboardModel, db: DB) => {
-  const { department, name } = values;
+  const { project, name } = values;
   return await db.insert({
-    fields: "department, name",
+    fields: "project, name",
     tables: "flow.dashboard",
-    values: [department, name],
+    values: [project, name],
     returning: "id"
   });
 };
 
-export const dashboardByDepartment = async (id: UUID, db: DB) => {
-  const department = await db.selectRow({
+export const dashboardByProject = async (id: UUID, db: DB) => {
+  const project = await db.selectRow({
     fields: '*',
     tables: 'flow.dashboard',
-    where: 'department = $1',
+    where: 'project = $1',
     values: [id]
   });
   return {
-    ...department,
-    department: await departmentById(id, db)
+    ...project,
+    project: await projectById(id, db)
   };
 }
 

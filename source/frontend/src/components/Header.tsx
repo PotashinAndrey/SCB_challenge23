@@ -25,8 +25,8 @@ const leftItems: MenuProps['items'] = [{
     key: "company",
     label: "Команда",
     children: [{
-        key: "departments",
-        label: <Link to={routing.departments}>Дашборды</Link>
+        key: "projects",
+        label: <Link to={routing.projects}>Проекты</Link>
       }
     ]
   }, {

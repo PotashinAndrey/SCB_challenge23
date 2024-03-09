@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Login from './Login';
 import Registration from './Registration';
 import Dashboard from './Dashboard';
-import Departments from './Departments';
+import Projects from './Projects';
 import ProcessCreate from './ProcessCreate';
 import Processes from './Processes';
 import PopupsList from './PopupsList';
@@ -18,7 +18,7 @@ const RoutesView = createRoutesView({
     { route: routing.dashboard,       view: Dashboard },
     { route: routing.processCreate,   view: ProcessCreate },
     { route: routing.processesList,   view: Processes },
-    { route: routing.departments,     view: Departments }
+    { route: routing.projects,     view: Projects }
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {
@@ -31,7 +31,7 @@ const RoutesView = createRoutesView({
         <p><Link to={routing.dashboard}>Dashboard</Link></p>
         <p><Link to={routing.processesList}>Список процессов</Link></p>
         <p><Link to={routing.processCreate}>Создание процесса</Link></p>
-        <p><Link to={routing.departments}>Departments</Link></p>
+        <p><Link to={routing.projects}>Проекты</Link></p>
       </div>
     );
   },

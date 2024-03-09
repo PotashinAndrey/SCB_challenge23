@@ -22,7 +22,7 @@ const Dashboards: FC = () => {
             title={item.name}
             description={(
               <Descriptions column={1} size="small">
-                <Descriptions.Item label="Отдел / Команда">{item.department.name}</Descriptions.Item>
+                <Descriptions.Item label="Отдел / Команда">{item.project.name}</Descriptions.Item>
                 <Descriptions.Item label="Описание">{item.description}</Descriptions.Item>
               </Descriptions>
             )}

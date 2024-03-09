@@ -1,6 +1,5 @@
 import type DB from "../../class/DB";
 import type { UUID } from "node:crypto";
-import { departmentById, departmentsList } from "./departments";
 import { TaskModel } from "@app/types/model/task";
 
 /** @deprecated - сделать через роутинг открытие дашборда */
