@@ -13,18 +13,18 @@ export const tasksList = async (filter: any, db: DB) => {
 };
 
 export const createTask = (values: TaskModel, db: DB): Promise<UUID> => {
-  const { dashboard, applicant } = values;
+  const { dashboard } = values;
   return db.insertRow({
-    fields: "dashboard, applicant",
+    fields: "dashboard",
     tables: "flow.tasks",
-    values: [dashboard, applicant]
+    values: [dashboard]
   });
 };
 
 
 // export const updateTask = (taskId: UUID, order: number, db: DB): Promise<any> => {
 //   return db.updateFieldByID({
-//     fields: "dashboard, applicant",
+//     fields: "dashboard",
 //     tables: "flow.tasks",
 //   });
   //@ts-ignore

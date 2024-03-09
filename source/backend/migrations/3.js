@@ -27,12 +27,6 @@
     source: "company.companies.id",
     target: "company.projects.company"
   }, client);
-  // Добавляем к кандидату ссылку на вакансию по которой он пришел
-  await db.createField("service.applicants", "vacancy", "uuid", client);
-  await db.createRelation({
-    source: "company.vacancies.id",
-    target: "service.applicants.vacancy"
-  }, client);
   // Добавляем сотруднику ссылку на департамент в котором он работает
   await db.createField("company.employes", "project", "uuid", client);
   await db.createRelation({

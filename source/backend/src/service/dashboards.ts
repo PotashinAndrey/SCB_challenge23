@@ -41,12 +41,12 @@ export const dashboardById = async (id: UUID, db: DB) => { // dashboard/get
 /** Список задач на дашборде */
 export const tasksList = (dashboardID: UUID, db: DB) => { // dashboard/get
   return db.select({
-    fields: 'tasks.id as task, applicants.id as applicant, name, grade, salary, experience, telegram, photo',
-    tables: 'flow.tasks, service.applicants',
-    where: "dashboard = $1 and tasks.applicant = applicants.id and tasks.removed = false and service.applicants.removed = false",
+    fields: 'tasks.id as task',
+    tables: 'flow.tasks',
+    where: "dashboard = $1 and tasks.removed = false",
     values: [dashboardID]
   });
-  // select tasks.id as task, applicants.id as applicant, name, grade, salary, experience, telegram, photo from flow.tasks, service.applicants where dashboard = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.applicant = applicants.id and tasks.removed = false and service.applicants.removed = false
+  // select tasks.id as task from flow.tasks where dashboard = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.removed = false
 };
 
 /** Истории перемещений задач */

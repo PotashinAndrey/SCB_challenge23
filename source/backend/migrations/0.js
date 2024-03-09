@@ -48,18 +48,6 @@ export default async function migration(client, db) {
     target: "service.user_role.role"
   }, client);
 
-  // соискатели (кандидаты)
-  await db.createTable("service.applicants", "id", {
-    id: "uuid public.uuid_generate_v4()",
-    name: "text", // фио
-    telegram: "text", // ! ссылка на телеграм (если есть)
-    link: "text", // ссылка на страницу где-нибудь в хедхантере и тд
-    file: "text", // путь до файла с резюме
-    photo: "text", // путь до фотки
-    // другие поля для описания соискателя
-    removed: "bool false"
-  }, client);
-
   // компания
   await db.createSchema("company", client);
 
@@ -95,17 +83,6 @@ export default async function migration(client, db) {
     target: "company.structure.project"
   }, client);
 
-  // вакансии компании
-  await db.createTable("company.vacancies", "id", {
-    id: "uuid public.uuid_generate_v4()",
-    project: "uuid",
-    name: "text",
-    description: "text",
-    removed: "bool false"
-    // status: text - вакансию можно открыть, закрыть, заморозить и так далее
-    // link: ссылки на хедхантер, хабр-карьеру и другие сервисы
-  }, client);
-
   // процессы
   await db.createSchema("flow", client);
 
@@ -134,7 +111,6 @@ export default async function migration(client, db) {
   await db.createTable("flow.tasks", "id", {
     id: "uuid public.uuid_generate_v4()",
     dashboard: "uuid",
-    applicant: "uuid",
     removed: "bool false"
     // status, step?
   }, client);
@@ -142,10 +118,5 @@ export default async function migration(client, db) {
   await db.createRelation({
     source: "flow.dashboard.id",
     target: "flow.tasks.dashboard"
-  }, client);
-
-  await db.createRelation({
-    source: "service.applicants.id",
-    target: "flow.tasks.applicant"
   }, client);
 }

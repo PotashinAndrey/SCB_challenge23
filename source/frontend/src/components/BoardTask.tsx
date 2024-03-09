@@ -51,7 +51,7 @@ const onChange = (key: string) => {
 
 const BoardTask: FC<BoardTaskProps> = props => {
   const { task } = props;
-  const { name, id, applicant } = task;
+  const { name, id } = task;
   console.log("task task", task)
 
   const tagText = task.step; // !
