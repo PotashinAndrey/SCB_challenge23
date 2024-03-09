@@ -21,7 +21,7 @@ const DashboardFilter: FC = () => {
   return (
     <Paper className="flex dashboard-header">
       <Space>
-        <Button onClick={() => {}} type="primary">Добавить</Button>
+        <Button onClick={() => {}} type="primary">Добавить задачу</Button>
         <Select
           value={selectedDashboard}
           onChange={setCurrentdashboard}
