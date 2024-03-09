@@ -17,24 +17,6 @@ interface BoardColumnProps {
   dashboardId?: UUID;
 }
 
-// const items = [{
-//   name: "first item",
-//   step: "yellow tag",
-//   id: "someID4"
-// }, {
-//   name: "second item",
-//   step: "yellow tag",
-//   id: "someID5"
-// }, {
-//   name: "third item",
-//   step: "yellow tag",
-//   id: "someID6"
-// }, {
-//   name: "fourth item",
-//   step: "yellow tag",
-//   id: "someID7"
-// }];
-
 const BoardColumn: FC<BoardColumnProps> = (props) => {
   const { column, dashboardId } = props;
   const { name } = column;
@@ -42,7 +24,7 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
   const tasks = useStoreMap({
     store: $dashboardDataTasks,
     fn: (dashboardDataTasks) =>
-      dashboardDataTasks.filter((t: any) => t.step === column.id),
+      dashboardDataTasks.filter((t: any) => t.process === column.id),
     keys: [column],
     defaultValue: [],
   });

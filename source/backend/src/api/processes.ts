@@ -1,4 +1,7 @@
 import type { FastifyInstance } from 'fastify';
+
+import { TaskModel } from "@app/types/model/task";
+
 import type DB from '../../class/DB';
 import {
   dashboardsList,
@@ -27,10 +30,19 @@ const processesApi = (
     const { id = '' } = request.body ? JSON.parse(request.body as string) : {};
     if (!id) return {};
     const dashboard = await dashboardById(id, db);
-    const steps = await processByDashboardId(id, db);
-    const tasks = await tasksList(id, db);
-    const history = await dashboardHistory(id, db);
-    return { dashboard, steps, tasks, history };
+    const processes = await processByDashboardId(id, db);
+
+    const processIds = processes.map(process => process.id);
+
+    const tasks: TaskModel[] = [];
+
+    processIds.forEach(async (id) => {
+      const processTasks = await tasksList(id, db);
+      tasks.push(...processTasks);
+    });
+
+    // const history = await dashboardHistory(id, db);
+    return { dashboard, processes, tasks}; //history 
   });
 
   done();

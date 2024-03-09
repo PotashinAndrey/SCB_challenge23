@@ -2,6 +2,7 @@ import type DB from '../../class/DB';
 import type { UUID } from 'node:crypto';
 import { projectById } from './projects';
 import { DashboardModel } from '@app/types/model/dashboard';
+import { TaskModel } from '@app/types/model/task';
 
 export const dashboardsList = async (db: DB) => {
   return await db.select({ fields: '*', tables: 'flow.dashboard' });
@@ -11,13 +12,13 @@ export const dashboardsList = async (db: DB) => {
 export const processByDashboardId = async (id: UUID, db: DB) => {
   // dashboard/get
   return db.select({
-    fields: `"process".id as id, step as "process", "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action"`,
-    tables: 'flow.process, flow.step',
-    where: 'dashboard = $1 and flow.step.id = flow.process.step',
+    fields: `*`,
+    tables: 'flow.process',
+    where: 'dashboard = $1',
     values: [id],
     order: '"order" asc',
   });
-  // SELECT step, "order", flow.process.description as process_description, "name", flow.step.description as step_description, "action" from flow.process, flow.step where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' and flow.step.id = flow.process.step order by "order" ASC
+  // SELECT * from flow.process where dashboard = '9e05e3e5-017b-4698-9abd-583ffb7dd510' ASC
 };
 
 export const dashboardById = async (id: UUID, db: DB) => {
@@ -30,16 +31,16 @@ export const dashboardById = async (id: UUID, db: DB) => {
   });
 };
 
-/** Список задач на дашборде */
-export const tasksList = (dashboardID: UUID, db: DB) => {
+/** Список задач у процесса */
+export const tasksList = (processID: UUID, db: DB): Promise<TaskModel[]> => {
   // dashboard/get
   return db.select({
     fields: 'tasks.id as task',
     tables: 'flow.tasks',
-    where: 'dashboard = $1 and tasks.removed = false',
-    values: [dashboardID],
+    where: 'process = $1 and tasks.removed = false',
+    values: [processID],
   });
-  // select tasks.id as task from flow.tasks where dashboard = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.removed = false
+  // select tasks.id as task from flow.tasks where process = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.removed = false
 };
 
 /** Истории перемещений задач */
@@ -62,27 +63,6 @@ export const dashboardHistory = (
       process.removed = false and tasks.removed = false`,
     values: [dashboardID],
   });
-};
-
-// ?
-export const stepsList = async (db: DB) => {
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.step',
-  });
-
-  return results;
-};
-
-export const stepById = async (id: UUID, db: DB) => {
-  let results = await db.select({
-    fields: '*',
-    tables: 'flow.step',
-    where: 'id = $1',
-    values: [id],
-  });
-
-  return results;
 };
 
 export const processList = async (db: DB) => {

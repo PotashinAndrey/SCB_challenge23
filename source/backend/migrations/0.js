@@ -100,9 +100,4 @@ export default async function migration(client, db) {
     process: "uuid",
     removed: "bool false"
   }, client);
-
-  await db.createRelation({
-    source: "flow.process.id",
-    target: "flow.tasks.process"
-  }, client);
 }

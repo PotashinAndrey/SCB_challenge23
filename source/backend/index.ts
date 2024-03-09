@@ -8,7 +8,6 @@ import usersApi from './src/api/users';
 import companiesApi from './src/api/companies';
 import projectsApi from './src/api/projects';
 import processesApi from './src/api/processes';
-import stepsApi from './src/api/step';
 import dashboardApi from './src/api/dashboard';
 import tasksApi from './src/api/tasks';
 
@@ -29,7 +28,6 @@ fastify.register(usersApi, { prefix: '/api/users', db });
 fastify.register(companiesApi, { prefix: '/api/companies', db });
 fastify.register(projectsApi, { prefix: '/api/projects', db });
 fastify.register(processesApi, { prefix: '/api/processes', db });
-fastify.register(stepsApi, { prefix: '/api/steps', db });
 fastify.register(dashboardApi, { prefix: '/api/dashboard', db });
 fastify.register(tasksApi, { prefix: '/api/tasks', db });
 

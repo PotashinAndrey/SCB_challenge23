@@ -72,9 +72,6 @@ const BoardTask: FC<BoardTaskProps> = (props) => {
   const { task } = props;
   const { name, id } = task;
   console.log('task task', task);
-
-  const tagText = task.step; // !
-
   // const [isModalOpen, setModalOpen] = useState(false);
 
   const handleDragStart = useCallback(
