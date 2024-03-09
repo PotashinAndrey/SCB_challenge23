@@ -94,29 +94,15 @@ export default async function migration(client, db) {
     removed: "bool false"
   }, client);
 
-  // шаги процесса
-  await db.createTable("flow.step", "id", {
-    id: "uuid public.uuid_generate_v4()",
-    name: "text",
-    dashboard: "uuid",
-    removed: "bool false"
-  }, client);
-
-  await db.createRelation({
-    source: "flow.dashboard.id",
-    target: "flow.step.dashboard"
-  }, client);
-
   // таски в процессе (перемещение карточки соискателя по флоу найма сотрудника)
   await db.createTable("flow.tasks", "id", {
     id: "uuid public.uuid_generate_v4()",
-    dashboard: "uuid",
+    process: "uuid",
     removed: "bool false"
-    // status, step?
   }, client);
 
   await db.createRelation({
-    source: "flow.dashboard.id",
-    target: "flow.tasks.dashboard"
+    source: "flow.process.id",
+    target: "flow.tasks.process"
   }, client);
 }

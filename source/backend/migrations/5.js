@@ -10,139 +10,28 @@
   */
 export default async function migration(client, db) {
 
-  // увы, нужна связь many - many (идея в том что в steps будут лежать все возможные шаги)
-  await db.removeRelation({
-    source: "flow.dashboard.id",
-    target: "flow.step.dashboard"
-  }, client);
-
-  // номер шага будет в связи между дашбордом и всеми шагами
-  await db.removeField("flow.step", "order", client);
-  await db.removeField("flow.step", "dashboard", client);
-
-  //
-  await db.createField("flow.dashboard", "description", "text", client);
-
-  await db.createField("flow.step", "description", "text", client);
-  await db.createField("flow.step", "action", "uuid", client);
-
-  // таблица (many-many) для связи дашбордов и списка шагов
-  await db.createTable("flow.process", "id", {
+  // история перемещений тасок по дашборду (from -> to id колонок процесса)
+  await db.createTable("flow.history", "id", {
     id: "uuid public.uuid_generate_v4()",
-    dashboard: "uuid",
-    step: "uuid",
-    order: "int4", // nullable!
-    description: "text",
-    created: "timestamp now()",
-    removed: "bool false"
+    timestamp: "timestamp now()",
+    task: "uuid",
+    from: "uuid",
+    to: "uuid",
   }, client);
 
-  await db.createRelation({
-    source: "flow.dashboard.id",
-    target: "flow.process.dashboard"
-  }, client);
-
-    await db.createRelation({
-    source: "flow.step.id",
-    target: "flow.process.step"
-  }, client);
-
-  // создаем базовые шаги
-  const prepareStep = await db.insertRow({
-    fields: "name, description",
-    values: ['Подготовка', 'Реакция на отклик, связь с кандидатом'],
-    tables: "flow.step",
-    client
+  db.createRelation({
+    source: "flow.tasks.id",
+    target: "flow.history.task"
   });
 
-  const interviewHRStep = await db.insertRow({
-    fields: "name, description",
-    values: ['Собеседование с HR', 'Собеседование кандидата с представителем отдела кадров'],
-    tables: "flow.step",
-    client
+  db.createRelation({
+    source: "flow.process.id",
+    target: "flow.history.from"
   });
 
-  const homeworkStep = await db.insertRow({
-    fields: "name, description, action",
-    values: ['Тестовое задание', 'Отправка ТЗ и его проверка', homework], // вешаем экшен на шаг процесса (на колонку)
-    tables: "flow.step",
-    client
+  db.createRelation({ // ?
+    source: "flow.process.id",
+    target: "flow.history.to"
   });
 
-  const interviewTechStep = await db.insertRow({
-    fields: "name, description",
-    values: ['Техническое собеседование', 'Собеседование кандидата с т техлидом команды разработки'],
-    tables: "flow.step",
-    client
-  });
-
-  const hiringStep = await db.insertRow({
-    fields: "name, description, action",
-    values: ['Выход на работу', 'Подготовка кандидата к выходу на работу', safeguard], // вешаем экшен на шаг процесса (на колонку)
-    tables: "flow.step",
-    client
-  });
-
-  // ID шагов из предыдущей миграции - навесим им действия
-  // const interviewHRStep = 'f236cb65-63ef-4d32-bc96-0792dab66801';
-  // await db.updateFieldByID({
-  //   table: "flow.step",
-  //   field: "action",
-  //   value: interview,
-  //   id: interviewHRStep,
-  //   client
-  // });
-
-  // const interviewTechStep = 'f236cb65-63ef-4d32-bc96-0792dab66801';
-  // await db.updateFieldByID({
-  //   table: "flow.step",
-  //   field: "action",
-  //   value: interview,
-  //   id: interviewTechStep,
-  //   client
-  // });
-
-  // создаем дашборд
-  const developersFlow = await db.insertRow({
-    fields: "project, name, description",
-    values: ['6521d533-4973-413b-9376-c25ecb414941', "найм разработчиков в ЛК", "процесс найма разработчиков (frontend, backend, mobile) в продукт ЛК"],
-    tables: "flow.dashboard",
-    client
-  });
-
-  // создаем список шагов в дашборде
-  await db.insertRow({
-    fields: "dashboard, step, order",
-    values: [developersFlow, prepareStep, 0],
-    tables: "flow.process",
-    client
-  });
-
-  await db.insertRow({
-    fields: "dashboard, step, order",
-    values: [developersFlow, interviewHRStep, 1],
-    tables: "flow.process",
-    client
-  });
-
-  await db.insertRow({
-    fields: "dashboard, step, order",
-    values: [developersFlow, homeworkStep, 2],
-    tables: "flow.process",
-    client
-  });
-
-  await db.insertRow({
-    fields: "dashboard, step, order",
-    values: [developersFlow, interviewTechStep, 3],
-    tables: "flow.process",
-    client
-  });
-
-  await db.insertRow({
-    fields: "dashboard, step, order",
-    values: [developersFlow, hiringStep, 4],
-    tables: "flow.process",
-    client
-  });
 }

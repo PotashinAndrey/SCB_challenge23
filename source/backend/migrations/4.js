@@ -8,37 +8,67 @@
   * @param { DB } db хелпер для работы с БД
   * @return {Promise<void>}
   */
- export default async function migration(client, db) {
-    await db.insert({
-        fields: "id, project, name",
-        values: ['f236cb65-63ef-4d32-bc96-0792dab66801', '6521d533-4973-413b-9376-c25ecb414941', 'Дашборд отдела разработки'],
-        tables: "flow.dashboard",
-        client
-    });
-    // Номер шага. От меньшего к большему
-    await db.createField("flow.step", "order", "int4 0", client); // email
-    await db.insert({
-        fields: "name, dashboard, order",
-        values: ['Созвон с кандидатом', 'f236cb65-63ef-4d32-bc96-0792dab66801', 0],
-        tables: "flow.step",
-        client
-    });
-    await db.insert({
-        fields: "name, dashboard, order",
-        values: ['Собеседование с HR', 'f236cb65-63ef-4d32-bc96-0792dab66801', 1],
-        tables: "flow.step",
-        client
-    });
-    await db.insert({
-        fields: "name, dashboard, order",
-        values: ['Техническое собеседование', 'f236cb65-63ef-4d32-bc96-0792dab66801', 2],
-        tables: "flow.step",
-        client
-    });
-    await db.insert({
-        fields: "name, dashboard, order",
-        values: ['Результаты', 'f236cb65-63ef-4d32-bc96-0792dab66801', 3],
-        tables: "flow.step",
-        client
-    });
- }
+export default async function migration(client, db) {
+
+  await db.createField("flow.dashboard", "description", "text", client);
+
+  // таблица (many-many) для связи дашбордов и списка шагов
+  await db.createTable("flow.process", "id", {
+    id: "uuid public.uuid_generate_v4()",
+    dashboard: "uuid",
+    name: "text",
+    order: "int4", // nullable!
+    description: "text",
+    created: "timestamp now()",
+    removed: "bool false"
+  }, client);
+
+  await db.createRelation({
+    source: "flow.dashboard.id",
+    target: "flow.process.dashboard"
+  }, client);
+
+  // создаем дашборд
+  const developersFlow = await db.insertRow({
+    fields: "project, name, description",
+    values: ['6521d533-4973-413b-9376-c25ecb414941', "найм разработчиков в ЛК", "процесс найма разработчиков (frontend, backend, mobile) в продукт ЛК"],
+    tables: "flow.dashboard",
+    client
+  });
+
+  // создаем список шагов в дашборде
+  await db.insertRow({
+    fields: "dashboard, name, order",
+    values: [developersFlow, "к выполнению", 0],
+    tables: "flow.process",
+    client
+  });
+
+  await db.insertRow({
+    fields: "dashboard, name, order",
+    values: [developersFlow, "в работе", 1],
+    tables: "flow.process",
+    client
+  });
+
+  await db.insertRow({
+    fields: "dashboard, name, order",
+    values: [developersFlow, "ревью", 2],
+    tables: "flow.process",
+    client
+  });
+
+  await db.insertRow({
+    fields: "dashboard, name, order",
+    values: [developersFlow, "тестирование", 3],
+    tables: "flow.process",
+    client
+  });
+
+  await db.insertRow({
+    fields: "dashboard, name, order",
+    values: [developersFlow, "готово", 4],
+    tables: "flow.process",
+    client
+  });
+}
