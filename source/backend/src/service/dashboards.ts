@@ -48,12 +48,12 @@ export const dashboardHistory = (
   dashboardID: UUID,
   db: DB
 ): Promise<
-  Array<{ timestamp: any; task: UUID; from: UUID; to: UUID; action: string }>
+  Array<{ timestamp: any; task: UUID; from: UUID; to: UUID }>
 > => {
   // dashboard/get
   return db.select({
     fields:
-      'history."timestamp", tasks.id as task, history."from" as "from", history."to" as "to", history."action" as "action"',
+      'history."timestamp", tasks.id as task, history."from" as "from", history."to" as "to"',
     tables: 'flow.history, flow.tasks, flow.process',
     // where: "tasks.dashboard = $1 and history.task = tasks.id and tasks.removed = false",
     where: `tasks.dashboard = $1 and
