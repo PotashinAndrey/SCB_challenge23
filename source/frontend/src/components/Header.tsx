@@ -18,7 +18,7 @@ const { Search } = Input;
 const onSearch = (value: string) => console.log(value);
 
 const leftItems: MenuProps['items'] = [{
-    label: <Link to={routing.dashboard}>Дашборды</Link>,
+    label: <Link to={routing.dashboard}>Дашборд</Link>,
     key: 'Дашборды',
     // icon: <SmileOutlined />
   }, {
