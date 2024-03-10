@@ -40,6 +40,10 @@ const leftItems: MenuProps['items'] = [
         key: 'projects',
         label: <Link to={routing.projects}>Проекты</Link>,
       },
+      {
+        key: 'dashboards',
+        label: <Link to={routing.dashboards}>Доски</Link>,
+      },
     ],
   },
   {

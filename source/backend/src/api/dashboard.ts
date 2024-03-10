@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
-import { dashboardsList, historyAppend } from '../service/dashboards';
+import { dashboardsList, historyAppend, createDashboard } from '../service/dashboards';
 import { UUID } from 'crypto';
 
 const dashboardApi = (
@@ -21,6 +21,19 @@ const dashboardApi = (
     console.log('\n\n ', request.body, columnId, taskId, '\n\n');
     if (!columnId || !taskId) return {};
     return await historyAppend(taskId as UUID, columnId, db);
+  });
+
+  fastify.post('/create', async (request, reply) => {
+    const { projectId = '', name = '', description = null } = request.body
+      ? JSON.parse(request.body as string)
+      : {};
+    console.log('\n\n ', request.body, projectId, name, description, '\n\n');
+    if (!projectId || !name) return {};
+    return await createDashboard({
+      project: projectId,
+      name,
+      description
+    }, db);
   });
 
   done();
