@@ -1,6 +1,10 @@
-import { UUID } from 'crypto';
+import type { TaskModel } from '@app/types/model/task';
 import api from '../scripts/api';
 
-export const taskUpdateState = (taskId: UUID, order: number): Promise<any> => {
-  return api('tasks/list', { taskId, order });
+export const taskCreate = (values: TaskModel): Promise<any> => {
+  return api('tasks/create', values);
+};
+
+export const taskUpdate = (values: TaskModel): Promise<any> => {
+  return api('tasks/update', values);
 };
