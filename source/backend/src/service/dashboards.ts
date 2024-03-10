@@ -69,14 +69,15 @@ export const processList = async (db: DB) => {
   });
 };
 
-export const createDashboard = async (values: DashboardModel, db: DB) => {
+export const createDashboard = async (values: DashboardModel, db: DB): Promise<UUID> => {
   const { project, name, description } = values;
-  return await db.insert({
+  const dashboard = await db.insert({
     fields: 'project, name, description',
     tables: 'flow.dashboard',
     values: [project, name, description],
     returning: 'id',
   });
+  return dashboard.rows[0].id;
 };
 
 export const dashboardByProject = async (id: UUID, db: DB) => {
@@ -97,6 +98,16 @@ export const historyAppend = async (taskId: UUID, columnId: string, db: DB) => {
     tables: 'flow.history',
     fields: 'task, to',
     values: [taskId, columnId],
+  });
+
+  return { id };
+};
+
+export const createProcess = async (dashboard: UUID, name: string, order: string, db: DB) => {
+  const id = await db.insertRow({
+    tables: 'flow.process',
+    fields: 'dashboard, name, order',
+    values: [dashboard, name, order],
   });
 
   return { id };

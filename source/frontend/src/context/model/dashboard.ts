@@ -13,8 +13,8 @@ import { routing } from '../router';
 export const fetchDashboardsList = createEvent();
 export const setCurrentDashboardId = createEvent<UUID | null>();
 export const fetchDashboardsListFx = createEffect(getDashboardsList);
-const createDashboardFx = createEffect(async (values: { projectId: UUID, name: string, description?: string }) => {
-  const result = await createDashboardRequest(values.projectId, values.name, values.description);
+const createDashboardFx = createEffect(async (values: { projectId: UUID, name: string, description?: string, columns?: string[] }) => {
+  const result = await createDashboardRequest(values.projectId, values.name, values.description, values.columns);
   return result;
 });
 
@@ -39,6 +39,18 @@ export const createDashbordForm = createForm();
 
 export const createDashbordFormSubmit = createEvent<any>();
 
+
+export const $canAddNewColumn = createStore(true);
+sample({
+  clock: createDashbordForm.$values,
+  source: createDashbordForm.$values,
+  fn: (formValues) => {
+    if (!formValues?.columns?.length) return true;
+    return formValues?.columns?.length < 7
+  },
+  target: $canAddNewColumn
+});
+
 sample({
   clock: createDashbordFormSubmit,
   source: [createDashbordForm.$values, $currentProjectId],
@@ -46,6 +58,7 @@ sample({
     name: formValues.name,
     description: formValues.description,
     projectId: currentProjectId,
+    columns: formValues.columns.filter((column: string) => column.length !== 0)
   }),
   target: createDashboardFx
 });

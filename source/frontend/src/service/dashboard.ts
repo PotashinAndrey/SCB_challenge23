@@ -22,6 +22,6 @@ export const appendHistory = ({
   return api('dashboard/history-append', { taskId, columnId, dashboardId });
 };
 
-export const createDashboardRequest = (projectId: UUID, name: string, description?: string): Promise<UUID> => {
-  return api('dashboard/create', { project: projectId, name, description });
+export const createDashboardRequest = (projectId: UUID, name: string, description?: string, columns?: string[]): Promise<UUID> => {
+  return api('dashboard/create', { project: projectId, name, description, columns });
 };

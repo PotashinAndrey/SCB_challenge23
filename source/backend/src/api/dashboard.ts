@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
-import { dashboardsList, historyAppend, createDashboard } from '../service/dashboards';
+import { dashboardsList, historyAppend, createDashboard, createProcess } from '../service/dashboards';
 import { UUID } from 'crypto';
 
 const dashboardApi = (
@@ -24,16 +24,23 @@ const dashboardApi = (
   });
 
   fastify.post('/create', async (request, reply) => {
-    const { project = '', name = '', description = null } = request.body
+    const { project = '', name = '', description = null, columns = [] } = request.body
       ? JSON.parse(request.body as string)
       : {};
     console.log('\n\n ', request.body, project, name, description, '\n\n');
     if (!project || !name) return {};
-    return await createDashboard({
+
+    const dashboard = await createDashboard({
       project,
       name,
       description
     }, db);
+
+    (columns as string[]).forEach(async (column, index) => {
+      await createProcess(dashboard, column, String(index), db)
+    });
+
+    return dashboard;
   });
 
   done();
