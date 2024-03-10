@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { useUnit } from 'effector-react';
+import { useMemo } from 'react';
+import { useUnit, useStore } from 'effector-react';
 import {
   Menu,
   MenuProps,
@@ -8,23 +9,20 @@ import {
   Avatar,
   Space,
   Typography,
-  Input,
+  Select,
 } from 'antd';
+import {
+  $currentDashboardId,
+  $dashboardsList,
+  setCurrentDashboardId,
+} from 'src/context/model/dashboard';
 import { UserOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
 
 import { $user } from '../context/login';
 import { routing } from '../context/router';
-// import "../style/ColumnItem.css";
-// import "../style/Menu.css";
-// import CaretDownFilled from '@ant-design/icons/CaretDownFilled'
-// import '../../../../node_modules/antd/dist/reset.css'
-// import SmileOutlined from '@ant-design/icons/SmileOutlined';
 
 const { Text } = Typography;
-const { Search } = Input;
-
-const onSearch = (value: string) => console.log(value);
 
 const leftItems: MenuProps['items'] = [
   {
@@ -97,13 +95,32 @@ const items: MenuProps['items'] = [
 
 const Header: FC = () => {
   const user = useUnit($user);
+  const selectedDashboard = useStore($currentDashboardId);
+  const dasboardsList = useStore($dashboardsList);
+
+  const dasboardsOptions = useMemo(
+    () =>
+      dasboardsList.map((e) => ({
+        value: e.id,
+        label: e.name,
+      })),
+    [dasboardsList]
+  );
 
   return (
     <div className="flex items-center space-between padding margin">
       <div className="flex items-center">
-        <Menu mode="horizontal" items={leftItems} disabledOverflow />{' '}
-        {/* selectedKeys={["dashboard"]} */}
-        <Search placeholder="Поиск..." onSearch={onSearch} className="w-card" />
+        <Space>
+          <Menu mode="horizontal" items={leftItems} disabledOverflow />
+          <Text>Дашборд: </Text>
+          <Select
+            aria-label="sda"
+            value={selectedDashboard}
+            onChange={setCurrentDashboardId}
+            style={{ width: '250px' }}
+            options={dasboardsOptions}
+          />
+        </Space>
       </div>
 
       <Dropdown menu={{ items, onClick }}>

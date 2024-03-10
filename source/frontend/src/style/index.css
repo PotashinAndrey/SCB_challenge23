@@ -13,10 +13,6 @@
     border-radius: 10px;
 }
 
-body {
-  font-family: --font;
-}
-
 ol, ul {
   margin: 0 !important;
 	list-style: none;

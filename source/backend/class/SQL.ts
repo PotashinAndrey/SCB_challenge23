@@ -33,7 +33,7 @@ export default class SQL {
     return text;
   }
 
-  static requestUpdateFiledByID(request: RequestUpdateFieldByID): string {
+  static requestUpdateFieldByID(request: RequestUpdateFieldByID): string {
     const table = `"` + request.table.replace('"', '').replace(/\./g, `"."`) + `"`;
     return `update ${table} set "${request.field}" = $1 where id = $2 returning *`;
   }

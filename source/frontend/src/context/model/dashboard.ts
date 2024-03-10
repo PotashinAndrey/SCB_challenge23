@@ -8,8 +8,7 @@ import factoryExteralData from '../factory/external';
 import { getDashboardsList, createDashboardRequest } from '../../service/dashboard';
 
 export const fetchDashboardsList = createEvent();
-export const setCurrentdashboard = createEvent<UUID | null>();
-
+export const setCurrentDashboardId = createEvent<UUID | null>();
 export const fetchDashboardsListFx = createEffect(getDashboardsList);
 const createDashboardFx = createEffect(async (values: {projectId: UUID, name: string, discription?: string}) => {
   const result = await createDashboardRequest(values.projectId, values.name, values.discription );
@@ -17,9 +16,9 @@ const createDashboardFx = createEffect(async (values: {projectId: UUID, name: st
 });
 
 
-export const $currentDashboard = createStore<UUID | null>(null)
+export const $currentDashboardId = createStore<UUID | null>(null)
   .on(fetchDashboardsListFx.doneData, (_state, data) => data[0]?.id ?? null)
-  .on(setCurrentdashboard, (_state, newDashboard) => newDashboard);
+  .on(setCurrentDashboardId, (_state, newDashboard) => newDashboard);
 export const $dashboardsList = createStore<DashboardModel[]>([]).on(
   fetchDashboardsListFx.doneData,
   (_state, data) => data || []

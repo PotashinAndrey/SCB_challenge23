@@ -31,14 +31,13 @@ export const dashboardById = async (id: UUID, db: DB) => {
   });
 };
 
-/** Список задач у процесса */
-export const tasksList = (processID: UUID, db: DB): Promise<TaskModel[]> => {
-  // dashboard/get
+/** Список задач у дашборда */
+export const tasksByDashboardId = (dashboardId: UUID, db: DB): Promise<TaskModel[]> => {
   return db.select({
     fields: 'tasks.id as task',
     tables: 'flow.tasks',
-    where: 'process = $1 and tasks.removed = false',
-    values: [processID],
+    where: 'dashboard = $1 and tasks.removed = false',
+    values: [dashboardId],
   });
   // select tasks.id as task from flow.tasks where process = 'f236cb65-63ef-4d32-bc96-0792dab66801' and tasks.removed = false
 };
@@ -47,9 +46,7 @@ export const tasksList = (processID: UUID, db: DB): Promise<TaskModel[]> => {
 export const dashboardHistory = (
   dashboardID: UUID,
   db: DB
-): Promise<
-  Array<{ timestamp: any; task: UUID; from: UUID; to: UUID }>
-> => {
+): Promise<Array<{ timestamp: any; task: UUID; from: UUID; to: UUID }>> => {
   // dashboard/get
   return db.select({
     fields:

@@ -65,7 +65,7 @@ class DB {
 
   updateFieldByID<T extends {} = {}>(request: RequestUpdateFieldByID): Promise<T> {
     const query = {
-      text: SQL.requestUpdateFiledByID(request),
+      text: SQL.requestUpdateFieldByID(request),
       values: [request.value, request.id],
     };
     return this.query<T>(query, request.client).then((r) => r.rows[0]);

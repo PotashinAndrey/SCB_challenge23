@@ -5,7 +5,7 @@ import { routing } from '../router';
 import { processesListLoad, dashboardLoad } from '../../service/process';
 import { appendHistory } from '../../service/dashboard';
 import { UUID } from 'node:crypto';
-import { $currentDashboard } from './dashboard';
+import { $currentDashboardId } from './dashboard';
 
 /** @section список процессов (дашбордов) */
 export const processesListLoadFx = createEffect(processesListLoad);
@@ -22,6 +22,7 @@ sample({
 });
 
 /** @section открытие дашборда */
+export const loadDashboard = createEvent();
 export const dashboardLoadFx = createEffect<UUID, any>(dashboardLoad);
 export const dashboardData = factoryExteralData(dashboardLoadFx, {});
 
@@ -37,11 +38,17 @@ sample({
   // filter: ({ params }) => params.dashboard !== undefined,
   fn: ({ params }) =>
     params.dashboard || ('b3791ff6-15a7-4ea8-a909-ce8a9f94d669' as UUID),
-  target: $currentDashboard,
+  target: $currentDashboardId,
 });
 
 sample({
-  clock: $currentDashboard,
+  clock: loadDashboard,
+  source: $currentDashboardId,
+  target: dashboardLoadFx,
+});
+
+sample({
+  clock: $currentDashboardId,
   filter: (id) => id !== ('' as UUID),
   target: dashboardLoadFx,
 });
