@@ -7,7 +7,8 @@ import type { BoardColumnModelType } from '@app/types/model/board';
 import BoardTask from './BoardTask';
 
 import '../style/BoardColumn.css';
-import { appendHistoryFx } from 'src/context/model/process';
+import { appendHistory } from 'src/context/model/history';
+import { updateTask } from 'src/context/model/tasks';
 import { UUID } from 'crypto';
 
 const { Text } = Typography;
@@ -35,10 +36,24 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
 
   const handleDrop = useCallback(
     (event: any) => {
-      console.log('taskId', dashboardId, { dashboardId: dashboardId! });
-      const columnId = column.id;
-      const taskId = event.dataTransfer.getData('taskId');
-      appendHistoryFx({ taskId, columnId, dashboardId: dashboardId! });
+      const newColumnId = column.id;
+      // TODO Подумать как нормально сделать
+      const movedTask = JSON.parse(localStorage.getItem('movedTask') || '');
+      localStorage.removeItem('movedTask');
+      const taskId = movedTask.process;
+      const oldColumnId = movedTask.process;
+      // TODO Нужно еще поменять порядок карточек
+      updateTask({
+        ...movedTask,
+        process: newColumnId,
+      });
+      if (oldColumnId !== newColumnId) {
+        appendHistory({
+          taskId,
+          oldColumnId,
+          newColumnId,
+        });
+      }
     },
     [column.id, dashboardId]
   );
@@ -51,17 +66,11 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
     >
       <h4 className="column-header">
         <Text>{name}</Text>
-        {/* <span>{`${count} / ${total}`}</span> */}
       </h4>
 
       <div className="column-content">
         {Children.toArray(tasks.map((t: any) => <BoardTask task={t} />))}
       </div>
-
-      {/* todo: убрать это */}
-      {/* {!tasks.length && items?.length && <div className="column-content">
-        {Children.toArray(items.map(e => <BoardTask task={e} />))}
-      </div>} */}
     </div>
   );
 };

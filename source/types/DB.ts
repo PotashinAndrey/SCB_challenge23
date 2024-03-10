@@ -30,8 +30,13 @@ export type RequestUpdateFieldByID = BaseDBRequestClient & {
   field: string;
   value: any;
 };
-
-// export type RequestUpdateDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & { returning?: string, conditionValues?: Array<any> }) | TextQueryType);
+export type RequestUpdateDB<T = any> = BaseDBRequestClient & {
+  table: string;
+  fields: string;
+  id: UUID;
+  where?: string;
+  values?: any[];
+};
 
 export type RequestRelationDB = {
   source: `${string}.${string}` | `${string}.${string}.${string}`;

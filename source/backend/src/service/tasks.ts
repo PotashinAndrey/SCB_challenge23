@@ -12,20 +12,22 @@ export const tasksList = async (filter: any, db: DB) => {
   return results;
 };
 
-export const createTask = (values: TaskModel, db: DB): Promise<UUID> => {
+export const createTask = async (values: TaskModel, db: DB): Promise<TaskModel> => {
   const { dashboard, process, title, description } = values;
-  return db.insertRow({
+  const task = await db.insertRow<TaskModel>({
     fields: 'dashboard, process, title, description',
     tables: 'flow.tasks',
     values: [dashboard, process, title, description],
   });
+  return { ...task };
 };
 
-// export const updateTask = (values: TaskModel, db: DB): Promise<any> => {
-//   const { dashboard, process, title, description } = values;
-//   return db.updateFieldByID({
-//     fields: 'dashboard, process, title, description',
-//     table: 'flow.tasks',
-//     values: [dashboard, process, title, description],
-//   });
-// };
+export const updateTask = (item: TaskModel, db: DB): Promise<TaskModel> => {
+  const { id, dashboard, process, title, description, removed } = item;
+  return db.update({
+    id,
+    fields: 'dashboard, process, title, description, removed',
+    table: 'flow.tasks',
+    values: [dashboard, process, title, description, removed],
+  });
+};

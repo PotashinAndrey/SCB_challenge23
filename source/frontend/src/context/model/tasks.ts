@@ -1,15 +1,19 @@
 import { TaskModel } from '@app/types/model/task';
 import { createEffect, createEvent, sample } from 'effector';
-import { taskCreate } from 'src/service/tasks';
+import { taskCreate, taskUpdate } from 'src/service/tasks';
 import { createVisibilityController } from 'src/utils/visibilityController';
 import { loadDashboard } from './process';
 
 export const modalToggler = createVisibilityController(false);
 
 export const createTask = createEvent<TaskModel>();
-export const createTaskFx = createEffect(taskCreate);
+export const updateTask = createEvent<TaskModel>();
+
+const createTaskFx = createEffect(taskCreate);
+const updateTaskFx = createEffect(taskUpdate);
 
 export const isTaskCreating = createTaskFx.pending;
+export const isTaskUpdating = updateTaskFx.pending;
 
 sample({
   clock: createTask,
@@ -17,6 +21,20 @@ sample({
 });
 
 sample({
+  clock: updateTask,
+  target: updateTaskFx,
+});
+
+// TODO Сделать чтобы при создании таски, с бека возвращался таск,
+//  тогда не придется заново весь дашборд запрашивать
+sample({
   clock: createTaskFx.done,
   target: [modalToggler.close, loadDashboard],
+});
+
+// TODO Сделать чтобы при обновлении таски, с бека возвращался таск,
+//  тогда не придется заново весь дашборд запрашивать
+sample({
+  clock: updateTaskFx.done,
+  target: loadDashboard,
 });

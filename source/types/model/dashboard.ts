@@ -7,3 +7,5 @@ export type DashboardModel = {
   removed?: boolean;
   description?: string;
 };
+
+export type DashboardCreateModel = Omit<DashboardModel, 'id' | 'removed'>;

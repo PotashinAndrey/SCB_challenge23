@@ -4,6 +4,7 @@ import type {
   RequestSelectDB,
   RequestRelationDB,
   RequestUpdateFieldByID,
+  RequestUpdateDB,
 } from '@app/types/DB';
 
 export default class SQL {
@@ -30,6 +31,14 @@ export default class SQL {
     // if ((request.where || []).length > 0) text += " where " + request.where;
     if (request.returning) text += ' returning ' + request.returning;
 
+    return text;
+  }
+
+  static requestUpdateById<T = any>(request: RequestUpdateDB): string {
+    const fields = `"` + request.fields.replace('"', '').replace(/,\s+/g, `", "`) + `"`;
+    const table = `"` + request.table.replace('"', '').replace(/\./g, `"."`) + `"`;
+    const values = request.values?.map((_e, i) => '$' + (i + 1)).join(', ');
+    let text = `UPDATE ${table} SET (${fields}) = (${values}) WHERE id = '${request.id}' returning *`;
     return text;
   }
 
