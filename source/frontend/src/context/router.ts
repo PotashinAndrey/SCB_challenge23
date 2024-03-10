@@ -15,7 +15,7 @@ export const routing = {
 };
 
 export const routes = [
-  { path: '/home/:dashboard?', route: routing.dashboard },
+  { path: '/dashboard/:dashboard?', route: routing.dashboard },
   { path: '/process-create', route: routing.processCreate },
   { path: '/processes', route: routing.processesList },
   { path: '/registration', route: routing.registration },

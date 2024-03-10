@@ -1,4 +1,6 @@
 import type { ServerProtocol, BackendConfig } from '@app/types/config';
+import type { Configuration } from 'webpack';
+import * as webpackDevServer from 'webpack-dev-server';
 
 import * as url from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -11,8 +13,27 @@ import config from '../../config/index';
 // const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const plugins = [
+  new HtmlWebpackPlugin({
+    template: './public/index.html',
+  }),
+  new webpack.DefinePlugin({
+    //   __API_HOST__: config.backend[config.backend.protocol].host,
+    __API_PORT__: (config as unknown as { backend: BackendConfig }).backend[
+      ((config as unknown as { backend: BackendConfig }).backend
+        .protocol as ServerProtocol) || 'http'
+    ]?.port,
+  }),
+];
+if (isDevelopment) {
+  plugins.push(
+    new webpack.HotModuleReplacementPlugin() as HtmlWebpackPlugin,
+    new ReactRefreshWebpackPlugin() as HtmlWebpackPlugin
+  );
+}
 
-export default {
+const configuration: Configuration = {
+  devtool: 'source-map',
   mode: isDevelopment ? 'development' : 'production',
   entry: './src/index.tsx',
   devServer: {
@@ -29,20 +50,7 @@ export default {
     filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist'),
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
-    new webpack.DefinePlugin({
-      //   __API_HOST__: config.backend[config.backend.protocol].host,
-      __API_PORT__: (config as unknown as { backend: BackendConfig }).backend[
-        ((config as unknown as { backend: BackendConfig }).backend
-          .protocol as ServerProtocol) || 'http'
-      ]?.port,
-    }),
-  ],
+  plugins,
   resolve: {
     modules: [__dirname, 'src', 'node_modules'],
     // extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
@@ -89,3 +97,5 @@ export default {
     ],
   },
 };
+
+export default configuration;

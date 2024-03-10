@@ -5,7 +5,6 @@ import { routing } from '../router';
 import { processesListLoad, dashboardLoad } from '../../service/process';
 import { appendHistory } from '../../service/dashboard';
 import { UUID } from 'node:crypto';
-// import { candidateProcessPopup } from "./candidate";
 import { $currentDashboard } from './dashboard';
 
 /** @section список процессов (дашбордов) */

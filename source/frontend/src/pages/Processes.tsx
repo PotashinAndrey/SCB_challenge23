@@ -5,7 +5,7 @@ import { routing } from '../context/router';
 import { processesListData } from '../context/model/process';
 import PageList from '../ui/PageList';
 
-const Dashboards: FC = () => {
+const Processes: FC = () => {
   const { store, loading } = useUnit(processesListData);
 
   return (
@@ -17,16 +17,6 @@ const Dashboards: FC = () => {
       renderItem={(item, index) => (
         <List.Item onClick={() => routing.dashboard.open({ dashboard: item.id })}>
           <pre>{JSON.stringify(item, null, 2)}</pre>
-          {/* <List.Item.Meta
-            avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} size={60} />}
-            title={item.name}
-            description={(
-              <Descriptions column={1} size="small">
-                <Descriptions.Item label="Отдел / Команда">{item.project.name}</Descriptions.Item>
-                <Descriptions.Item label="Описание">{item.description}</Descriptions.Item>
-              </Descriptions>
-            )}
-          /> */}
         </List.Item>
       )}
     >
@@ -37,4 +27,4 @@ const Dashboards: FC = () => {
   );
 };
 
-export default Dashboards;
+export default Processes;
