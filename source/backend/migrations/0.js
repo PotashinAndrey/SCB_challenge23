@@ -98,6 +98,7 @@ export default async function migration(client, db) {
   await db.createTable("flow.tasks", "id", {
     id: "uuid public.uuid_generate_v4()",
     process: "uuid",
+    dashboard: "uuid",
     removed: "bool false"
   }, client);
 }

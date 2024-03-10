@@ -30,6 +30,11 @@ export default async function migration(client, db) {
 
   await db.createRelation({
     source: "flow.dashboard.id",
+    target: "flow.tasks.dashboard"
+  }, client);
+
+  await db.createRelation({
+    source: "flow.dashboard.id",
     target: "flow.process.dashboard"
   }, client);
 
