@@ -24,13 +24,13 @@ const dashboardApi = (
   });
 
   fastify.post('/create', async (request, reply) => {
-    const { projectId = '', name = '', description = null } = request.body
+    const { project = '', name = '', description = null } = request.body
       ? JSON.parse(request.body as string)
       : {};
-    console.log('\n\n ', request.body, projectId, name, description, '\n\n');
-    if (!projectId || !name) return {};
+    console.log('\n\n ', request.body, project, name, description, '\n\n');
+    if (!project || !name) return {};
     return await createDashboard({
-      project: projectId,
+      project,
       name,
       description
     }, db);
