@@ -28,7 +28,7 @@ const plugins = [
 if (isDevelopment) {
   plugins.push(
     new webpack.HotModuleReplacementPlugin() as HtmlWebpackPlugin,
-    new ReactRefreshWebpackPlugin() as HtmlWebpackPlugin
+    new ReactRefreshWebpackPlugin() as unknown as HtmlWebpackPlugin
   );
 }
 
