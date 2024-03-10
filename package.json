@@ -29,7 +29,7 @@
     "atomic-router-react": "^0.8.3",
     "classnames": "^2.3.2",
     "deepmerge": "^4.3.1",
-    "effector": "23.2.0",
+    "effector": "^22.0.0",
     "effector-react": "^22.5.3",
     "effector-react-form": "^3.0.0-4",
     "fastify": "^4.17.0",
