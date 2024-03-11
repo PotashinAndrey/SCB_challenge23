@@ -40,7 +40,7 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
       // TODO Подумать как нормально сделать
       const movedTask = JSON.parse(localStorage.getItem('movedTask') || '');
       localStorage.removeItem('movedTask');
-      const taskId = movedTask.process;
+      const taskId = movedTask.id;
       const oldColumnId = movedTask.process;
       // TODO Нужно еще поменять порядок карточек
       updateTask({
