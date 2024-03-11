@@ -12,9 +12,9 @@ import {
   Select,
 } from 'antd';
 import {
-  $currentDashboard,
+  $currentDashboardId,
   $dashboardsList,
-  setCurrentdashboard,
+  setCurrentDashboardId,
 } from 'src/context/model/dashboard';
 import { UserOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
@@ -37,6 +37,10 @@ const leftItems: MenuProps['items'] = [
       {
         key: 'projects',
         label: <Link to={routing.projects}>Проекты</Link>,
+      },
+      {
+        key: 'dashboards',
+        label: <Link to={routing.dashboards}>Доски</Link>,
       },
     ],
   },
@@ -91,7 +95,7 @@ const items: MenuProps['items'] = [
 
 const Header: FC = () => {
   const user = useUnit($user);
-  const selectedDashboard = useStore($currentDashboard);
+  const selectedDashboard = useStore($currentDashboardId);
   const dasboardsList = useStore($dashboardsList);
 
   const dasboardsOptions = useMemo(
@@ -112,7 +116,7 @@ const Header: FC = () => {
           <Select
             aria-label="sda"
             value={selectedDashboard}
-            onChange={setCurrentdashboard}
+            onChange={setCurrentDashboardId}
             style={{ width: '250px' }}
             options={dasboardsOptions}
           />

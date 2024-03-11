@@ -12,6 +12,7 @@ export const routing = {
   processCreate: createRoute(),
   processesList: createRoute(),
   projects: createRoute(),
+  dashboards: createRoute(),
 };
 
 export const routes = [
@@ -21,6 +22,7 @@ export const routes = [
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
   { path: '/projects', route: routing.projects },
+  { path: '/dashboards', route: routing.dashboards },
   // { path: '/posts/:postId', route: postRoute },
 ];
 

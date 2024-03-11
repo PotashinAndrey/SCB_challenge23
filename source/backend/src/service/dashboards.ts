@@ -2,6 +2,7 @@ import type DB from '../../class/DB';
 import type { UUID } from 'node:crypto';
 import { projectById } from './projects';
 import { DashboardModel } from '@app/types/model/dashboard';
+import { HistoryAppendModel } from '@app/types/model/history';
 import { TaskModel } from '@app/types/model/task';
 
 export const dashboardsList = async (db: DB) => {
@@ -34,7 +35,7 @@ export const dashboardById = async (id: UUID, db: DB) => {
 /** Список задач у дашборда */
 export const tasksByDashboardId = (dashboardId: UUID, db: DB): Promise<TaskModel[]> => {
   return db.select({
-    fields: 'tasks.id as task',
+    fields: '*',
     tables: 'flow.tasks',
     where: 'dashboard = $1 and tasks.removed = false',
     values: [dashboardId],
@@ -69,14 +70,18 @@ export const processList = async (db: DB) => {
   });
 };
 
-export const createDashboard = async (values: DashboardModel, db: DB) => {
-  const { project, name } = values;
-  return await db.insert({
-    fields: 'project, name',
+export const createDashboard = async (
+  values: DashboardModel,
+  db: DB
+): Promise<DashboardModel> => {
+  const { project, name, description } = values;
+  const response = await db.insert({
+    fields: 'project, name, description',
     tables: 'flow.dashboard',
-    values: [project, name],
-    returning: 'id',
+    values: [project, name, description],
+    returning: '*',
   });
+  return { ...response.rows[0] };
 };
 
 export const dashboardByProject = async (id: UUID, db: DB) => {
@@ -92,12 +97,28 @@ export const dashboardByProject = async (id: UUID, db: DB) => {
   };
 };
 
-export const historyAppend = async (taskId: UUID, columnId: string, db: DB) => {
-  const id = await db.insertRow({
+export const historyAppend = async (values: HistoryAppendModel, db: DB) => {
+  const { taskId, oldColumnId, newColumnId } = values;
+  const history = await db.insertRow({
     tables: 'flow.history',
-    fields: 'task, to',
-    values: [taskId, columnId],
+    fields: 'task, from, to',
+    values: [taskId, oldColumnId, newColumnId],
   });
 
-  return { id };
+  return { ...history };
+};
+
+export const createProcess = async (
+  dashboard: UUID,
+  name: string,
+  order: string,
+  db: DB
+) => {
+  const process = await db.insertRow({
+    tables: 'flow.process',
+    fields: 'dashboard, name, order',
+    values: [dashboard, name, order],
+  });
+
+  return { ...process };
 };

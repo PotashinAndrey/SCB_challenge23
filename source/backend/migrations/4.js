@@ -39,7 +39,7 @@ export default async function migration(client, db) {
   }, client);
 
   // создаем дашборд
-  const developersFlow = await db.insertRow({
+  const {id} = await db.insertRow({
     fields: "project, name, description",
     values: ['6521d533-4973-413b-9376-c25ecb414941', "найм разработчиков в ЛК", "процесс найма разработчиков (frontend, backend, mobile) в продукт ЛК"],
     tables: "flow.dashboard",
@@ -49,35 +49,35 @@ export default async function migration(client, db) {
   // создаем список шагов в дашборде
   await db.insertRow({
     fields: "dashboard, name, order",
-    values: [developersFlow, "к выполнению", 0],
+    values: [id, "к выполнению", 0],
     tables: "flow.process",
     client
   });
 
   await db.insertRow({
     fields: "dashboard, name, order",
-    values: [developersFlow, "в работе", 1],
+    values: [id, "в работе", 1],
     tables: "flow.process",
     client
   });
 
   await db.insertRow({
     fields: "dashboard, name, order",
-    values: [developersFlow, "ревью", 2],
+    values: [id, "ревью", 2],
     tables: "flow.process",
     client
   });
 
   await db.insertRow({
     fields: "dashboard, name, order",
-    values: [developersFlow, "тестирование", 3],
+    values: [id, "тестирование", 3],
     tables: "flow.process",
     client
   });
 
   await db.insertRow({
     fields: "dashboard, name, order",
-    values: [developersFlow, "готово", 4],
+    values: [id, "готово", 4],
     tables: "flow.process",
     client
   });

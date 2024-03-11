@@ -5,4 +5,7 @@ export type DashboardModel = {
   name: string;
   project: UUID; // UUID
   removed?: boolean;
+  description?: string;
 };
+
+export type DashboardCreateModel = Omit<DashboardModel, 'id' | 'removed'>;

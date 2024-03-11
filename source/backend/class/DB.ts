@@ -11,6 +11,7 @@ import type {
 import { promises as fs } from 'fs';
 import type {
   RequestInsertDB,
+  RequestUpdateDB,
   RequestSelectDB,
   RequestRelationDB,
   RequestUpdateFieldByID,
@@ -56,16 +57,22 @@ class DB {
     return this.query(query, request.client);
   }
 
-  insertRow(request: RequestInsertDB): Promise<UUID> {
+  insertRow<T extends {} = {}>(request: RequestInsertDB): Promise<T> {
     // todo: Omit<returning>
-    return this.insert({ ...request, returning: 'id' }).then((r) => r.rows[0].id);
+    return this.insert({ ...request, returning: '*' }).then((r) => r.rows[0]);
   }
 
-  update() {}
+  update(request: RequestUpdateDB): Promise<any> {
+    const query = {
+      text: SQL.requestUpdateById(request),
+      values: request.values,
+    };
+    return this.query(query, request.client).then((r) => r.rows[0]);
+  }
 
   updateFieldByID<T extends {} = {}>(request: RequestUpdateFieldByID): Promise<T> {
     const query = {
-      text: SQL.requestUpdateFiledByID(request),
+      text: SQL.requestUpdateFieldByID(request),
       values: [request.value, request.id],
     };
     return this.query<T>(query, request.client).then((r) => r.rows[0]);

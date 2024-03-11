@@ -147,10 +147,6 @@
 }
 
 /* APP-SIZES */
-.w-card {
-  width: var(--width-card);
-}
-
 .w-modal {
   width: var(--width-modal);
 }

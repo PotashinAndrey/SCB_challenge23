@@ -10,6 +10,7 @@ import Projects from './Projects';
 import ProcessCreate from './ProcessCreate';
 import Processes from './Processes';
 import PopupsList from './PopupsList';
+import Dashboards from './Dashboards';
 
 const RoutesView = createRoutesView({
   routes: [
@@ -19,6 +20,7 @@ const RoutesView = createRoutesView({
     { route: routing.processCreate, view: ProcessCreate },
     { route: routing.processesList, view: Processes },
     { route: routing.projects, view: Projects },
+    { route: routing.dashboards, view: Dashboards },
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {

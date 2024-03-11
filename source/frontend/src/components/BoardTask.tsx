@@ -1,193 +1,48 @@
 import type { FC } from 'react';
-import { useCallback } from 'react';
-import {
-  Tag,
-  Card,
-  Avatar,
-  Tabs,
-  Divider,
-  Tooltip,
-  Badge,
-  Space,
-  Typography,
-  Descriptions,
-} from 'antd';
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-  AlipayCircleOutlined,
-  AntDesignOutlined,
-  UserOutlined,
-  MessageOutlined,
-} from '@ant-design/icons';
-import Amount from '../ui/Amount';
+import { useCallback, memo } from 'react';
+import { Card, Avatar, Descriptions } from 'antd';
 
-import type { BoardCardModelType } from '@app/types/model/board';
-const { Text } = Typography;
+import { TaskModel } from '@app/types/model/task';
 
 type BoardTaskProps = {
-  task: any; // BoardCardModelType;
-  // title: string;
-  // tagText: string;
-  // id: string;
+  task: TaskModel;
 };
+const BoardTask: FC<BoardTaskProps> = ({ task }) => {
+  const { title, description } = task;
 
-const items = [
-  //  TabsProps['items']
-  {
-    key: '1',
-    label: `Найм`,
-    children: (
-      <Space direction="vertical">
-        <Text>текущая задача по найму</Text>
-        <Text>на чьей стороне "мячик"</Text>
-        <Text>например, "выполняет тестовое задание"</Text>
-      </Space>
-    ),
-  },
-  {
-    key: '2',
-    label: `Оценки`,
-    children: `Саммари оценок / заметок по кандидату по предыдущим этапам`,
-  },
-  {
-    key: '3',
-    // label: `Tab 2`,
-    label: (
-      <Badge count={1000} overflowCount={9} size="small">
-        <MessageOutlined />
-        <Text className="mr-2">Чат</Text>
-      </Badge>
-    ),
-    children: `последние сообщения от кандидата`,
-  },
-];
-
-const onChange = (key: string) => {
-  console.log(key);
-};
-
-const BoardTask: FC<BoardTaskProps> = (props) => {
-  const { task } = props;
-  const { name, id } = task;
-  console.log('task task', task);
-  // const [isModalOpen, setModalOpen] = useState(false);
-
-  const handleDragStart = useCallback(
-    (ev: any) => {
-      console.log('id drqagstart', task.task);
-      ev.dataTransfer.setData('taskId', task.task);
-    },
-    [task]
-  );
-
-  // const handleClik = () => {
-  //   setModalOpen(false);
-  // }
+  const handleDragStart = useCallback(() => {
+    localStorage.setItem('movedTask', JSON.stringify(task));
+  }, [task]);
 
   return (
-    // <>
-    <Badge.Ribbon text="Hippies">
-      <Card
-        hoverable
-        // size="small"
-        // title={name}
-        // onClick={() => setModalOpen(true)}
-        onClick={() => console.log('TODO OPEN CREATE TASK POPUP')}
-        onDragStart={handleDragStart}
-        draggable
-        // extra={<a>Открыть</a>}
-        // tabList={tabList}
-        // style={{ width: 300 }}
-        className="w-card"
-        actions={[
-          // <Space size="large">
-          //   <EditOutlined />
-          //   <Badge count={1000} overflowCount={9} size="small">
-          //     <MessageOutlined />
-          //   </Badge>
-          // </Space>,
-          <Amount mode={Math.random() < 0.5 ? 'from' : 'to'} value={task.salary} />,
-          // <SettingOutlined />,
-          // <EllipsisOutlined />,
-          // <AlipayCircleOutlined />
-          <Avatar.Group
-            size="small"
-            maxCount={2}
-            maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-          >
-            <Avatar
-              size="small"
-              src={
-                'https://xsgames.co/randomusers/avatar.php?g=pixel&key=2&' + Math.random()
-              }
-            />
-            <Avatar size="small" style={{ backgroundColor: '#f56a00' }}>
-              K
-            </Avatar>
-            <Tooltip title="Ant User" placement="top">
-              <Avatar
-                size="small"
-                style={{ backgroundColor: '#87d068' }}
-                icon={<UserOutlined />}
-              />
-            </Tooltip>
-            <Avatar
-              size="small"
-              style={{ backgroundColor: '#1677ff' }}
-              icon={<AntDesignOutlined />}
-            />
-          </Avatar.Group>,
-        ]}
-      >
-        <Card.Meta
-          avatar={
-            <Avatar
-              size={60}
-              src={
-                'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1&' + Math.random()
-              }
-            />
-          }
-          title={name}
-          description="Должность из резюме"
-        />
-
-        <div className="mt-4">
-          <Tag color="yellow">{task.grade}</Tag>
-          <Tag color="volcano">{Math.random() < 0.5 ? 'frontend' : 'iOS'}</Tag>
-          <Tag>{Math.random() < 0.5 ? 'удалёнка' : 'в офисе'}</Tag>
-
-          <Divider />
-
-          {/*  title="User Info" */}
-          <Descriptions column={1} size="small">
-            {/* <Descriptions.Item label="Инфо">26 лет</Descriptions.Item>
-            <Descriptions.Item label="Образование">Высшее</Descriptions.Item> */}
-            <Descriptions.Item label="Опыт">{task.experience}</Descriptions.Item>
-            {/* <Descriptions.Item label="Локация">Уфа, Россия</Descriptions.Item> */}
-            {/* <Descriptions.Item label="Образование">УГАТУ</Descriptions.Item> */}
-            {/* <Descriptions.Item label="Live">Hangzhou, Zhejiang</Descriptions.Item>
-            <Descriptions.Item label="Remark">empty</Descriptions.Item>
-            <Descriptions.Item label="Address">
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-            </Descriptions.Item> */}
-          </Descriptions>
-
-          <Tag>{Math.random() < 0.5 ? 'хакатоны' : 'олимпиады'}</Tag>
-          <Tag>{Math.random() < 0.5 ? 'архитектура' : 'react'}</Tag>
-
-          <Tabs
-            defaultActiveKey={Math.random() < 0.5 ? '1' : '2'}
-            items={items}
-            onChange={onChange}
+    <Card
+      size="small"
+      hoverable
+      onClick={() => console.log('TODO OPEN CREATE TASK POPUP')}
+      onDragStart={handleDragStart}
+      draggable
+      className="w-card"
+    >
+      <Card.Meta
+        avatar={
+          // TODO Тут отображать исполнителя
+          <Avatar
+            size={30}
+            src={
+              'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1&' + Math.random()
+            }
           />
-        </div>
-      </Card>
-    </Badge.Ribbon>
-    // </>
+        }
+        title={title}
+      />
+
+      <div className="mt-4">
+        <Descriptions size="small">
+          <Descriptions.Item>{description}</Descriptions.Item>
+        </Descriptions>
+      </div>
+    </Card>
   );
 };
 
-export default BoardTask;
+export default memo(BoardTask);

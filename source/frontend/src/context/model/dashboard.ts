@@ -1,24 +1,77 @@
 import { createEffect, sample, createEvent, createStore } from 'effector';
+import { createForm } from 'effector-react-form';
 import type { UUID } from 'node:crypto';
+import factoryPopupBehaviour from '../factory/popup';
 
 import { DashboardModel } from '@app/types/model/dashboard';
 
-import factoryExteralData from '../factory/external';
-import { getDashboardsList } from '../../service/dashboard';
+import { getDashboardsList, createDashboardRequest } from '../../service/dashboard';
+import { $currentProjectId } from './project';
+import { routing } from '../router';
 
 export const fetchDashboardsList = createEvent();
-export const setCurrentdashboard = createEvent<UUID | null>();
+export const setCurrentDashboardId = createEvent<UUID | null>();
 export const fetchDashboardsListFx = createEffect(getDashboardsList);
+const createDashboardFx = createEffect(
+  async (values: {
+    projectId: UUID;
+    name: string;
+    description?: string;
+    columns?: string[];
+  }) => {
+    const result = await createDashboardRequest(
+      values.projectId,
+      values.name,
+      values.description,
+      values.columns
+    );
+    return result;
+  }
+);
 
-export const $currentDashboard = createStore<UUID | null>(null)
+export const $currentDashboardId = createStore<UUID | null>(null)
   .on(fetchDashboardsListFx.doneData, (_state, data) => data[0]?.id ?? null)
-  .on(setCurrentdashboard, (_state, newDashboard) => newDashboard);
+  .on(setCurrentDashboardId, (_state, newDashboard) => newDashboard);
 export const $dashboardsList = createStore<DashboardModel[]>([]).on(
   fetchDashboardsListFx.doneData,
-  (_state, data) => data
+  (_state, data) => data || []
 );
 
 sample({
-  clock: fetchDashboardsList,
+  clock: [createDashboardFx.doneData, fetchDashboardsList, routing.dashboards.opened],
   target: fetchDashboardsListFx,
+});
+
+export const createDashboardPopup = factoryPopupBehaviour();
+
+export const createDashbordForm = createForm();
+
+export const createDashbordFormSubmit = createEvent<any>();
+
+export const $canAddNewColumn = createStore(true);
+sample({
+  clock: createDashbordForm.$values,
+  source: createDashbordForm.$values,
+  fn: (formValues) => {
+    if (!formValues?.columns?.length) return true;
+    return formValues?.columns?.length < 7;
+  },
+  target: $canAddNewColumn,
+});
+
+sample({
+  clock: createDashbordFormSubmit,
+  source: [createDashbordForm.$values, $currentProjectId],
+  fn: ([formValues, currentProjectId]) => ({
+    name: formValues.name,
+    description: formValues.description,
+    projectId: currentProjectId,
+    columns: formValues.columns.filter((column: string) => column.length !== 0),
+  }),
+  target: createDashboardFx,
+});
+
+sample({
+  clock: createDashboardFx.done,
+  target: [createDashbordForm.reset, createDashboardPopup.close],
 });

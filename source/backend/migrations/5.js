@@ -33,5 +33,4 @@ export default async function migration(client, db) {
     source: "flow.process.id",
     target: "flow.history.to"
   });
-
 }

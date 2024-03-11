@@ -99,6 +99,8 @@ export default async function migration(client, db) {
     id: "uuid public.uuid_generate_v4()",
     process: "uuid",
     dashboard: "uuid",
+    title: "text",
+    description: "text",
     removed: "bool false"
   }, client);
 }
