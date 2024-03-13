@@ -10,7 +10,7 @@ import {
 } from '../context/model/dashboard';
 import { InputField, TextAreaField } from '../form/input';
 
-import Paper from 'src/ui/Paper';
+import Paper from '@ui/Paper';
 
 const hide = () => createDashboardPopup.close();
 const { Text } = Typography;

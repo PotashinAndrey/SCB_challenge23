@@ -53,32 +53,27 @@ const configuration: Configuration = {
   plugins,
   resolve: {
     modules: [__dirname, 'src', 'node_modules'],
-    // extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
+    alias: {
+      "@ui": path.resolve(__dirname, "src/ui"),
+      "@context": path.resolve(__dirname, "src/context"),
+      "@service": path.resolve(__dirname, "src/service"),
+
+      // кандидаты на улучшение
+      "@form": path.resolve(__dirname, "src/form"),
+      "@popup": path.resolve(__dirname, "src/popup"),
+      "@component": path.resolve(__dirname, "src/component"),
+    }
   },
   module: {
     rules: [
       {
         test: /\.ts$|tsx/,
         exclude: /node_modules/,
-        // loader: require.resolve("babel-loader"),
-        // loader: (async () => {
-        //   const dependencyAsset = await import.meta.resolve('babel-loader');
-        // })(),
-        // use: "babel-loader",
-        // options: {
-        //   plugins: [
-        //     // isDevelopment && require.resolve("react-refresh/babel"),
-        //     // isDevelopment && (async () => {
-        //     //   const dependencyAsset = await import.meta.resolve('react-refresh/babel');
-        //     // })()
-        //     isDevelopment
-        //   ].filter(Boolean),
-        // },
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [['@babel/preset-env', { targets: 'defaults' }]],
+            presets: [['@babel/preset-env', { targets: 'defaults' }], '@babel/preset-typescript']
           },
         },
       },

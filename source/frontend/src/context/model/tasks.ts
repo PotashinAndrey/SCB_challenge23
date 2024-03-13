@@ -1,10 +1,10 @@
 import { TaskModel } from '@app/types/model/task';
 import { createEffect, createEvent, sample } from 'effector';
 import { taskCreate, taskUpdate } from 'src/service/tasks';
-import { createVisibilityController } from 'src/utils/visibilityController';
+import factoryPopupBehaviour from '../factory/popup';
 import { loadDashboard } from './process';
 
-export const modalToggler = createVisibilityController(false);
+export const modalToggler = factoryPopupBehaviour();
 
 export const createTask = createEvent<TaskModel>();
 export const updateTask = createEvent<TaskModel>();

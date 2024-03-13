@@ -24,7 +24,10 @@
       "@app/types": ["../types"],
       "@app/types/*": ["../types/*"],
       "@app/scripts": ["../scripts"],
-      "@app/scripts/*": ["../scripts/*"]
+      "@app/scripts/*": ["../scripts/*"],
+
+      "@ui": ["./src/ui"],
+      "@ui/*": ["./src/ui/*"],
     }
   },
   "ts-node": {
