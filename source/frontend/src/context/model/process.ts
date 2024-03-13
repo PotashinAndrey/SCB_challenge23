@@ -3,7 +3,7 @@ import factoryPopupBehaviour from '../factory/popup';
 import factoryExteralData from '../factory/external';
 import { routing } from '../router';
 import { processesListLoad, dashboardLoad } from '../../service/process';
-import { UUID } from 'node:crypto';
+import type { UUID } from 'node:crypto';
 import { $currentDashboardId } from './dashboard';
 
 /** @section список процессов (дашбордов) */
