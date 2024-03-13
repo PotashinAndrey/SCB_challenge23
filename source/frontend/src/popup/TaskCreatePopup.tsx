@@ -1,32 +1,31 @@
-import { FC, useMemo } from 'react';
-import { useStore } from 'effector-react';
+import type { FC } from 'react';
+import type { TaskModel } from '@app/types/model/task';
+import { useStore, useUnit } from 'effector-react';
 import { Modal, Input, Select, Form, Button, Typography } from 'antd';
-import { createTask, modalToggler } from '../../src/context/model/tasks';
+import { createTask, createTaskPopup } from '../context/model/tasks';
 import TextArea from 'antd/es/input/TextArea';
 import { useForm } from 'antd/es/form/Form';
-import { $currentDashboardId } from '../../src/context/model/dashboard';
-import { TaskModel } from '@app/types/model/task';
-import { dashboardData, processesListData } from '../context/model/process';
+import { $currentDashboardId } from '../context/model/dashboard';
+import { dashboardData } from '../context/model/process';
 
 const { Text } = Typography;
 
 type TaskCreateFormValues = Pick<TaskModel, 'title' | 'description' | 'process'>;
 
-const TaskCreate: FC = () => {
+const TaskCreatePopup: FC = () => {
   const [form] = useForm();
   const dashboardId = useStore($currentDashboardId);
   const dashboard = useStore(dashboardData.$store);
-  const { close } = modalToggler;
-  const isOpen = useStore(modalToggler.$isOpen);
+  const { visible, close } = useUnit(createTaskPopup);
 
-  const processesToSelect = useMemo(() => {
-    const options =
+  const getProcessesToSelect = () => {
+    const baseOptions =
       dashboard?.processes?.map((proc: any) => ({
         value: proc.id,
         label: proc.name,
       })) ?? [];
-    return [{ label: 'Выберите процесс', value: '', disabled: true }, ...options];
-  }, [dashboard]);
+    return [{ label: 'Выберите процесс', value: '', disabled: true }, ...baseOptions];
+  };
 
   const onTaskCreate = (values: TaskCreateFormValues) => {
     createTask({
@@ -37,7 +36,7 @@ const TaskCreate: FC = () => {
   return (
     <Modal
       destroyOnClose
-      open={isOpen}
+      open={visible}
       width={800}
       closable
       onCancel={() => close()}
@@ -55,7 +54,10 @@ const TaskCreate: FC = () => {
         </Form.Item>
         <Text>Процесс</Text>
         <Form.Item name="process">
-          <Select options={processesToSelect} placeholder="Выберите процесс"></Select>
+          <Select
+            options={getProcessesToSelect()}
+            placeholder="Выберите процесс"
+          ></Select>
         </Form.Item>
         <Button htmlType="submit" key="submit" form="TaskCreateForm" type="primary">
           Создать
@@ -65,4 +67,4 @@ const TaskCreate: FC = () => {
   );
 };
 
-export default TaskCreate;
+export default TaskCreatePopup;

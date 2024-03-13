@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback } from 'react';
 import { Children } from 'react';
 import { useStoreMap } from 'effector-react';
 import { Typography } from 'antd';

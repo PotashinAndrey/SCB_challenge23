@@ -3,6 +3,7 @@ import { useCallback, memo } from 'react';
 import { Card, Avatar, Descriptions } from 'antd';
 
 import { TaskModel } from '@app/types/model/task';
+import { setCurrentTask, taskViewPopup } from 'src/context/model/tasks';
 
 type BoardTaskProps = {
   task: TaskModel;
@@ -14,11 +15,16 @@ const BoardTask: FC<BoardTaskProps> = ({ task }) => {
     localStorage.setItem('movedTask', JSON.stringify(task));
   }, [task]);
 
+  const onCardOpen = () => {
+    taskViewPopup.open();
+    setCurrentTask(task);
+  };
+
   return (
     <Card
       size="small"
       hoverable
-      onClick={() => console.log('TODO OPEN CREATE TASK POPUP')}
+      onClick={onCardOpen}
       onDragStart={handleDragStart}
       draggable
       className="w-card"
