@@ -1,14 +1,16 @@
 import type { FC } from 'react';
 
-import ProcessCreateStepAppendPopup from '../popup/ProcessCreateStepAppendPopup';
+import TaskViewPopup from '../popup/TaskViewPopup';
 import CreateDashboardPopup from '../popup/CreateDashboardPopup';
+import TaskCreatePopup from '../popup/TaskCreatePopup';
 
 /** PopupsList -  */
 const PopupsList: FC = () => {
   return (
     <>
-      <ProcessCreateStepAppendPopup />
       <CreateDashboardPopup />
+      <TaskCreatePopup />
+      <TaskViewPopup />
     </>
   );
 };
