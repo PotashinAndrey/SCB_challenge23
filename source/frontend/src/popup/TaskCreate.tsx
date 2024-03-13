@@ -1,10 +1,10 @@
 import { FC, useMemo } from 'react';
 import { useStore } from 'effector-react';
 import { Modal, Input, Select, Form, Button, Typography } from 'antd';
-import { createTask, modalToggler } from '../src/context/model/tasks';
+import { createTask, modalToggler } from '../../src/context/model/tasks';
 import TextArea from 'antd/es/input/TextArea';
 import { useForm } from 'antd/es/form/Form';
-import { $currentDashboardId } from '../src/context/model/dashboard';
+import { $currentDashboardId } from '../../src/context/model/dashboard';
 import { TaskModel } from '@app/types/model/task';
 import { dashboardData, processesListData } from '../context/model/process';
 
