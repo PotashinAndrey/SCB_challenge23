@@ -23,24 +23,29 @@ export const isTaskUpdating = updateTaskFx.pending;
 
 sample({
   clock: createTask,
-  target: createTaskFx,
+  target: createTaskFx
 });
 
 sample({
   clock: updateTask,
-  target: updateTaskFx,
+  target: updateTaskFx
 });
 
 // TODO Сделать чтобы при создании таски, с бека возвращался таск,
 //  тогда не придется заново весь дашборд запрашивать
 sample({
   clock: createTaskFx.done,
-  target: [createTaskPopup.close, loadDashboard],
+  target: [createTaskPopup.close, loadDashboard]
 });
 
 // TODO Сделать чтобы при обновлении таски, с бека возвращался таск,
 //  тогда не придется заново весь дашборд запрашивать
 sample({
   clock: updateTaskFx.done,
-  target: loadDashboard,
+  target: loadDashboard
+});
+
+sample({
+  clock: updateTaskFx.doneData,
+  target: setCurrentTask
 });
