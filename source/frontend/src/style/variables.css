@@ -25,3 +25,45 @@
   --width-modal: 540px;
   --width-aside: 360px;
 }
+
+/* body.dark-mode {
+  background-color: #141414;
+} */
+/*
+body {
+  background-color: Canvas;
+  color: CanvasText;
+  color-scheme: light dark;
+} */
+
+:where(html) {
+  --darkmode: 0;
+  container-name: root;
+  container-type: normal;
+}
+
+body {
+  --background-color: #FFF;
+  --text-color: #222;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  color-scheme: light dark;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  html { --darkmode: 1; }
+}
+@media (prefers-color-scheme: light) {
+  html { --darkmode: 0; }
+}
+
+html:has(#color-scheme-light:checked) { --darkmode: 0; }
+html:has(#color-scheme-dark:checked) { --darkmode: 1; }
+
+@container root style(--darkmode: 1) {
+  body {
+    --background-color: hsl(228, 5%, 15%);
+    --text-color: hsl(228, 5%, 80%);
+  }
+}

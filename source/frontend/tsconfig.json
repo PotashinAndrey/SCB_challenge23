@@ -28,6 +28,8 @@
 
       "@ui": ["./src/ui"],
       "@ui/*": ["./src/ui/*"],
+      "@context": ["./src/context"],
+      "@context/*": ["./src/context/*"],
     }
   },
   "ts-node": {

@@ -1,6 +1,8 @@
 import type { FC } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createRoutesView, Link } from 'atomic-router-react';
-import { routing } from '../context/router';
+import { ConfigProvider, theme, App } from 'antd';
+import { routing } from '@context/router';
 import Header from '../components/Header';
 
 import Login from './Login';
@@ -51,14 +53,39 @@ const RoutesView = createRoutesView({
   },
 });
 
-const App: FC = () => {
+const Application: FC = () => {
+  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light");
+
+  const changeTheme = useCallback((toDark: boolean) => {
+    setCurrentTheme(toDark ? "dark" : "light");
+    document.documentElement.style.setProperty('--darkmode', toDark ? "1" : "0");
+  }, []);
+
+  useEffect(() => {
+    const isDarkTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    changeTheme(isDarkTheme);
+
+    const changeThemeEvent = (e: MediaQueryListEvent) => changeTheme(e.matches);
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change", changeThemeEvent);
+    return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener("change", changeThemeEvent);
+  }, []);
+
   return (
-    <div className="application">
-      <Header />
-      <RoutesView />
-      <PopupsList />
-    </div>
+    <ConfigProvider
+      theme={{
+        cssVar: true,
+        algorithm: currentTheme === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm // [theme.darkAlgorithm, theme.compactAlgorithm]
+      }}
+    >
+      <App>
+        <div className="application">
+          <Header theme={currentTheme} changeTheme={changeTheme} />
+          <RoutesView />
+          <PopupsList />
+        </div>
+      </App>
+    </ConfigProvider >
   );
 };
 
-export default App;
+export default Application;

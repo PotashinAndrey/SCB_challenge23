@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useUnit, useStore } from 'effector-react';
 import {
   Menu,
@@ -9,7 +9,7 @@ import {
   Avatar,
   Space,
   Typography,
-  Select,
+  Select
 } from 'antd';
 import {
   $currentDashboardId,
@@ -74,26 +74,13 @@ const leftItems: MenuProps['items'] = [
   },
 ];
 
-const onClick: MenuProps['onClick'] = ({ key }) => {
-  message.info(`Click on item ${key}`);
+type ThemeProps = {
+  theme: "light" | "dark";
+  changeTheme: (toDark: boolean) => void;
 };
 
-const items: MenuProps['items'] = [
-  {
-    label: 'Профиль',
-    key: '1',
-  },
-  {
-    label: 'Параметры',
-    key: '2',
-  },
-  {
-    label: 'Выход из системы',
-    key: '3',
-  },
-];
-
-const Header: FC = () => {
+const Header: FC<ThemeProps> = props => {
+  const { theme, changeTheme } = props;
   const user = useUnit($user);
   const selectedDashboard = useStore($currentDashboardId);
   const dasboardsList = useStore($dashboardsList);
@@ -106,6 +93,28 @@ const Header: FC = () => {
       })),
     [dasboardsList]
   );
+
+  const setCurrentTheme = useCallback(() => changeTheme(theme === "light"), [theme, changeTheme]);
+
+  const items: MenuProps['items'] = [
+  {
+    label: 'Профиль',
+    key: '1',
+  },
+  {
+    label: 'Параметры',
+    key: '2',
+  },
+  {
+    label: "Тема",
+    key: 'theme',
+    onClick: setCurrentTheme
+  },
+  {
+    label: 'Выход из системы',
+    key: '3',
+  },
+];
 
   return (
     <div className="flex items-center space-between padding margin">
@@ -123,7 +132,7 @@ const Header: FC = () => {
         </Space>
       </div>
 
-      <Dropdown menu={{ items, onClick }}>
+      <Dropdown menu={{ items }}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             <Text>{user.name}</Text>
