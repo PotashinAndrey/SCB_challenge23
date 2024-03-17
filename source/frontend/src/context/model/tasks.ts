@@ -1,8 +1,10 @@
+import { createForm } from 'effector-react-form';
 import { TaskModel } from '@app/types/model/task';
 import { createEffect, createEvent, sample, createStore } from 'effector';
 import { taskCreate, taskUpdate } from 'src/service/tasks';
 import factoryPopupBehaviour from '../factory/popup';
 import { loadDashboard } from './process';
+import { $currentDashboardId } from './dashboard';
 
 export const createTask = createEvent<TaskModel>();
 export const updateTask = createEvent<TaskModel>();
@@ -48,4 +50,19 @@ sample({
 sample({
   clock: updateTaskFx.doneData,
   target: setCurrentTask
+});
+
+export const createTaskForm = createForm();
+export const createTaskFormSubmit = createEvent<any>();
+
+sample({
+  clock: createTaskFormSubmit,
+  source: [createTaskForm.$values, $currentDashboardId],
+  fn: ([formValues, currentDashboardId]) => ({
+    process: formValues.process,
+    dashboard: currentDashboardId,
+    title: formValues.name,
+    description: formValues.description,
+  }),
+  target: createTaskFx,
 });

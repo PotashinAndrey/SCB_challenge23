@@ -1,5 +1,5 @@
-import { FC, useCallback } from 'react';
-import { Children } from 'react';
+import { FC, useCallback, Children } from 'react';
+
 import { useStoreMap } from 'effector-react';
 import { Typography } from 'antd';
 import { $dashboardDataTasks } from '../context/model/process';
@@ -24,8 +24,7 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
 
   const tasks = useStoreMap({
     store: $dashboardDataTasks,
-    fn: (dashboardDataTasks) =>
-      dashboardDataTasks.filter((t: any) => t.process === column.id),
+    fn: (dashboardDataTasks) => dashboardDataTasks.filter((t: any) => t.process === column.id),
     keys: [column],
     defaultValue: [],
   });
