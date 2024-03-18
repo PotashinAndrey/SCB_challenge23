@@ -1,10 +1,13 @@
 import { FC, useState, useReducer, useEffect, ChangeEvent, useCallback } from 'react';
 import { useStore, useUnit } from 'effector-react';
-import { Modal } from 'antd';
-import { $currentTask, taskViewPopup, updateTask } from '../context/model/tasks';
+import { Button, Modal } from 'antd';
+import { $currentTask, taskViewPopup, updateTask } from '../../context/model/tasks';
 import { TaskModel } from '@app/types/model/task';
-import { EditableTaskTitle } from './TaskViewPopup/EditableTaskTitle';
-import { EditableTaskDescription } from './TaskViewPopup/EditableTaskDescription';
+import { EditableTaskTitle } from './EditableTaskTitle';
+import { EditableTaskDescription } from './EditableTaskDescription';
+import { TaskActions } from './TaskActions';
+
+import "./TaskViewPopup.css";
 
 const reducer = (state: TaskModel, payload: Partial<TaskModel>): TaskModel => {
   return { ...state, ...payload };
@@ -27,6 +30,11 @@ const TaskViewPopup: FC = () => {
     updateTask(editableTask);
   }, [editableTask]);
 
+  const saveAndClose = () => {
+    onSave();
+    close();
+  }
+
   return (
     <Modal
       destroyOnClose
@@ -43,15 +51,25 @@ const TaskViewPopup: FC = () => {
           onReset={onReset}
         />
       }
-      footer={[]}
+      footer={[
+        <Button type="text" onClick={close}>Закрыть</Button>,
+        <Button type="primary" onClick={saveAndClose}>Сохранить</Button>
+      ]}
     >
-      <EditableTaskDescription
-        task={task}
-        editableTask={editableTask}
-        dispatchTaskEdit={dispatchTaskEdit}
-        onSave={onSave}
-        onReset={onReset}
-      />
+      <div className="editableTaskPopupBody">
+        <EditableTaskDescription
+          task={task}
+          editableTask={editableTask}
+          dispatchTaskEdit={dispatchTaskEdit}
+          onSave={onSave}
+          onReset={onReset}
+        />
+        <TaskActions
+          task={task}
+          editableTask={editableTask}
+          dispatchTaskEdit={dispatchTaskEdit}
+        />
+      </div>
     </Modal>
   );
 };

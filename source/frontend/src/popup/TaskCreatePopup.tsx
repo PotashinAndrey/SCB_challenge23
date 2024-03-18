@@ -1,20 +1,14 @@
 import type { FC } from 'react';
-import type { TaskModel } from '@app/types/model/task';
 import { useStore, useUnit } from 'effector-react';
-import { Modal, Button, Typography } from 'antd';
+import { Modal, Button } from 'antd';
 import { useForm } from 'effector-react-form';
-import { createTask, createTaskForm, createTaskFormSubmit, createTaskPopup } from '../context/model/tasks';
-import { $currentDashboardId } from '../context/model/dashboard';
+import { createTaskForm, createTaskFormSubmit, createTaskPopup } from '../context/model/tasks';
 import { dashboardData } from '../context/model/process';
 import { InputField, TextAreaField } from '../form/input';
 import { SelectField } from 'src/form/select';
 
-const { Text } = Typography;
-
-type TaskCreateFormValues = Pick<TaskModel, 'title' | 'description' | 'process'>;
 
 const TaskCreatePopup: FC = () => {
-  const dashboardId = useStore($currentDashboardId);
   const dashboard = useStore(dashboardData.$store);
   const { visible, close } = useUnit(createTaskPopup);
   const { controller } = useForm({ form: createTaskForm });
