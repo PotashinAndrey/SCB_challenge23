@@ -13,7 +13,7 @@ const Login: FC = () => {
 
   return (
     <div className="flex center items-center mt-content">
-      <Card title="Авторизация" extra={<a href="#">Регистрация</a>} style={{ width: 480 }}>
+      <Card title="Авторизация" extra={<a href="#/registration">Регистрация</a>} style={{ width: 480 }}>
         <InputField
           controller={controller({ name: 'login' })}
           label={'Электронная почта'}

@@ -1,12 +1,12 @@
-import { FC } from 'react';
+import type { FC } from 'react';
+import { useEffect } from 'react';
 import { useUnit } from 'effector-react';
-import { Button, Checkbox, Input, Typography } from 'antd';
+import { Button, Checkbox, Input, Typography, Card } from 'antd';
 import { useForm } from 'effector-react-form';
 
-import { registrationForm, registrationFormSubmit, $user } from '../context/registration';
+import { registrationForm, registrationFormSubmit, $user } from '@context/registration';
 
 import { InputField } from '../form/input';
-import { useEffect } from 'react';
 
 const { Title } = Typography;
 
@@ -18,10 +18,8 @@ const Registration: FC = () => {
   useEffect(() => console.log({ user }), [user]);
 
   return (
-    <div className="page-wrap page-registration">
-      <div className="section-wrap">
-        <Title>Регистрация</Title>
-
+    <div className="flex center items-center mt-content">
+      <Card title="Регистрация" extra={<a href="#/login">Уже зарегистрированы?</a>} style={{ width: 480 }}>
         <InputField controller={controller({ name: 'name' })} label={'Имя'} />
         <InputField
           controller={controller({ name: 'email' })}
@@ -36,9 +34,10 @@ const Registration: FC = () => {
         <Button onClick={registrationFormSubmit} type="primary" htmlType="submit">
           Зарегистрироваться
         </Button>
-      </div>
+        <Button type="link">Забыли пароль?</Button>
 
-      {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+        <pre>{JSON.stringify(user, null, 2)}</pre>
+      </Card>
     </div>
   );
 };
