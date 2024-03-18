@@ -1,15 +1,12 @@
-import { FC, useCallback, Children } from 'react';
-
+import type { UUID } from 'crypto';
+import { type FC, useCallback, Children } from 'react';
 import { useStoreMap } from 'effector-react';
-import { Typography } from 'antd';
-import { $dashboardDataTasks } from '../context/model/process';
+import { Typography, Card } from 'antd';
+import { appendHistory } from '@context/model/history';
+import { updateTask } from '@context/model/tasks';
+import { $dashboardDataTasks } from '@context/model/process';
 import type { BoardColumnModelType } from '@app/types/model/board';
 import BoardTask from './BoardTask';
-
-import '../style/BoardColumn.css';
-import { appendHistory } from 'src/context/model/history';
-import { updateTask } from 'src/context/model/tasks';
-import { UUID } from 'crypto';
 
 const { Text } = Typography;
 
@@ -58,19 +55,9 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
   );
 
   return (
-    <div
-      className="column-component boxAndRadius"
-      onDrop={handleDrop}
-      onDragOver={onDragOverHandler}
-    >
-      <h4 className="column-header">
-        <Text>{name}</Text>
-      </h4>
-
-      <div className="column-content">
-        {Children.toArray(tasks.map((t: any) => <BoardTask task={t} />))}
-      </div>
-    </div>
+    <Card title={name} type="inner" style={{ width: 300 }} onDrop={handleDrop} onDragOver={onDragOverHandler}>
+      {Children.toArray(tasks.map((t: any) => <BoardTask task={t} />))}
+    </Card>
   );
 };
 

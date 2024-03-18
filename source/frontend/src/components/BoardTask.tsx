@@ -1,9 +1,8 @@
 import type { FC } from 'react';
 import { useCallback, memo } from 'react';
 import { Card, Avatar, Descriptions } from 'antd';
-
+import { setCurrentTask, taskViewPopup } from '@context/model/tasks';
 import { TaskModel } from '@app/types/model/task';
-import { setCurrentTask, taskViewPopup } from 'src/context/model/tasks';
 
 type BoardTaskProps = {
   task: TaskModel;

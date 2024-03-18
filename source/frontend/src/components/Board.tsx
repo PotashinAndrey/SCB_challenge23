@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import { useEffect, Children, useMemo } from 'react';
 import { useUnit } from 'effector-react';
-import { Spin } from 'antd';
-import { dashboardData } from '../context/model/process';
+import { Spin, Flex } from 'antd';
+import { dashboardData } from '@context/model/process';
 import type { BoardColumnModelType } from '@app/types/model/board';
 
 import BoardColumn from './BoardColumn';
