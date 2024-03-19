@@ -7,8 +7,8 @@ import {
   createDashboardPopup,
   createDashbordForm,
   createDashbordFormSubmit,
-} from '../context/model/dashboard';
-import { InputField, TextAreaField } from '../form/input';
+} from '@context/model/dashboard';
+import { InputField, TextAreaField } from '@form/input';
 
 import Paper from '@ui/Paper';
 

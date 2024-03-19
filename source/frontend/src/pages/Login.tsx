@@ -4,7 +4,7 @@ import { useUnit } from 'effector-react';
 import { useForm } from 'effector-react-form';
 import { loginForm, loginFormSubmit, $user } from '@context/login';
 
-import { InputField } from '../form/input';
+import { InputField } from '@form/input';
 
 const Login: FC = () => {
   const { controller } = useForm({ form: loginForm });

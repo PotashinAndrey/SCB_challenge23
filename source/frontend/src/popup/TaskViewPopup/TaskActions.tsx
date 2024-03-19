@@ -16,12 +16,12 @@ const TaskActionRow: FC<TaskActionRowProps & PropsWithChildren> = (props) => {
   const { text, children } = props;
 
   return (
-    <Flex>
+    <div>
       <Text style={{ marginRight: "10px" }}>
         {text}
       </Text>
       {children}
-    </Flex>
+    </div>
   );
 }
 

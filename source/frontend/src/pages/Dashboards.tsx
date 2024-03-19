@@ -1,12 +1,9 @@
 import type { FC } from 'react';
-import { useEffect } from 'react';
-import { Avatar, Button, List, Typography } from 'antd';
+import { Button, List } from 'antd';
 import { useStore, useUnit } from 'effector-react';
-import PageList from '../ui/PageList';
-import { DashboardModel } from '@app/types/model/dashboard';
-import { $dashboardsList, createDashboardPopup } from '../context/model/dashboard';
-
-import '../style/Dashboards.css';
+import { $dashboardsList, createDashboardPopup } from '@context/model/dashboard';
+import PageList from '@ui/PageList';
+import type { DashboardModel } from '@app/types/model/dashboard';
 
 const Dashboards: FC = () => {
   const dasboardsList = useStore<DashboardModel[]>($dashboardsList);

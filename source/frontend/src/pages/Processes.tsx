@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { Avatar, Button, List, Descriptions } from 'antd';
 import { useUnit } from 'effector-react';
-import { routing } from '../context/router';
-import { processesListData } from '../context/model/process';
-import PageList from '../ui/PageList';
+import { routing } from '@context/router';
+import { processesListData } from '@context/model/process';
+import PageList from '@ui/PageList';
 
 const Processes: FC = () => {
   const { store, loading } = useUnit(processesListData);

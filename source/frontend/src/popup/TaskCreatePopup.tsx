@@ -2,10 +2,10 @@ import type { FC } from 'react';
 import { useStore, useUnit } from 'effector-react';
 import { Modal, Button } from 'antd';
 import { useForm } from 'effector-react-form';
-import { createTaskForm, createTaskFormSubmit, createTaskPopup } from '../context/model/tasks';
-import { dashboardData } from '../context/model/process';
-import { InputField, TextAreaField } from '../form/input';
-import { SelectField } from 'src/form/select';
+import { createTaskForm, createTaskFormSubmit, createTaskPopup } from '@context/model/tasks';
+import { dashboardData } from '@context/model/process';
+import { InputField, TextAreaField } from '@form/input';
+import { SelectField } from '@form/select';
 
 
 const TaskCreatePopup: FC = () => {
