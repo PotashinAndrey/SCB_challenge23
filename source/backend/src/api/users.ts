@@ -29,7 +29,7 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
     console.log('Login user: ', user);
     if (user) {
       const token = sign({ user }, 'privatekey');
-      reply.setCookie('Authorization', token, { path: '' });
+      reply.setCookie('Authorization', token, { httpOnly: true, path: '/' });
       reply.send({ token });
     } else {
       reply.code(401).send({ message: 'Пользователь не найден!' });

@@ -23,7 +23,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 fastify.addHook('preHandler', async (request, reply) => {
   reply.headers({
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'http://localhost:8080',
     'Content-Type': 'application/json'
   });
 });

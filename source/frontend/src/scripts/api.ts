@@ -11,6 +11,7 @@ const api = async <S, T>(method: string, data?: S): Promise<T> => {
 
   const response = await fetch(url, {
     method: 'post',
+    credentials: 'include',
     body: data ? JSON.stringify(data) : null
   });
 
