@@ -1,25 +1,12 @@
 import type { FC } from 'react';
 import { useCallback, useMemo } from 'react';
 import { useUnit, useStore } from 'effector-react';
-import {
-  Menu,
-  MenuProps,
-  Dropdown,
-  message,
-  Avatar,
-  Space,
-  Typography,
-  Select
-} from 'antd';
-import {
-  $currentDashboardId,
-  $dashboardsList,
-  setCurrentDashboardId,
-} from 'src/context/model/dashboard';
+import { Menu, MenuProps, Dropdown, message, Avatar, Space, Typography, Select } from 'antd';
+import { $currentDashboardId, $dashboardsList, setCurrentDashboardId } from 'src/context/model/dashboard';
 import { UserOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
 
-import { $user } from '../context/login';
+import { $currentUser } from '../context/login';
 import { routing } from '../context/router';
 
 const { Text } = Typography;
@@ -27,7 +14,7 @@ const { Text } = Typography;
 const leftItems: MenuProps['items'] = [
   {
     label: <Link to={routing.dashboard}>Дашборд</Link>,
-    key: 'Дашборды',
+    key: 'Дашборды'
     // icon: <SmileOutlined />
   },
   {
@@ -36,13 +23,13 @@ const leftItems: MenuProps['items'] = [
     children: [
       {
         key: 'projects',
-        label: <Link to={routing.projects}>Проекты</Link>,
+        label: <Link to={routing.projects}>Проекты</Link>
       },
       {
         key: 'dashboards',
-        label: <Link to={routing.dashboards}>Доски</Link>,
-      },
-    ],
+        label: <Link to={routing.dashboards}>Доски</Link>
+      }
+    ]
   },
   {
     label: (
@@ -56,32 +43,32 @@ const leftItems: MenuProps['items'] = [
     children: [
       {
         label: <Link to={routing.login}>Страница логина</Link>,
-        key: 'login',
+        key: 'login'
       },
       {
         label: <Link to={routing.registration}>Страница регистрации</Link>,
-        key: 'register',
+        key: 'register'
       },
       {
         label: <Link to={routing.processCreate}>Создание процесса</Link>,
-        key: 'process-create',
+        key: 'process-create'
       },
       {
         label: <Link to={routing.processesList}>Список процессов</Link>,
-        key: 'processes',
-      },
-    ],
-  },
+        key: 'processes'
+      }
+    ]
+  }
 ];
 
 type ThemeProps = {
-  theme: "light" | "dark";
+  theme: 'light' | 'dark';
   changeTheme: (toDark: boolean) => void;
 };
 
-const Header: FC<ThemeProps> = props => {
+const Header: FC<ThemeProps> = (props) => {
   const { theme, changeTheme } = props;
-  const user = useUnit($user);
+  const user = useUnit($currentUser);
   const selectedDashboard = useStore($currentDashboardId);
   const dasboardsList = useStore($dashboardsList);
 
@@ -89,32 +76,32 @@ const Header: FC<ThemeProps> = props => {
     () =>
       dasboardsList.map((e) => ({
         value: e.id,
-        label: e.name,
+        label: e.name
       })),
     [dasboardsList]
   );
 
-  const setCurrentTheme = useCallback(() => changeTheme(theme === "light"), [theme, changeTheme]);
+  const setCurrentTheme = useCallback(() => changeTheme(theme === 'light'), [theme, changeTheme]);
 
   const items: MenuProps['items'] = [
-  {
-    label: 'Профиль',
-    key: '1',
-  },
-  {
-    label: 'Параметры',
-    key: '2',
-  },
-  {
-    label: "Тема",
-    key: 'theme',
-    onClick: setCurrentTheme
-  },
-  {
-    label: 'Выход из системы',
-    key: '3',
-  },
-];
+    {
+      label: 'Профиль',
+      key: '1'
+    },
+    {
+      label: 'Параметры',
+      key: '2'
+    },
+    {
+      label: 'Тема',
+      key: 'theme',
+      onClick: setCurrentTheme
+    },
+    {
+      label: 'Выход из системы',
+      key: '3'
+    }
+  ];
 
   return (
     <div className="flex items-center space-between padding margin">
@@ -122,13 +109,7 @@ const Header: FC<ThemeProps> = props => {
         <Space>
           <Menu mode="horizontal" items={leftItems} disabledOverflow />
           <Text>Дашборд: </Text>
-          <Select
-            aria-label="sda"
-            value={selectedDashboard}
-            onChange={setCurrentDashboardId}
-            style={{ width: '250px' }}
-            options={dasboardsOptions}
-          />
+          <Select aria-label="sda" value={selectedDashboard} onChange={setCurrentDashboardId} style={{ width: '250px' }} options={dasboardsOptions} />
         </Space>
       </div>
 

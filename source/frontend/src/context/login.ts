@@ -4,32 +4,51 @@ import { routing } from './router';
 import api from '../scripts/api';
 import { UserModel } from '@app/types/model/user';
 import { loginService } from '../service/users';
+import { message } from 'antd';
 
-export const $user = createStore<UserModel>({} as UserModel);
+type LoginStatus = { status?: 'success' | 'danger'; message: string; data?: any };
+
+export const $currentUser = createStore<UserModel>({} as UserModel);
+export const $logInStatus = createStore<LoginStatus>({ message: '' });
 
 export const loginForm = createForm();
 
 export const loginFormSubmit = createEvent<any>();
+export const setLogInStatus = createEvent<LoginStatus>();
 
-const loginFx = createEffect(async (values: any) => {
-  const result = loginService(values);
-  return result;
-});
+const loginFormSubmitFx = createEffect(loginService);
 
 sample({
   clock: loginFormSubmit,
   source: loginForm.$values,
   fn: (source, clock) => source,
-  target: loginFx,
+  target: loginFormSubmitFx
 });
 
 sample({
-  clock: loginFx.doneData,
+  clock: loginFormSubmitFx.doneData,
   // fn: data => data,
-  target: $user,
+  target: $currentUser
 });
 
 sample({
-  clock: loginFx.done,
-  target: routing.dashboard.open,
+  clock: loginFormSubmitFx.doneData,
+  fn: (data) => {
+    setLogInStatus({ message: 'Успех', status: 'success', data });
+    void message.success(`Добро пожаловать, ${data.name}!`);
+  },
+  target: routing.dashboard.open
+});
+
+sample({
+  clock: loginFormSubmitFx.failData,
+  fn: (error) => {
+    setLogInStatus({ message: error.message, status: 'danger' });
+    void message.error(`Не удалось авторизоваться: ${error.message}`);
+  }
+});
+
+sample({
+  clock: setLogInStatus,
+  target: $logInStatus
 });

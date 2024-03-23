@@ -16,7 +16,7 @@ const usersService = {
   },
   async login(user: UserLoginModel, db: DB) {
     return db.select<UserLoginModel>({
-      text: `select name, id, email from service.users where email='${user.login}'`,
+      text: `SELECT id, name, email FROM service.users WHERE name='${user.login}' AND password='${user.password}'`,
     });
   },
 };

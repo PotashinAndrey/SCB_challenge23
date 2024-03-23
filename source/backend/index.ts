@@ -20,7 +20,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 fastify.addHook('preHandler', async (request, reply) => {
   reply.headers({
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   });
 });
 
@@ -38,7 +38,7 @@ const start = async () => {
     await fastify.listen(
       (config as unknown as { backend: BackendConfig }).backend.http || {
         host: 'localhost',
-        port: 8080,
+        port: 8080
       }
     );
   } catch (error) {

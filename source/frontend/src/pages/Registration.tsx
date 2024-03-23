@@ -21,22 +21,14 @@ const Registration: FC = () => {
     <div className="flex center items-center mt-content">
       <Card title="Регистрация" extra={<a href="#/login">Уже зарегистрированы?</a>} style={{ width: 480 }}>
         <InputField controller={controller({ name: 'name' })} label={'Имя'} />
-        <InputField
-          controller={controller({ name: 'email' })}
-          label={'Электронная почта'}
-        />
+        <InputField controller={controller({ name: 'email' })} label={'Электронная почта'} />
         <InputField controller={controller({ name: 'password' })} label={'Пароль'} />
-        <InputField
-          controller={controller({ name: 'passwordCheck' })}
-          label={'Повтор пароля'}
-        />
+        <InputField controller={controller({ name: 'passwordCheck' })} label={'Повтор пароля'} />
 
         <Button onClick={registrationFormSubmit} type="primary" htmlType="submit">
           Зарегистрироваться
         </Button>
         <Button type="link">Забыли пароль?</Button>
-
-        <pre>{JSON.stringify(user, null, 2)}</pre>
       </Card>
     </div>
   );

@@ -1,5 +1,5 @@
 import type DB from '../../class/DB';
-import type { UUID } from 'node:crypto';
+import type { UUID } from 'crypto';
 import { CompanyModel } from '@app/types/model/company';
 
 export const companyCreate = async (values: CompanyModel, db: DB): Promise<UUID> => {

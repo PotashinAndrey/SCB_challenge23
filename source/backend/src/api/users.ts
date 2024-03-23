@@ -24,9 +24,13 @@ const usersApi = (
   /** авторизация пользователя */
   fastify.post('/login', async (request, reply) => {
     console.log('/login', request.body);
-    const user = JSON.parse(request.body as string) as UserLoginModel;
-    const id = await usersService.login(user, db);
-    return { ...id[0] };
+    const body = JSON.parse(request.body as string) as UserLoginModel;
+    const results = await usersService.login(body, db);
+    const user = results[0]
+    if (!user) {
+      throw Error('Пользователь не найден!')
+    }
+    return { ...user };
   });
 
   done();

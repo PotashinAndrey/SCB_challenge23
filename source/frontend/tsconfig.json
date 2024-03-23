@@ -30,6 +30,10 @@
       "@ui/*": ["./src/ui/*"],
       "@context": ["./src/context"],
       "@context/*": ["./src/context/*"],
+      "@popup": ["./src/popup"],
+      "@popup/*": ["./src/popup/*"],
+      "@form": ["./src/form"],
+      "@form/*": ["./src/form/*"],
     }
   },
   "ts-node": {
