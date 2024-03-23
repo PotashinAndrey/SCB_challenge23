@@ -30,18 +30,18 @@ const configuration: Configuration = {
   devtool: 'source-map',
   mode: isDevelopment ? 'development' : 'production',
   entry: './src/index.tsx',
-  devServer: {
-    proxy: {
-      '/api': `http://localhost:3000`
-    },
-    // hot: true,
-    static: {
-      directory: path.join(__dirname, 'public')
-    },
-    compress: true,
-    port: (config as never as { frontend: { port: number } }).frontend.port,
-    allowedHosts: 'all'
-  },
+  // devServer: {
+  //   proxy: {
+  //     '/api': `http://localhost:3000`
+  //   },
+  //   // hot: true,
+  //   static: {
+  //     directory: path.join(__dirname, 'public')
+  //   },
+  //   compress: true,
+  //   port: (config as never as { frontend: { port: number } }).frontend.port,
+  //   allowedHosts: 'all'
+  // },
   target: 'web',
   output: {
     filename: 'bundle.[hash].js',
