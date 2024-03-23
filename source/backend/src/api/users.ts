@@ -26,7 +26,6 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done): void => 
     const body = JSON.parse(request.body as string) as UserLoginModel;
     const results = await usersService.login(body, db);
     const user = results[0];
-    console.log('Login user: ', user);
     if (user) {
       const token = sign({ user }, process.env.SECRET);
       reply.setCookie('authToken', token, { httpOnly: true, path: '/' });

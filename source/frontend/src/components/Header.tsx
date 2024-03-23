@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { useCallback, useMemo } from 'react';
 import { useUnit, useStore } from 'effector-react';
-import { Menu, MenuProps, Dropdown, message, Avatar, Space, Typography, Select } from 'antd';
-import { $currentDashboardId, $dashboardsList, setCurrentDashboardId } from 'src/context/model/dashboard';
-import { UserOutlined, DownOutlined, SearchOutlined } from '@ant-design/icons';
+import { Menu, MenuProps, Dropdown, Avatar, Space, Typography, Select, Button } from 'antd';
+import { $currentDashboardId, $dashboardsList, createDashboardPopup, setCurrentDashboardId } from 'src/context/model/dashboard';
+import { UserOutlined, DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
 
 import { $currentUser } from '../context/login';
@@ -30,34 +30,6 @@ const leftItems: MenuProps['items'] = [
         label: <Link to={routing.dashboards}>Доски</Link>
       }
     ]
-  },
-  {
-    label: (
-      <Space>
-        <Text>Дополнительно</Text>
-        <DownOutlined />
-      </Space>
-    ),
-    key: 'more',
-    // icon: <DownOutlined />, // <SettingOutlined />,
-    children: [
-      {
-        label: <Link to={routing.login}>Страница логина</Link>,
-        key: 'login'
-      },
-      {
-        label: <Link to={routing.registration}>Страница регистрации</Link>,
-        key: 'register'
-      },
-      {
-        label: <Link to={routing.processCreate}>Создание процесса</Link>,
-        key: 'process-create'
-      },
-      {
-        label: <Link to={routing.processesList}>Список процессов</Link>,
-        key: 'processes'
-      }
-    ]
   }
 ];
 
@@ -71,6 +43,7 @@ const Header: FC<ThemeProps> = (props) => {
   const user = useUnit($currentUser);
   const selectedDashboard = useStore($currentDashboardId);
   const dasboardsList = useStore($dashboardsList);
+  const { open: openCrateDashboardPopup } = useUnit(createDashboardPopup);
 
   const dasboardsOptions = useMemo(
     () =>
@@ -83,6 +56,14 @@ const Header: FC<ThemeProps> = (props) => {
 
   const setCurrentTheme = useCallback(() => changeTheme(theme === 'light'), [theme, changeTheme]);
 
+  const redirectToLoginPage = () => {
+    routing.login.open();
+  };
+
+  const redirectToRegistrationPage = () => {
+    routing.registration.open();
+  };
+
   const items: MenuProps['items'] = [
     {
       label: 'Профиль',
@@ -93,13 +74,19 @@ const Header: FC<ThemeProps> = (props) => {
       key: '2'
     },
     {
+      label: 'Войти в другой аккаунт',
+      key: '3',
+      onClick: redirectToLoginPage
+    },
+    {
+      label: 'Регистрация',
+      key: '4',
+      onClick: redirectToRegistrationPage
+    },
+    {
       label: 'Тема',
       key: 'theme',
       onClick: setCurrentTheme
-    },
-    {
-      label: 'Выход из системы',
-      key: '3'
     }
   ];
 
@@ -108,8 +95,8 @@ const Header: FC<ThemeProps> = (props) => {
       <div className="flex items-center">
         <Space>
           <Menu mode="horizontal" items={leftItems} disabledOverflow />
-          <Text>Дашборд: </Text>
           <Select aria-label="sda" value={selectedDashboard} onChange={setCurrentDashboardId} style={{ width: '250px' }} options={dasboardsOptions} />
+          <Button icon={<PlusOutlined />} onClick={openCrateDashboardPopup} />
         </Space>
       </div>
 

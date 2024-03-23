@@ -29,9 +29,6 @@ sample({
 sample({
   clock: loginFormSubmitFx.done,
   fn: ({ params, result }) => {
-    const token = result.token;
-    // document.cookie = `authToken=${token}; path=/;`;
-    setLogInStatus({ message: 'Успех', status: 'success', data: result });
     void message.success(`Добро пожаловать, ${params.login}!`);
     return {};
   },
@@ -41,9 +38,10 @@ sample({
 sample({
   clock: loginFormSubmitFx.failData,
   fn: (error) => {
-    setLogInStatus({ message: error.message, status: 'danger' });
     void message.error(`Не удалось авторизоваться: ${error.message}`);
-  }
+    return { message: error.message, status: 'danger' };
+  },
+  target: setLogInStatus
 });
 
 sample({
