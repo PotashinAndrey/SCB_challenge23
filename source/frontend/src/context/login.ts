@@ -27,7 +27,11 @@ sample({
 
 sample({
   clock: loginFormSubmitFx.doneData,
-  // fn: data => data,
+  fn: data => {
+    const token = data.token;
+    document.cookie = `Authorization=${token}; path=/;`;
+    return data;
+  },
   target: $currentUser
 });
 

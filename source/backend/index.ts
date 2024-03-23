@@ -4,6 +4,7 @@ import type { BackendConfig } from '@app/types/config';
 import FastifyCookie from '@fastify/cookie';
 import config from '../../config';
 import DB from './class/DB';
+import cors from '@fastify/cors'
 
 import usersApi from './src/api/users';
 import companiesApi from './src/api/companies';
@@ -32,6 +33,14 @@ fastify.addHook('preHandler', async (request, reply) => {
 //   // request.body = { ...request.body, importantKey: 'randomString' }
 //   done();
 // });
+
+fastify.register(cors, {
+  origin: '*', // Установите здесь домен вашего фронтенда
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
+  allowedHeaders: ['Authorization', 'Content-Type'], // Разрешенные заголовки
+  credentials: true, // Разрешить передачу куки и заголовков аутентификации
+  exposedHeaders: ['X-Custom-Header'] // Заголовки, доступные для клиентского JavaScript кода
+});
 
 fastify.register(usersApi, { prefix: '/api/users', db });
 fastify.register(companiesApi, { prefix: '/api/companies', db });
