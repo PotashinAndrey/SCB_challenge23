@@ -3,7 +3,7 @@ import { createForm } from 'effector-react-form';
 import { routing } from './router';
 import api from '../scripts/api';
 import { UserModel } from '@app/types/model/user';
-import { loginService } from '../service/users';
+import { getUserData, loginUser } from '../service/users';
 import { message } from 'antd';
 
 type LoginStatus = { status?: 'success' | 'danger'; message: string; data?: any };
@@ -16,7 +16,8 @@ export const loginForm = createForm();
 export const loginFormSubmit = createEvent<any>();
 export const setLogInStatus = createEvent<LoginStatus>();
 
-const loginFormSubmitFx = createEffect(loginService);
+const loginFormSubmitFx = createEffect(loginUser);
+const getUserDataFx = createEffect(getUserData);
 
 sample({
   clock: loginFormSubmit,
@@ -26,17 +27,15 @@ sample({
 });
 
 sample({
-  clock: loginFormSubmitFx.doneData,
-  target: $currentUser
-});
-
-sample({
-  clock: loginFormSubmitFx.doneData,
-  fn: (data) => {
-    setLogInStatus({ message: 'Успех', status: 'success', data });
-    void message.success(`Добро пожаловать, ${data.name}!`);
+  clock: loginFormSubmitFx.done,
+  fn: ({ params, result }) => {
+    const token = result.token;
+    // document.cookie = `authToken=${token}; path=/;`;
+    setLogInStatus({ message: 'Успех', status: 'success', data: result });
+    void message.success(`Добро пожаловать, ${params.login}!`);
+    return {};
   },
-  target: routing.dashboard.open
+  target: [routing.dashboard.open, getUserDataFx]
 });
 
 sample({
@@ -50,4 +49,9 @@ sample({
 sample({
   clock: setLogInStatus,
   target: $logInStatus
+});
+
+sample({
+  clock: getUserDataFx.doneData,
+  target: $currentUser
 });

@@ -29,7 +29,7 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
     console.log('Login user: ', user);
     if (user) {
       const token = sign({ user }, 'privatekey');
-      reply.setCookie('Authorization', token, { httpOnly: true, path: '/' });
+      reply.setCookie('authToken', token, { httpOnly: true, path: '/' });
       reply.send({ token });
     } else {
       reply.code(401).send({ message: 'Пользователь не найден!' });
@@ -37,30 +37,19 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
   });
 
   //This is a protected route
-  fastify.get('/user/data', (request, reply) => {
+  fastify.post('/userInfo', (request, reply) => {
     // format: 'BEARER token'
-    const authHeader = request.headers['authorization'];
-
-    // TODO Надо в хук вынести логику валидации токена для протектед роутов
-    let token: string;
-    if (authHeader) {
-      token = authHeader.split(' ')[1];
-    } else {
-      reply.status(403);
-    }
+    const authToken = request.cookies.authToken;
 
     // verify the JWT token generated for the user
-    verify(token, 'privatekey', (err, user) => {
+    verify(authToken, 'privatekey', (err, user) => {
       if (err) {
         // If error send Forbidden (403)
         console.log('ERROR: Could not connect to the protected route');
         reply.status(403);
       } else {
         // If token is successfully verified, we can send the autorized data
-        reply.send({
-          message: 'Successful log in',
-          user
-        });
+        reply.send({ ...(user as object) });
         console.log('SUCCESS: Connected to protected route');
       }
     });

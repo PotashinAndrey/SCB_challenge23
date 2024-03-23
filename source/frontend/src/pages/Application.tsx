@@ -22,7 +22,7 @@ const RoutesView = createRoutesView({
     { route: routing.processCreate, view: ProcessCreate },
     { route: routing.processesList, view: Processes },
     { route: routing.projects, view: Projects },
-    { route: routing.dashboards, view: Dashboards },
+    { route: routing.dashboards, view: Dashboards }
     // { route: Post.route, view: PostPage.view },
   ],
   otherwise() {
@@ -50,31 +50,33 @@ const RoutesView = createRoutesView({
         </p>
       </div>
     );
-  },
+  }
 });
 
 const Application: FC = () => {
-  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light");
+  const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('light');
 
   const changeTheme = useCallback((toDark: boolean) => {
-    setCurrentTheme(toDark ? "dark" : "light");
-    document.documentElement.style.setProperty('--darkmode', toDark ? "1" : "0");
+    setCurrentTheme(toDark ? 'dark' : 'light');
+    document.documentElement.style.setProperty('--darkmode', toDark ? '1' : '0');
   }, []);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const isDarkTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     changeTheme(isDarkTheme);
 
     const changeThemeEvent = (e: MediaQueryListEvent) => changeTheme(e.matches);
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change", changeThemeEvent);
-    return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener("change", changeThemeEvent);
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', changeThemeEvent);
+    return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', changeThemeEvent);
   }, []);
 
   return (
     <ConfigProvider
       theme={{
         cssVar: true,
-        algorithm: currentTheme === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm // [theme.darkAlgorithm, theme.compactAlgorithm]
+        algorithm: currentTheme === 'light' ? theme.defaultAlgorithm : theme.darkAlgorithm // [theme.darkAlgorithm, theme.compactAlgorithm]
       }}
     >
       <App>
@@ -84,7 +86,7 @@ const Application: FC = () => {
           <PopupsList />
         </div>
       </App>
-    </ConfigProvider >
+    </ConfigProvider>
   );
 };
 
