@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import * as url from 'url';
 import type { BackendConfig } from '@app/types/config';
+import FastifyCookie from '@fastify/cookie';
 import config from '../../config';
 import DB from './class/DB';
 
@@ -12,6 +13,8 @@ import dashboardApi from './src/api/dashboard';
 import tasksApi from './src/api/tasks';
 
 const fastify = Fastify({ logger: true });
+fastify.register(FastifyCookie);
+
 const db = await new DB().connect();
 
 // const __filename = url.fileURLToPath(import.meta.url);
@@ -23,6 +26,12 @@ fastify.addHook('preHandler', async (request, reply) => {
     'Content-Type': 'application/json'
   });
 });
+
+// fastify.addHook('preValidation', (request, reply, done) => {
+//   console.log('pre validation headers: ', request.headers);
+//   // request.body = { ...request.body, importantKey: 'randomString' }
+//   done();
+// });
 
 fastify.register(usersApi, { prefix: '/api/users', db });
 fastify.register(companiesApi, { prefix: '/api/companies', db });
