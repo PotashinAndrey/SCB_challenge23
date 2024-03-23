@@ -30,7 +30,7 @@ const uploadProps: UploadProps = {
   },
   onDrop(e) {
     console.log('Dropped files', e.dataTransfer.files);
-  },
+  }
 };
 
 export const InputField: FC<InputProps> = ({ controller, label }) => {
@@ -66,12 +66,7 @@ export const DocsUploadField: FC<InputProps> = ({ controller, label }) => {
     <div className="input-wrap">
       <label style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
         <span>{label}</span>
-        <Dragger
-          {...input}
-          multiple
-          onChange={uploadProps.onChange}
-          onDrop={uploadProps.onDrop}
-        >
+        <Dragger {...input} multiple onChange={uploadProps.onChange} onDrop={uploadProps.onDrop}>
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>

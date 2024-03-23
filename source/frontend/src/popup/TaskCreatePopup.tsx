@@ -7,7 +7,6 @@ import { dashboardData } from '@context/model/process';
 import { InputField, TextAreaField } from '@form/input';
 import { SelectField } from '@form/select';
 
-
 const TaskCreatePopup: FC = () => {
   const dashboard = useStore(dashboardData.$store);
   const { visible, close } = useUnit(createTaskPopup);
@@ -17,7 +16,7 @@ const TaskCreatePopup: FC = () => {
     const baseOptions =
       dashboard?.processes?.map((proc: any) => ({
         value: proc.id,
-        label: proc.name,
+        label: proc.name
       })) ?? [];
     return [{ label: 'Выберите процесс', value: '', disabled: true }, ...baseOptions];
   };
@@ -33,14 +32,11 @@ const TaskCreatePopup: FC = () => {
       footer={[
         <Button type="primary" key="create" onClick={createTaskFormSubmit}>
           Создать
-        </Button>,
+        </Button>
       ]}
     >
       <InputField controller={controller({ name: 'name' })} label={'Название'} />
-      <TextAreaField
-        controller={controller({ name: 'description' })}
-        label={'Описание'}
-      />
+      <TextAreaField controller={controller({ name: 'description' })} label={'Описание'} />
 
       <SelectField controller={controller({ name: 'process' })} label="Процесс" options={getProcessesToSelect()} />
     </Modal>

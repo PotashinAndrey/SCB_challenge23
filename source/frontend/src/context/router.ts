@@ -12,7 +12,7 @@ export const routing = {
   processCreate: createRoute(),
   processesList: createRoute(),
   projects: createRoute(),
-  dashboards: createRoute(),
+  dashboards: createRoute()
 };
 
 export const routes = [
@@ -22,7 +22,7 @@ export const routes = [
   { path: '/registration', route: routing.registration },
   { path: '/login', route: routing.login },
   { path: '/projects', route: routing.projects },
-  { path: '/dashboards', route: routing.dashboards },
+  { path: '/dashboards', route: routing.dashboards }
   // { path: '/posts/:postId', route: postRoute },
 ];
 
@@ -31,7 +31,7 @@ export const router = createHistoryRouter({ routes });
 sample({
   clock: appStated,
   fn: () => createHashHistory(),
-  target: router.setHistory,
+  target: router.setHistory
 });
 
 sample({
@@ -39,7 +39,7 @@ sample({
   // clock: router.$path,
   fn: (...args) => {
     console.log('ROUTING INIT', args);
-  },
+  }
 });
 
 // sample({

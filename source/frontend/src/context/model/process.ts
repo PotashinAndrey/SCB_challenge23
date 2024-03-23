@@ -12,12 +12,12 @@ export const processesListData = factoryExteralData(processesListLoadFx);
 
 sample({
   clock: [routing.processesList.opened],
-  target: processesListLoadFx,
+  target: processesListLoadFx
 });
 
 sample({
   clock: processesListLoadFx.doneData,
-  target: processesListData.$store,
+  target: processesListData.$store
 });
 
 export const loadDashboard = createEvent();
@@ -28,24 +28,24 @@ sample({
   clock: routing.dashboard.updated,
   fn: (...args) => {
     console.log('DASHBOARD UPDATED', args);
-  },
+  }
 });
 
 sample({
   clock: loadDashboard,
   source: $currentDashboardId,
-  target: dashboardLoadFx,
+  target: dashboardLoadFx
 });
 
 sample({
   clock: $currentDashboardId,
   filter: (id) => id !== ('' as UUID),
-  target: dashboardLoadFx,
+  target: dashboardLoadFx
 });
 
 sample({
   clock: dashboardLoadFx.doneData,
-  target: dashboardData.$store,
+  target: dashboardData.$store
 });
 
 // получаем список тасок, для каждой таски надо найти историю и по ней понять, на каком столбике ее отобразить
@@ -61,7 +61,7 @@ sample({
     });
     return tasks;
   },
-  target: $dashboardDataTasks,
+  target: $dashboardDataTasks
 });
 
 /** @section добавление нового процесса (дашборда) */

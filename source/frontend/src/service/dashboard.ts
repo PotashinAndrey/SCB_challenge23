@@ -15,11 +15,6 @@ export const appendHistory = (values: HistoryAppendModel): Promise<any> => {
   return api('dashboard/history-append', values);
 };
 
-export const createDashboardRequest = (
-  projectId: UUID,
-  name: string,
-  description?: string,
-  columns?: string[]
-): Promise<UUID> => {
+export const createDashboardRequest = (projectId: UUID, name: string, description?: string, columns?: string[]): Promise<UUID> => {
   return api('dashboard/create', { project: projectId, name, description, columns });
 };

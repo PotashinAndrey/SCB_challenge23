@@ -21,13 +21,7 @@ export const InputTagField: FC<InputProps> = ({ controller, label, data }) => {
     <div className="input-wrap">
       <label>
         <span style={{ marginRight: '10px' }}>{label}</span>
-        <Select
-          mode="multiple"
-          placeholder="Выберите"
-          defaultValue={[]}
-          options={data}
-          onChange={(value) => setTags(value)}
-        />
+        <Select mode="multiple" placeholder="Выберите" defaultValue={[]} options={data} onChange={(value) => setTags(value)} />
       </label>
     </div>
   );

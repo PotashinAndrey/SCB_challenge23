@@ -17,12 +17,8 @@ export type BaseQueryType = {
   where?: string;
 };
 
-export type RequestSelectDB = BaseDBRequestClient &
-  BaseQueryValues &
-  ((BaseQueryType & BaseOrderByType) | TextQueryType);
-export type RequestInsertDB = BaseDBRequestClient &
-  BaseQueryValues &
-  ((BaseQueryType & { returning?: string }) | TextQueryType);
+export type RequestSelectDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & BaseOrderByType) | TextQueryType);
+export type RequestInsertDB = BaseDBRequestClient & BaseQueryValues & ((BaseQueryType & { returning?: string }) | TextQueryType);
 
 export type RequestUpdateFieldByID = BaseDBRequestClient & {
   id: UUID;

@@ -23,7 +23,7 @@ function factoryPopupBehaviour<S = void>(initial = false): PopupBehaviour<S> {
   const unitShape = (): PopupBehaviourShape<S> => ({
     visible: $visible,
     open,
-    close,
+    close
   });
 
   return { $visible, open, close, '@@unitShape': unitShape };

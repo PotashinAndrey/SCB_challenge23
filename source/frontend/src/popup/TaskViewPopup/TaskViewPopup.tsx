@@ -24,7 +24,7 @@ const TaskViewPopup: FC = () => {
 
   const onReset = useCallback(() => {
     dispatchTaskEdit({ ...task });
-  }, [task, dispatchTaskEdit])
+  }, [task, dispatchTaskEdit]);
 
   const onSave = useCallback(() => {
     updateTask(editableTask);
@@ -33,7 +33,7 @@ const TaskViewPopup: FC = () => {
   const saveAndClose = () => {
     onSave();
     close();
-  }
+  };
 
   return (
     <Modal
@@ -42,36 +42,22 @@ const TaskViewPopup: FC = () => {
       width={900}
       closable
       onCancel={() => close()}
-      title={
-        <EditableTaskTitle
-          task={task}
-          editableTask={editableTask}
-          dispatchTaskEdit={dispatchTaskEdit}
-          onSave={onSave}
-          onReset={onReset}
-        />
-      }
+      title={<EditableTaskTitle task={task} editableTask={editableTask} dispatchTaskEdit={dispatchTaskEdit} onSave={onSave} onReset={onReset} />}
       footer={[
-        <Button key="close" type="text" onClick={close}>Закрыть</Button>,
-        <Button key="save" type="primary" onClick={saveAndClose}>Сохранить</Button>
+        <Button key="close" type="text" onClick={close}>
+          Закрыть
+        </Button>,
+        <Button key="save" type="primary" onClick={saveAndClose}>
+          Сохранить
+        </Button>
       ]}
     >
       <Layout>
         <Content>
-          <EditableTaskDescription
-            task={task}
-            editableTask={editableTask}
-            dispatchTaskEdit={dispatchTaskEdit}
-            onSave={onSave}
-            onReset={onReset}
-          />
+          <EditableTaskDescription task={task} editableTask={editableTask} dispatchTaskEdit={dispatchTaskEdit} onSave={onSave} onReset={onReset} />
         </Content>
         <Sider width="30%">
-          <TaskActions
-            task={task}
-            editableTask={editableTask}
-            dispatchTaskEdit={dispatchTaskEdit}
-          />
+          <TaskActions task={task} editableTask={editableTask} dispatchTaskEdit={dispatchTaskEdit} />
         </Sider>
       </Layout>
     </Modal>
@@ -79,5 +65,3 @@ const TaskViewPopup: FC = () => {
 };
 
 export default TaskViewPopup;
-
-

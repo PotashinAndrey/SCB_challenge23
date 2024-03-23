@@ -4,7 +4,7 @@ import type { BackendConfig } from '@app/types/config';
 import FastifyCookie from '@fastify/cookie';
 import config from '../../config';
 import DB from './class/DB';
-import cors from '@fastify/cors'
+import cors from '@fastify/cors';
 
 import usersApi from './src/api/users';
 import companiesApi from './src/api/companies';

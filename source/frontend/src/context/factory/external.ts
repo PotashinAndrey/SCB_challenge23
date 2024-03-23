@@ -24,10 +24,7 @@ type ExternalDataNullable<S> = ExternalDataNullableUnits<S> & {
 
 function factory<T, S = any>(effect: Effect<T, S, Error>): ExternalDataNullable<S>;
 function factory<T, S = any>(effect: Effect<T, S, Error>, initial: S): ExternalData<S>;
-function factory<T, S = any>(
-  effect: Effect<T, S, Error>,
-  initial?: S
-): ExternalDataNullable<S> | ExternalData<S> {
+function factory<T, S = any>(effect: Effect<T, S, Error>, initial?: S): ExternalDataNullable<S> | ExternalData<S> {
   const $error = createStore<string>('');
   const $loading = createStore<boolean>(false);
 
@@ -36,25 +33,24 @@ function factory<T, S = any>(
 
   const data = { $error, $loading };
 
-  const $store =
-    initial !== undefined ? createStore<S>(initial) : createStore<S | null>(null);
+  const $store = initial !== undefined ? createStore<S>(initial) : createStore<S | null>(null);
 
   const unitShape = () => ({
     store: $store,
     error: $error,
-    loading: $loading,
+    loading: $loading
   });
 
   return initial !== undefined
     ? ({
         ...data,
         $store,
-        '@@unitShape': unitShape as () => ExternalDataShape<S>,
+        '@@unitShape': unitShape as () => ExternalDataShape<S>
       } as ExternalData<S>)
     : ({
         ...data,
         $store,
-        '@@unitShape': unitShape as () => ExternalDataNullableShape<S>,
+        '@@unitShape': unitShape as () => ExternalDataNullableShape<S>
       } as ExternalDataNullable<S>);
 }
 

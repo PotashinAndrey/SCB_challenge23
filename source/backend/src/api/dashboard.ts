@@ -1,17 +1,8 @@
 import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
-import {
-  dashboardsList,
-  historyAppend,
-  createDashboard,
-  createProcess,
-} from '../service/dashboards';
+import { dashboardsList, historyAppend, createDashboard, createProcess } from '../service/dashboards';
 
-const dashboardApi = (
-  fastify: FastifyInstance,
-  options: { db: DB },
-  done: () => void
-): void => {
+const dashboardApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
 
   fastify.post('/list', async (request, reply) => {
@@ -19,29 +10,20 @@ const dashboardApi = (
   });
 
   fastify.post('/history-append', async (request, reply) => {
-    const {
-      taskId = '',
-      oldColumnId = '',
-      newColumnId = '',
-    } = request.body ? JSON.parse(request.body as string) : {};
+    const { taskId = '', oldColumnId = '', newColumnId = '' } = request.body ? JSON.parse(request.body as string) : {};
     if (!newColumnId || !taskId) return {};
     return await historyAppend(
       {
         taskId,
         oldColumnId,
-        newColumnId,
+        newColumnId
       },
       db
     );
   });
 
   fastify.post('/create', async (request, reply) => {
-    const {
-      project = '',
-      name = '',
-      description = null,
-      columns = [],
-    } = request.body ? JSON.parse(request.body as string) : {};
+    const { project = '', name = '', description = null, columns = [] } = request.body ? JSON.parse(request.body as string) : {};
     console.log('\n\n ', request.body, project, name, description, '\n\n');
     if (!project || !name) return {};
 
@@ -49,7 +31,7 @@ const dashboardApi = (
       {
         project,
         name,
-        description,
+        description
       },
       db
     );

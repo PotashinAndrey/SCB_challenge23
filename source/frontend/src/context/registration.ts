@@ -18,16 +18,16 @@ sample({
   clock: registrationFormSubmit,
   source: registrationForm.$values,
   fn: (source, clock) => source,
-  target: registrationFx,
+  target: registrationFx
 });
 
 sample({
   clock: registrationFx.doneData,
   // fn: data => data
-  target: $user,
+  target: $user
 });
 
 sample({
   clock: registrationFx.done,
-  target: routing.dashboard.open,
+  target: routing.dashboard.open
 });

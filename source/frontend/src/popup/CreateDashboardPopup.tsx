@@ -2,12 +2,7 @@ import type { FC } from 'react';
 import { useUnit } from 'effector-react';
 import { Modal, Button, Typography, Flex } from 'antd';
 import { createFieldArray, useFieldArray, useForm } from 'effector-react-form';
-import {
-  $canAddNewColumn,
-  createDashboardPopup,
-  createDashbordForm,
-  createDashbordFormSubmit,
-} from '@context/model/dashboard';
+import { $canAddNewColumn, createDashboardPopup, createDashbordForm, createDashbordFormSubmit } from '@context/model/dashboard';
 import { InputField, TextAreaField } from '@form/input';
 
 import Paper from '@ui/Paper';
@@ -39,22 +34,16 @@ const CreateDashboardPopup: FC = () => {
       footer={[
         <Button type="primary" key="create" onClick={handleCreateDashboard}>
           Создать
-        </Button>,
+        </Button>
       ]}
     >
       <InputField controller={controller({ name: 'name' })} label={'Название'} />
-      <TextAreaField
-        controller={controller({ name: 'description' })}
-        label={'Описание'}
-      />
+      <TextAreaField controller={controller({ name: 'description' })} label={'Описание'} />
       <Text>Столбцы:</Text>
       <Paper>
         {map(({ field, formItemName, index }) => (
           <Flex justify="space-between" align="center">
-            <InputField
-              controller={controller({ name: formItemName })}
-              label={`Столбец ${index}`}
-            />
+            <InputField controller={controller({ name: formItemName })} label={`Столбец ${index}`} />
             <Button onClick={() => remove(index)} danger>
               удалить
             </Button>

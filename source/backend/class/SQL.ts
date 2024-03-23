@@ -1,11 +1,5 @@
 // import type { QueryConfig } from "pg";
-import type {
-  RequestInsertDB,
-  RequestSelectDB,
-  RequestRelationDB,
-  RequestUpdateFieldByID,
-  RequestUpdateDB,
-} from '@app/types/DB';
+import type { RequestInsertDB, RequestSelectDB, RequestRelationDB, RequestUpdateFieldByID, RequestUpdateDB } from '@app/types/DB';
 
 export default class SQL {
   static requestSelect(request: RequestSelectDB): string {
@@ -73,8 +67,7 @@ export default class SQL {
   }
 
   static createRelation(request: RequestRelationDB): string {
-    const { name, sourceTable, sourceField, targetTable, targetField } =
-      SQL.requestRelationParse(request);
+    const { name, sourceTable, sourceField, targetTable, targetField } = SQL.requestRelationParse(request);
     return `alter table "${targetTable}" add constraint "${name}" foreign key ("${targetField}") references "${sourceTable}" ("${sourceField}")`;
   }
 }

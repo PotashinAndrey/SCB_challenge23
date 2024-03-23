@@ -1,21 +1,9 @@
 import crypto from 'node:crypto';
 import type { UUID } from 'node:crypto';
 import pg from 'pg';
-import type {
-  QueryResult,
-  QueryArrayResult,
-  PoolClient,
-  PoolConfig,
-  QueryConfig,
-} from 'pg';
+import type { QueryResult, QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from 'pg';
 import { promises as fs } from 'fs';
-import type {
-  RequestInsertDB,
-  RequestUpdateDB,
-  RequestSelectDB,
-  RequestRelationDB,
-  RequestUpdateFieldByID,
-} from '@app/types/DB';
+import type { RequestInsertDB, RequestUpdateDB, RequestSelectDB, RequestRelationDB, RequestUpdateFieldByID } from '@app/types/DB';
 import config from '../../../config';
 import SQL from './SQL';
 
@@ -52,7 +40,7 @@ class DB {
   insert(request: RequestInsertDB): Promise<any> {
     const query = {
       text: SQL.requestInsert(request),
-      values: request.values, // "text" in request ? undefined : [...(request.values || []), ...(request.conditionValues || [])]
+      values: request.values // "text" in request ? undefined : [...(request.values || []), ...(request.conditionValues || [])]
     };
     return this.query(query, request.client);
   }
@@ -65,7 +53,7 @@ class DB {
   update(request: RequestUpdateDB): Promise<any> {
     const query = {
       text: SQL.requestUpdateById(request),
-      values: request.values,
+      values: request.values
     };
     return this.query(query, request.client).then((r) => r.rows[0]);
   }
@@ -73,7 +61,7 @@ class DB {
   updateFieldByID<T extends {} = {}>(request: RequestUpdateFieldByID): Promise<T> {
     const query = {
       text: SQL.requestUpdateFieldByID(request),
-      values: [request.value, request.id],
+      values: [request.value, request.id]
     };
     return this.query<T>(query, request.client).then((r) => r.rows[0]);
   }
@@ -84,10 +72,7 @@ class DB {
 
   transaction() {}
 
-  async createRelation(
-    request: RequestRelationDB,
-    client?: PoolClient | pg.Client
-  ): Promise<any> {
+  async createRelation(request: RequestRelationDB, client?: PoolClient | pg.Client): Promise<any> {
     // const sourceSplitIndex = request.source.lastIndexOf(".");
     // const sourceTable = request.source.substring(0, sourceSplitIndex).replace(".", '"."');
     // const sourceField = request.source.substring(sourceSplitIndex + 1);
@@ -107,20 +92,12 @@ class DB {
     return await this.query({ text }, client);
   }
 
-  async removeRelation(
-    request: RequestRelationDB,
-    client?: PoolClient | pg.Client
-  ): Promise<any> {
+  async removeRelation(request: RequestRelationDB, client?: PoolClient | pg.Client): Promise<any> {
     const text = SQL.removeRelation(request); // `alter table "${targetTable}" drop constraint if exists "${name}"`;
     return this.query({ text }, client);
   }
 
-  createTable(
-    name: string,
-    primary: string,
-    fields: Record<string, string>,
-    client?: PoolClient
-  ) {
+  createTable(name: string, primary: string, fields: Record<string, string>, client?: PoolClient) {
     const columns = Object.keys(fields).map((key) => {
       const [type, initial = 'NULL'] = fields[key].split(' ');
       const nullable = initial !== 'NULL' ? 'NOT NULL' : '';
@@ -131,12 +108,7 @@ class DB {
     return this.query({ text }, client);
   }
 
-  createField(
-    table: string,
-    field: string,
-    structure: string,
-    client?: PoolClient | pg.Client
-  ): Promise<any> {
+  createField(table: string, field: string, structure: string, client?: PoolClient | pg.Client): Promise<any> {
     const [type, initial = 'NULL'] = structure.split(' ');
     const nullable = initial !== 'NULL' ? 'NOT NULL' : '';
     const info = [`"${field}"`, type, nullable, 'DEFAULT', initial].join(' ');
@@ -144,11 +116,7 @@ class DB {
     return this.query({ text }, client);
   }
 
-  removeField(
-    table: string,
-    field: string,
-    client?: PoolClient | pg.Client
-  ): Promise<any> {
+  removeField(table: string, field: string, client?: PoolClient | pg.Client): Promise<any> {
     const text = `ALTER TABLE "${table.replace('.', '"."')}" DROP COLUMN if exists "${field}"`;
     return this.query({ text }, client);
   }
@@ -164,14 +132,9 @@ class DB {
     return this.query({ text }, client);
   }
 
-  async query<S extends {} = {}>(
-    query: QueryConfig,
-    client?: PoolClient | pg.Client
-  ): Promise<QueryResult<S>> {
+  async query<S extends {} = {}>(query: QueryConfig, client?: PoolClient | pg.Client): Promise<QueryResult<S>> {
     try {
-      return client
-        ? await client.query<S>(query)
-        : await this.wrap<S>((client) => client.query<S>(query));
+      return client ? await client.query<S>(query) : await this.wrap<S>((client) => client.query<S>(query));
     } catch (error) {
       console.log(query);
       console.error('DB ERROR:', (error as Error).message);
@@ -210,7 +173,7 @@ class DB {
       SET row_security = off;
       SET default_tablespace = '';
       SET default_table_access_method = heap;
-    `,
+    `
     });
     await this.createExtension('uuid-ossp');
   }
@@ -233,9 +196,7 @@ class DB {
     return this;
   }
 
-  async wrap<T extends {} = {}>(
-    fn: (client: PoolClient, db: DB) => Promise<QueryResult<T>>
-  ) {
+  async wrap<T extends {} = {}>(fn: (client: PoolClient, db: DB) => Promise<QueryResult<T>>) {
     const client = await this.pool!.connect();
     try {
       return await fn(client, this);
@@ -272,7 +233,7 @@ class DB {
       // нет таблицы public.migrations
       await this.createTable('public.migrations', 'timestamp', {
         id: 'int4',
-        timestamp: 'timestamp now()',
+        timestamp: 'timestamp now()'
       });
       migrated = await this.selectArray<number>(migratedQuery);
     }
@@ -284,9 +245,7 @@ class DB {
     for (let i = 0; i < rest.length; ++i) {
       await this.migration(folder, rest[i]);
     }
-    console.log(
-      rest.length > 0 ? 'все новые миграции применены' : 'не требуется применять миграции'
-    );
+    console.log(rest.length > 0 ? 'все новые миграции применены' : 'не требуется применять миграции');
   }
 
   disconnect() {

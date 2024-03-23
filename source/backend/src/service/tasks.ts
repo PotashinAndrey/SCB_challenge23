@@ -6,7 +6,7 @@ import { TaskModel } from '@app/types/model/task';
 export const tasksList = async (filter: any, db: DB) => {
   let results = await db.select<TaskModel>({
     fields: '*',
-    tables: 'flow.tasks',
+    tables: 'flow.tasks'
   });
 
   return results;
@@ -17,7 +17,7 @@ export const createTask = async (values: TaskModel, db: DB): Promise<TaskModel> 
   const task = await db.insertRow<TaskModel>({
     fields: 'dashboard, process, title, description',
     tables: 'flow.tasks',
-    values: [dashboard, process, title, description],
+    values: [dashboard, process, title, description]
   });
   return { ...task };
 };
@@ -28,6 +28,6 @@ export const updateTask = (item: TaskModel, db: DB): Promise<TaskModel> => {
     id,
     fields: 'dashboard, process, title, description, removed',
     table: 'flow.tasks',
-    values: [dashboard, process, title, description, removed],
+    values: [dashboard, process, title, description, removed]
   });
 };

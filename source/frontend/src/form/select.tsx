@@ -15,12 +15,7 @@ export const SelectField: FC<InputProps> = ({ controller, label, options }) => {
   return (
     <div className="input-wrap input-wrap_select">
       <label>{label}</label>
-      <Select
-        {...input}
-        value={input.value || ''}
-        options={options || []}
-        className="input"
-      />
+      <Select {...input} value={input.value || ''} options={options || []} className="input" />
     </div>
   );
 };

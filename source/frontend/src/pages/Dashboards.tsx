@@ -7,7 +7,7 @@ import type { DashboardModel } from '@app/types/model/dashboard';
 
 const Dashboards: FC = () => {
   const dasboardsList = useStore<DashboardModel[]>($dashboardsList);
-  const {open: openCrateDashboardPopup} = useUnit(createDashboardPopup);
+  const { open: openCrateDashboardPopup } = useUnit(createDashboardPopup);
 
   return (
     <>
@@ -18,15 +18,14 @@ const Dashboards: FC = () => {
         loading={false}
         renderItem={(item) => (
           <List.Item>
-            <List.Item.Meta
-              title={item.name}
-              description={item.description}
-            />
+            <List.Item.Meta title={item.name} description={item.description} />
           </List.Item>
         )}
       >
         <div>
-          <Button onClick={openCrateDashboardPopup} type="primary">Создать Дашборд</Button>
+          <Button onClick={openCrateDashboardPopup} type="primary">
+            Создать Дашборд
+          </Button>
         </div>
       </PageList>
     </>

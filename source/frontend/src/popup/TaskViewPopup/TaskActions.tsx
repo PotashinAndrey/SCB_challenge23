@@ -1,10 +1,10 @@
-import { useMemo, type FC, type PropsWithChildren, type ChangeEvent } from "react";
-import { Flex, Select, Typography } from "antd";
-import { useStore } from "effector-react";
+import { useMemo, type FC, type PropsWithChildren, type ChangeEvent } from 'react';
+import { Flex, Select, Typography } from 'antd';
+import { useStore } from 'effector-react';
 
 import { dashboardData } from '../../context/model/process';
-import { TaskModel } from "@app/types/model/task";
-import { UUID } from "crypto";
+import { TaskModel } from '@app/types/model/task';
+import { UUID } from 'crypto';
 
 const { Text } = Typography;
 
@@ -17,13 +17,11 @@ const TaskActionRow: FC<TaskActionRowProps & PropsWithChildren> = (props) => {
 
   return (
     <div>
-      <Text style={{ marginRight: "10px" }}>
-        {text}
-      </Text>
+      <Text style={{ marginRight: '10px' }}>{text}</Text>
       {children}
     </div>
   );
-}
+};
 
 interface TaskActionsProps {
   task: TaskModel;
@@ -39,26 +37,20 @@ export const TaskActions: FC<TaskActionsProps> = (props) => {
     const baseOptions =
       dashboard?.processes?.map((proc: any) => ({
         value: proc.id,
-        label: proc.name,
+        label: proc.name
       })) ?? [];
     return [{ label: 'Выберите процесс', value: '', disabled: true }, ...baseOptions];
   }, [dashboard]);
 
   const handleProcessChange = (id: UUID) => {
     dispatchTaskEdit({ process: id });
-  }
+  };
 
   return (
     <>
-      <TaskActionRow text="Процесс: " >
-        <Select
-          options={processesToSelect}
-          aria-label="sda"
-          value={editableTask?.process}
-          onChange={handleProcessChange}
-          style={{ minWidth: '220px' }}
-        />
+      <TaskActionRow text="Процесс: ">
+        <Select options={processesToSelect} aria-label="sda" value={editableTask?.process} onChange={handleProcessChange} style={{ minWidth: '220px' }} />
       </TaskActionRow>
     </>
   );
-}
+};

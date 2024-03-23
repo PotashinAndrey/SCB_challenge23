@@ -18,8 +18,7 @@ type PageListProps = PropsWithChildren &
 
 /** PageList -  */
 const PageList: FC<PageListProps> = (props) => {
-  const { children, className, caption, dataSource, renderItem, loading, description } =
-    props;
+  const { children, className, caption, dataSource, renderItem, loading, description } = props;
   const classes = cn('w-main margin-center mt-content mb-content', className);
 
   return (
@@ -32,17 +31,10 @@ const PageList: FC<PageListProps> = (props) => {
       )}
 
       <Paper className="primary bordered">
-        {Boolean(children) && (
-          <Paper className="primary mb-4 bordered no-shadow">{children}</Paper>
-        )}
+        {Boolean(children) && <Paper className="primary mb-4 bordered no-shadow">{children}</Paper>}
 
         <Spin spinning={loading}>
-          <List
-            size="large"
-            itemLayout="horizontal"
-            dataSource={dataSource}
-            renderItem={renderItem}
-          />
+          <List size="large" itemLayout="horizontal" dataSource={dataSource} renderItem={renderItem} />
         </Spin>
       </Paper>
     </div>

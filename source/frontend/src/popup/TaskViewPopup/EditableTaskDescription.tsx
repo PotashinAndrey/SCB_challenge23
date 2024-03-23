@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react";
-import type { FC, ChangeEvent } from "react";
+import { useCallback, useState } from 'react';
+import type { FC, ChangeEvent } from 'react';
 import { Button, Flex, Input, Space } from 'antd';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { TaskModel } from "@app/types/model/task";
+import { TaskModel } from '@app/types/model/task';
 
 const { TextArea } = Input;
 
@@ -21,34 +21,28 @@ export const EditableTaskDescription: FC<EditableTaskDescriptionProps> = (props)
 
   const handleSave = useCallback(() => {
     onSave();
-    setDescriptionEditing(false)
+    setDescriptionEditing(false);
   }, [onSave]);
 
   const handleReset = useCallback(() => {
     onReset();
-    setDescriptionEditing(false)
+    setDescriptionEditing(false);
   }, [onReset]);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     dispatchTaskEdit({ description: value });
-  }
+  };
 
-  return (descriptionEditing ? (
+  return descriptionEditing ? (
     <Flex>
       <Space>
-        <TextArea
-          value={editableTask.description}
-          onChange={handleInputChange}
-          style={{ width: '400px' }}
-        />
+        <TextArea value={editableTask.description} onChange={handleInputChange} style={{ width: '400px' }} />
         <Button type="dashed" icon={<CloseOutlined />} onClick={handleReset}></Button>
         <Button type="primary" icon={<CheckOutlined />} onClick={handleSave}></Button>
       </Space>
     </Flex>
   ) : (
-    <div onClick={() => setDescriptionEditing(true)}>
-      {task.description}
-    </div>
-  ));
-}
+    <div onClick={() => setDescriptionEditing(true)}>{task.description}</div>
+  );
+};

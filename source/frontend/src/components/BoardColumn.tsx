@@ -23,7 +23,7 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
     store: $dashboardDataTasks,
     fn: (dashboardDataTasks) => dashboardDataTasks.filter((t: any) => t.process === column.id),
     keys: [column],
-    defaultValue: [],
+    defaultValue: []
   });
 
   const onDragOverHandler = (event: any) => {
@@ -41,13 +41,13 @@ const BoardColumn: FC<BoardColumnProps> = (props) => {
       // TODO Нужно еще поменять порядок карточек
       updateTask({
         ...movedTask,
-        process: newColumnId,
+        process: newColumnId
       });
       if (oldColumnId !== newColumnId) {
         appendHistory({
           taskId,
           oldColumnId,
-          newColumnId,
+          newColumnId
         });
       }
     },

@@ -160,9 +160,7 @@ export default class ObjectPath {
   static all<T>(obj: T, prefix?: Array<string>): Array<ObjectPath> {
     const keys = Object.keys(obj as any);
 
-    const childs = keys
-      .filter((key) => obj[key] instanceof Object)
-      .map((key: string): Array<ObjectPath> => ObjectPath.all(obj[key], [key]));
+    const childs = keys.filter((key) => obj[key] instanceof Object).map((key: string): Array<ObjectPath> => ObjectPath.all(obj[key], [key]));
 
     const list = keys.map((key) => new ObjectPath(key)).concat(...childs);
 
@@ -173,9 +171,7 @@ export default class ObjectPath {
   /** Возвращает все конечные пути (до листьев) */
   static leafs<T>(obj: T): Array<ObjectPath> {
     const paths = ObjectPath.all<T>(obj).map((p) => p.toString());
-    return paths
-      .filter((path, _index, list) => !list.find((p) => p.startsWith(path + '.')))
-      .map((p) => new ObjectPath(p));
+    return paths.filter((path, _index, list) => !list.find((p) => p.startsWith(path + '.'))).map((p) => new ObjectPath(p));
   }
 
   static items(...list: Array<string | number | undefined>): Array<string> {

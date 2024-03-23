@@ -11,9 +11,7 @@ const Board: FC = () => {
   const { store, error, loading } = useUnit(dashboardData);
 
   const boardColumns = useMemo(() => {
-    return (store.processes || []).map((column: BoardColumnModelType) => (
-      <BoardColumn dashboardId={store?.dashboard?.id} column={column} />
-    ));
+    return (store.processes || []).map((column: BoardColumnModelType) => <BoardColumn dashboardId={store?.dashboard?.id} column={column} />);
   }, [store]);
 
   return (

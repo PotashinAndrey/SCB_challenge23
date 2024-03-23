@@ -7,5 +7,5 @@ const appendHistoryFx = createEffect(appendHistoryMethod);
 
 sample({
   clock: appendHistory,
-  target: appendHistoryFx,
+  target: appendHistoryFx
 });

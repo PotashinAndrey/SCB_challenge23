@@ -8,7 +8,7 @@ const usersService = {
       fields: 'name, email, password',
       tables: 'service.users',
       values: [user.name, user.email, user.password],
-      returning: 'id',
+      returning: 'id'
     });
 
     const id = data.rows[0].id as UUID;
@@ -16,9 +16,9 @@ const usersService = {
   },
   async login(user: UserLoginModel, db: DB) {
     return db.select<UserModel>({
-      text: `SELECT id, name, email FROM service.users WHERE email='${user.login}' AND password='${user.password}'`,
+      text: `SELECT id, name, email FROM service.users WHERE email='${user.login}' AND password='${user.password}'`
     });
-  },
+  }
 };
 
 export default usersService;

@@ -3,11 +3,7 @@ import type DB from '../../class/DB';
 import { companiesList, companyCreate } from '../service/companies';
 import { CompanyModel } from '@app/types/model/company';
 
-const companiesApi = (
-  fastify: FastifyInstance,
-  options: { db: DB },
-  done: () => void
-): void => {
+const companiesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
 
   /** Получение списка всех компаний */
@@ -26,7 +22,7 @@ const companiesApi = (
     const id = await companyCreate(eventData, db);
     return {
       ...eventData,
-      id,
+      id
     };
   });
 

@@ -1,19 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 
 import type DB from '../../class/DB';
-import {
-  dashboardsList,
-  dashboardById,
-  processByDashboardId,
-  tasksByDashboardId,
-  dashboardHistory,
-} from '../service/dashboards';
+import { dashboardsList, dashboardById, processByDashboardId, tasksByDashboardId, dashboardHistory } from '../service/dashboards';
 
-const processesApi = (
-  fastify: FastifyInstance,
-  options: { db: DB },
-  done: () => void
-): void => {
+const processesApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
 
   /** Получение списка процессов (дашбордов) */

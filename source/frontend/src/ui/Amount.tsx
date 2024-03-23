@@ -16,7 +16,7 @@ const Amount: FC<AmountProps> = (props) => {
     style: 'currency',
     currency,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 2
   };
 
   const amount = new Intl.NumberFormat('ru-RU', options).format(value);

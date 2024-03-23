@@ -2,11 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
 import { projectsList, projectById } from '../service/projects';
 
-const projectsApi = (
-  fastify: FastifyInstance,
-  options: { db: DB },
-  done: () => void
-): void => {
+const projectsApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
 
   /** Получение списка всех отделов */

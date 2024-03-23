@@ -20,14 +20,7 @@ const Projects: FC = () => {
       dataSource={(store?.items || []) as ProjectModel[]}
       renderItem={(item, index) => (
         <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar
-                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-              />
-            }
-            title={item.name}
-          />
+          <List.Item.Meta avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />} title={item.name} />
         </List.Item>
       )}
     />

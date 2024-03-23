@@ -3,8 +3,7 @@ import type { PropsWithClassName } from '@app/types/ui';
 import cn from 'classnames';
 import { Typography } from 'antd';
 
-type CaptionProps = PropsWithChildren &
-  PropsWithClassName & { level?: 1 | 2 | 3 | 4 | 5 };
+type CaptionProps = PropsWithChildren & PropsWithClassName & { level?: 1 | 2 | 3 | 4 | 5 };
 
 const { Title } = Typography;
 

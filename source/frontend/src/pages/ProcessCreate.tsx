@@ -30,12 +30,7 @@ const ProcessCreate: FC = () => {
       <Paper className="primary bordered">
         <Paper className="primary mb-4 bordered no-shadow">дропдавн с отделами</Paper>
 
-        <List
-          size="large"
-          itemLayout="horizontal"
-          dataSource={dataSource}
-          renderItem={renderItem}
-        />
+        <List size="large" itemLayout="horizontal" dataSource={dataSource} renderItem={renderItem} />
       </Paper>
 
       <div className="ta-c mt-8">

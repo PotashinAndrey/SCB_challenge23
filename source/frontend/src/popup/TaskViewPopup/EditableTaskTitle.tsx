@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react";
-import type { FC, ChangeEvent } from "react";
+import { useCallback, useState } from 'react';
+import type { FC, ChangeEvent } from 'react';
 import { Button, Flex, Input, Space } from 'antd';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { TaskModel } from "@app/types/model/task";
+import { TaskModel } from '@app/types/model/task';
 
 interface EditableTaskTitleProps {
   editableTask: TaskModel;
@@ -20,27 +20,23 @@ export const EditableTaskTitle: FC<EditableTaskTitleProps> = (props) => {
 
   const handleSave = useCallback(() => {
     onSave();
-    setTityleEditing(false)
+    setTityleEditing(false);
   }, [onSave]);
 
   const handleReset = useCallback(() => {
     onReset();
-    setTityleEditing(false)
+    setTityleEditing(false);
   }, [onReset]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     dispatchTaskEdit({ title: value });
-  }
+  };
 
-  return (titleEditing ? (
+  return titleEditing ? (
     <Flex>
       <Space>
-        <Input
-          value={editableTask.title}
-          onChange={handleInputChange}
-          style={{ width: '400px' }}
-        />
+        <Input value={editableTask.title} onChange={handleInputChange} style={{ width: '400px' }} />
         <Button type="dashed" icon={<CloseOutlined />} onClick={handleReset}></Button>
         <Button type="primary" icon={<CheckOutlined />} onClick={handleSave}></Button>
       </Space>
@@ -49,5 +45,5 @@ export const EditableTaskTitle: FC<EditableTaskTitleProps> = (props) => {
     <div style={{ margin: '4px 0 12px 0' }} onClick={() => setTityleEditing(true)}>
       {task.title}
     </div>
-  ));
-}
+  );
+};

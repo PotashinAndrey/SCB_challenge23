@@ -15,10 +15,7 @@ const updateTaskFx = createEffect(taskUpdate);
 
 export const createTaskPopup = factoryPopupBehaviour(false);
 export const taskViewPopup = factoryPopupBehaviour(false);
-export const $currentTask = createStore<TaskModel>({} as TaskModel).on(
-  setCurrentTask,
-  (_state, task) => task
-);
+export const $currentTask = createStore<TaskModel>({} as TaskModel).on(setCurrentTask, (_state, task) => task);
 
 export const isTaskCreating = createTaskFx.pending;
 export const isTaskUpdating = updateTaskFx.pending;
@@ -62,7 +59,7 @@ sample({
     process: formValues.process,
     dashboard: currentDashboardId,
     title: formValues.name,
-    description: formValues.description,
+    description: formValues.description
   }),
-  target: createTaskFx,
+  target: createTaskFx
 });

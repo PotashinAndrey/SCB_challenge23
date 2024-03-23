@@ -8,7 +8,7 @@ export const companyCreate = async (values: CompanyModel, db: DB): Promise<UUID>
     fields: 'name, description',
     tables: 'company.companies',
     values: [name, description],
-    returning: 'id',
+    returning: 'id'
   });
 
   const id = data.rows[0].id as UUID;
@@ -18,7 +18,7 @@ export const companyCreate = async (values: CompanyModel, db: DB): Promise<UUID>
 export const companiesList = async (db: DB): Promise<Array<CompanyModel>> => {
   return db.select<CompanyModel>({
     fields: 'name, description',
-    tables: 'company.companies',
+    tables: 'company.companies'
   });
 };
 
@@ -27,6 +27,6 @@ export const companyById = async (id: UUID, db: DB): Promise<CompanyModel> => {
     fields: '*',
     tables: 'company.companies',
     where: 'id = $1',
-    values: [id],
+    values: [id]
   });
 };

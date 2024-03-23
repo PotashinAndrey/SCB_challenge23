@@ -15,10 +15,10 @@ export const $currentProjectId = createStore<UUID | null>(null)
 
 sample({
   clock: [projectPageOpen, routing.dashboards.opened],
-  target: projectListLoadFx,
+  target: projectListLoadFx
 });
 
 sample({
   clock: projectListLoadFx.doneData,
-  target: projectListData.$store,
+  target: projectListData.$store
 });

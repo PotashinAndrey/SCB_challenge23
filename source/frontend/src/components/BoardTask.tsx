@@ -20,23 +20,11 @@ const BoardTask: FC<BoardTaskProps> = ({ task }) => {
   };
 
   return (
-    <Card
-      size="small"
-      hoverable
-      onClick={onCardOpen}
-      onDragStart={handleDragStart}
-      draggable
-      className="w-card"
-    >
+    <Card size="small" hoverable onClick={onCardOpen} onDragStart={handleDragStart} draggable className="w-card">
       <Card.Meta
         avatar={
           // TODO Тут отображать исполнителя
-          <Avatar
-            size={30}
-            src={
-              'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1&' + Math.random()
-            }
-          />
+          <Avatar size={30} src={'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1&' + Math.random()} />
         }
         title={title}
       />

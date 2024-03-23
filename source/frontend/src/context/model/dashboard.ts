@@ -12,34 +12,19 @@ import { routing } from '../router';
 export const fetchDashboardsList = createEvent();
 export const setCurrentDashboardId = createEvent<UUID | null>();
 export const fetchDashboardsListFx = createEffect(getDashboardsList);
-const createDashboardFx = createEffect(
-  async (values: {
-    projectId: UUID;
-    name: string;
-    description?: string;
-    columns?: string[];
-  }) => {
-    const result = await createDashboardRequest(
-      values.projectId,
-      values.name,
-      values.description,
-      values.columns
-    );
-    return result;
-  }
-);
+const createDashboardFx = createEffect(async (values: { projectId: UUID; name: string; description?: string; columns?: string[] }) => {
+  const result = await createDashboardRequest(values.projectId, values.name, values.description, values.columns);
+  return result;
+});
 
 export const $currentDashboardId = createStore<UUID | null>(null)
   .on(fetchDashboardsListFx.doneData, (_state, data) => data[0]?.id ?? null)
   .on(setCurrentDashboardId, (_state, newDashboard) => newDashboard);
-export const $dashboardsList = createStore<DashboardModel[]>([]).on(
-  fetchDashboardsListFx.doneData,
-  (_state, data) => data || []
-);
+export const $dashboardsList = createStore<DashboardModel[]>([]).on(fetchDashboardsListFx.doneData, (_state, data) => data || []);
 
 sample({
   clock: [createDashboardFx.doneData, fetchDashboardsList, routing.dashboards.opened],
-  target: fetchDashboardsListFx,
+  target: fetchDashboardsListFx
 });
 
 export const createDashboardPopup = factoryPopupBehaviour();
@@ -56,7 +41,7 @@ sample({
     if (!formValues?.columns?.length) return true;
     return formValues?.columns?.length < 7;
   },
-  target: $canAddNewColumn,
+  target: $canAddNewColumn
 });
 
 sample({
@@ -66,12 +51,12 @@ sample({
     name: formValues.name,
     description: formValues.description,
     projectId: currentProjectId,
-    columns: formValues.columns.filter((column: string) => column.length !== 0),
+    columns: formValues.columns.filter((column: string) => column.length !== 0)
   }),
-  target: createDashboardFx,
+  target: createDashboardFx
 });
 
 sample({
   clock: createDashboardFx.done,
-  target: [createDashbordForm.reset, createDashboardPopup.close],
+  target: [createDashbordForm.reset, createDashboardPopup.close]
 });

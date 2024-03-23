@@ -2,11 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
 import { createTask, updateTask } from '../service/tasks';
 
-const tasksApi = (
-  fastify: FastifyInstance,
-  options: { db: DB },
-  done: () => void
-): void => {
+const tasksApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
 
   fastify.post('/create', async (request, reply) => {
