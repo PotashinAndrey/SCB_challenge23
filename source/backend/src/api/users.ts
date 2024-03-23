@@ -28,7 +28,7 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
     const user = results[0];
     console.log('Login user: ', user);
     if (user) {
-      const token = sign({ user }, 'privatekey');
+      const token = sign({ user }, process.env.SECRET);
       reply.setCookie('authToken', token, { httpOnly: true, path: '/' });
       reply.send({ token });
     } else {
@@ -42,7 +42,7 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done: () => voi
     const authToken = request.cookies.authToken;
 
     // verify the JWT token generated for the user
-    verify(authToken, 'privatekey', (err, user) => {
+    verify(authToken, process.env.SECRET, (err, user) => {
       if (err) {
         // If error send Forbidden (403)
         console.log('ERROR: Could not connect to the protected route');

@@ -53,5 +53,6 @@ sample({
 
 sample({
   clock: getUserDataFx.doneData,
+  fn: ({ user }) => user,
   target: $currentUser
 });
