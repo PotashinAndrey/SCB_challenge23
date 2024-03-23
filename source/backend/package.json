@@ -1,3 +1,6 @@
 {
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@fastify/auth": "^4.6.1"
+  }
 }

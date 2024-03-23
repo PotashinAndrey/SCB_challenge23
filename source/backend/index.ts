@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import * as url from 'url';
 import type { BackendConfig } from '@app/types/config';
 import FastifyCookie from '@fastify/cookie';
@@ -12,30 +12,57 @@ import projectsApi from './src/api/projects';
 import processesApi from './src/api/processes';
 import dashboardApi from './src/api/dashboard';
 import tasksApi from './src/api/tasks';
+import JWT from 'jsonwebtoken';
 
-const fastify = Fastify({ logger: true });
-fastify.register(FastifyCookie);
+const { verify } = JWT;
+
+const NOT_PROTECTED_PATHS = ['/api/users/login', '/api/users/register'];
+
+const verifyJWT = (request: FastifyRequest, reply: FastifyReply, done) => {
+  const { authToken } = request.cookies;
+  if (!authToken) {
+    reply.code(401);
+    done(new Error('Unauthorized'));
+  }
+  try {
+    const user = verify(authToken, process.env.SECRET);
+    // TODO Можно тут же проверять на роль юзера
+    // if (user.role === 'admin') {
+    //   reply.code(403);
+    //   done(new Error('Forbidden'));
+    // }
+    console.log('SUCCESS: Connected to protected route');
+    done();
+  } catch (verifyError) {
+    // If error send Forbidden (403)
+    console.log('ERROR: Could not connect to the protected route');
+    reply.status(403);
+    done(new Error('Cannot verify token'));
+  }
+};
+
+const fastify: FastifyInstance = Fastify({ logger: true });
 
 const db = await new DB().connect();
 
 // const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-fastify.addHook('preHandler', async (request, reply) => {
+fastify.addHook('preHandler', (request, reply, done) => {
   reply.headers({
     'Access-Control-Allow-Origin': 'http://localhost:8080',
     'Content-Type': 'application/json'
   });
+  if (NOT_PROTECTED_PATHS.includes(request.routerPath)) {
+    done();
+  } else {
+    verifyJWT(request, reply, done);
+  }
 });
 
-// fastify.addHook('preValidation', (request, reply, done) => {
-//   console.log('pre validation headers: ', request.headers);
-//   // request.body = { ...request.body, importantKey: 'randomString' }
-//   done();
-// });
-
+fastify.register(FastifyCookie);
 fastify.register(cors, {
-  origin: '*', // Установите здесь домен вашего фронтенда
+  origin: 'http://localhost:8080', // Установите здесь домен вашего фронтенда
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
   allowedHeaders: ['Authorization', 'Content-Type'], // Разрешенные заголовки
   credentials: true, // Разрешить передачу куки и заголовков аутентификации
