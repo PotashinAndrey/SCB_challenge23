@@ -22,11 +22,9 @@ const Dashboards: FC = () => {
           </List.Item>
         )}
       >
-        <div>
-          <Button onClick={openCrateDashboardPopup} type="primary">
-            Создать Дашборд
-          </Button>
-        </div>
+        <Button onClick={openCrateDashboardPopup} type="primary">
+          Создать Дашборд
+        </Button>
       </PageList>
     </>
   );
