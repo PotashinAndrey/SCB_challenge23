@@ -6,7 +6,7 @@ import { $currentDashboardId, $dashboardsList, createDashboardPopup, setCurrentD
 import { UserOutlined, DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
 
-import { $currentUser } from '../context/login';
+import { $currentUser, logoutUserEvent } from '../context/login';
 import { routing } from '../context/router';
 
 const { Text } = Typography;
@@ -56,9 +56,9 @@ const Header: FC<ThemeProps> = (props) => {
 
   const setCurrentTheme = useCallback(() => changeTheme(theme === 'light'), [theme, changeTheme]);
 
-  const redirectToLoginPage = () => {
-    routing.login.open();
-  };
+  const logoutHandler = () => {
+    logoutUserEvent(user.id);
+  }
 
   const redirectToRegistrationPage = () => {
     routing.registration.open();
@@ -74,9 +74,9 @@ const Header: FC<ThemeProps> = (props) => {
       key: '2'
     },
     {
-      label: 'Войти в другой аккаунт',
+      label: 'Выйти',
       key: '3',
-      onClick: redirectToLoginPage
+      onClick: logoutHandler
     },
     {
       label: 'Регистрация',

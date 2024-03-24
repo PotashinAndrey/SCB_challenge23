@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyRegisterOptions } from 'fastify';
+import type { FastifyInstance } from 'fastify';
 import type { UserLoginModel, UserRegistrationModel } from '@app/types/model/user';
 import type DB from '../../class/DB';
 import usersService from '../service/users';
@@ -34,6 +34,34 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done): void => 
       reply.code(401);
       throw new Error('Пользователь не найден!');
     }
+  });
+
+  fastify.post('/logout', async (request, reply) => {
+    reply.clearCookie('authToken', { httpOnly: true, path: '/' });
+    reply.send(true);
+    // const authToken = request.cookies.authToken;
+    // verify(authToken, process.env.SECRET, async (err, decoded) => {
+    //   if (err) {
+    //     console.error(err);
+    //     reply.code(401);
+    //     throw new Error('authtoken is not valide !');
+    //   }
+
+    //   const id = (decoded as { user: UserModel })?.user?.id;
+    //   const results = await usersService.logout(id, db);
+    //   const user = results[0];
+    //   console.log("TOKEN");
+    //   console.group();
+    //   console.log(decoded, id, user);
+
+    //   if (user) {
+    //     reply.setCookie('authToken', "", { httpOnly: true, path: '/' });
+    //   } else {
+    //     reply.code(401);
+    //     throw new Error('authtoken is not valide !');
+    //   }
+
+    //});//TODO калбек для ошибки
   });
 
   //This is a protected route

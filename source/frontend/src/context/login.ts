@@ -1,10 +1,10 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import { createForm } from 'effector-react-form';
 import { routing } from './router';
-import api from '../scripts/api';
 import { UserModel } from '@app/types/model/user';
-import { getUserData, loginUser } from '../service/users';
+import { getUserData, loginUser, logoutUser } from '../service/users';
 import { message } from 'antd';
+import { UUID } from 'crypto';
 
 type LoginStatus = { status?: 'success' | 'danger'; message: string; data?: any };
 
@@ -53,4 +53,18 @@ sample({
   clock: getUserDataFx.doneData,
   fn: ({ user }) => user,
   target: $currentUser
+});
+
+export const logoutUserEvent = createEvent<UUID>();
+const logoutUserFx = createEffect(logoutUser)
+
+sample({
+  clock: logoutUserEvent,
+  fn: (id) => id,
+  target: logoutUserFx
+});
+
+sample({
+  clock: logoutUserFx.done,
+  target: routing.login.open
 });

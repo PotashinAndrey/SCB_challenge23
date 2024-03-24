@@ -1,3 +1,5 @@
+import { UUID } from "crypto";
+
 export type UserLoginModel = {
   login: string;
   password: string;
@@ -6,7 +8,7 @@ export type UserLoginModel = {
 export type UserModel = {
   name: string;
   email: string;
-  id: string;
+  id: UUID;
 };
 
 export type UserRegistrationModel = {
