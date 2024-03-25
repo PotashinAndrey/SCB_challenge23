@@ -16,7 +16,7 @@ import JWT from 'jsonwebtoken';
 
 const { verify } = JWT;
 
-const NOT_PROTECTED_PATHS = ['/api/users/login', '/api/users/register'];
+const NOT_PROTECTED_PATHS = ['/api/users/login', '/api/users/registration'];
 
 const verifyJWT = (request: FastifyRequest, reply: FastifyReply, done) => {
   const { authToken } = request.cookies;
