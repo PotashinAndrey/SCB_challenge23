@@ -1,6 +1,5 @@
 import type { ServerProtocol, BackendConfig } from '@app/types/config';
 import type { Configuration } from 'webpack';
-import * as webpackDevServer from 'webpack-dev-server';
 
 import * as url from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
