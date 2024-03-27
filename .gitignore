@@ -6,3 +6,4 @@ config/local.ts
 /node_modules
 
 source/backend/build
+dist

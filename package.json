@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "backend-start": "npm run backend-build && npm run backend-migrations && npm run backend-launch",
-    "frontend-start": "npm run frontend-launch",
+    "frontend-start": "npm run frontend-build && npm run frontend-launch",
     "backend-clear": "rm -rf ./source/backend/build/",
     "backend-build": "npx tsc -p ./source/backend/",
     "backend-migrations": "cp -R ./source/backend/migrations ./source/backend/build/source/backend",
     "backend-launch": "cd ./source/backend && node --experimental-loader ./loader.js --env-file .env ./build/source/backend/index.js",
     "frontend-launch": "cd ./source/frontend && webpack serve --config ./webpack.config.ts",
+    "frontend-build": "cd ./source/frontend && webpack build --config ./webpack.config.ts",
     "clear": "npm run backend-clear && rm -rf package-lock.json node_modules/",
     "prettier": "prettier --config .prettierrc \"**/*.{ts,tsx}\" --write",
     "eslint": "eslint ./source"
