@@ -25,7 +25,6 @@ export const routes = [
   { path: '/projects', route: routing.projects },
   { path: '/dashboards', route: routing.dashboards },
   { path: '/forbidden', route: routing.forbidden }
-  // { path: '/posts/:postId', route: postRoute },
 ];
 
 export const router = createHistoryRouter({ routes });

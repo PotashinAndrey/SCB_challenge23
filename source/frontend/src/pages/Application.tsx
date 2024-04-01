@@ -1,59 +1,13 @@
-import type { FC } from 'react';
+import type { CSSProperties, FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { createRoutesView, Link } from 'atomic-router-react';
-import { ConfigProvider, theme, App } from 'antd';
-import { routing } from '@context/router';
-import Header from '../components/Header';
-
-import Login from './Login';
-import Registration from './Registration';
-import Dashboard from './Dashboard';
-import Projects from './Projects';
-import ProcessCreate from './ProcessCreate';
-import Processes from './Processes';
+import { ConfigProvider, theme, App, Layout } from 'antd';
+import ApplicationBar from '@component/ApplicationBar';
+import RoutesView from './RoutesView';
 import PopupsList from './PopupsList';
-import Dashboards from './Dashboards';
-import Forbidden from './Forbidden';
 
-const RoutesView = createRoutesView({
-  routes: [
-    { route: routing.login, view: Login },
-    { route: routing.registration, view: Registration },
-    { route: routing.dashboard, view: Dashboard },
-    { route: routing.processCreate, view: ProcessCreate },
-    { route: routing.processesList, view: Processes },
-    { route: routing.projects, view: Projects },
-    { route: routing.dashboards, view: Dashboards },
-    { route: routing.forbidden, view: Forbidden }
-    // { route: Post.route, view: PostPage.view },
-  ],
-  otherwise() {
-    return (
-      <div>
-        <h2>Page not found!</h2>
+const { Header, Content } = Layout;
 
-        <p>
-          <Link to={routing.login}>Login</Link>
-        </p>
-        <p>
-          <Link to={routing.registration}>Registration</Link>
-        </p>
-        <p>
-          <Link to={routing.dashboard}>Dashboard</Link>
-        </p>
-        <p>
-          <Link to={routing.processesList}>Список процессов</Link>
-        </p>
-        <p>
-          <Link to={routing.processCreate}>Создание процесса</Link>
-        </p>
-        <p>
-          <Link to={routing.projects}>Проекты</Link>
-        </p>
-      </div>
-    );
-  }
-});
+const styleHader: CSSProperties = { display: 'flex', alignItems: 'center', background: 'none' };
 
 const Application: FC = () => {
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('light');
@@ -62,8 +16,6 @@ const Application: FC = () => {
     setCurrentTheme(toDark ? 'dark' : 'light');
     document.documentElement.style.setProperty('--darkmode', toDark ? '1' : '0');
   }, []);
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     const isDarkTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -82,11 +34,16 @@ const Application: FC = () => {
       }}
     >
       <App>
-        <div className="application">
-          <Header theme={currentTheme} changeTheme={changeTheme} />
-          <RoutesView />
-          <PopupsList />
-        </div>
+        <Layout>
+          <Header style={styleHader}>
+            <ApplicationBar theme={currentTheme} changeTheme={changeTheme} />
+          </Header>
+          <Content>
+            <RoutesView />
+          </Content>
+        </Layout>
+
+        <PopupsList />
       </App>
     </ConfigProvider>
   );

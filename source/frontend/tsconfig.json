@@ -28,6 +28,8 @@
 
       "@ui": ["./src/ui"],
       "@ui/*": ["./src/ui/*"],
+      "@component": ["./src/component"],
+      "@component/*": ["./src/component/*"],
       "@context": ["./src/context"],
       "@context/*": ["./src/context/*"],
       "@popup": ["./src/popup"],

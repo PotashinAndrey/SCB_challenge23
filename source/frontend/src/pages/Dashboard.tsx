@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 
-import DashboardFilter from '../components/DashboardFilter';
-import Board from '../components/Board';
+import DashboardFilter from '@component/DashboardFilter';
+import Board from '@component/Board';
 import { fetchDashboardsList } from 'src/context/model/dashboard';
 
 const Dashboard: FC = () => {
