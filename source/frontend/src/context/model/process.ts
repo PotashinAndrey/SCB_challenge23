@@ -1,15 +1,27 @@
-import { createEffect, sample, createEvent, createStore } from 'effector';
-import factoryPopupBehaviour from '../factory/popup';
-import factoryExteralData from '../factory/external';
-// import { routing } from '../router';
-import { processesListLoad, dashboardLoad } from '../../service/process';
-
 import type { UUID } from 'crypto';
+import { createEffect, sample, createEvent, createStore } from 'effector';
+import type { ProcessModelType } from '@app/types/model/process';
+import factoryPopupBehaviour from '../factory/popup';
+// import { routing } from '../router';
+// import { processesListLoad, dashboardLoad } from '@service/process';
 // import { $currentDashboardId } from './dashboard';
 
+import { dashboardDataQuery } from './dashboard';
+
+export const $processes = createStore<Array<ProcessModelType>>([]);
+
+sample({
+  clock: dashboardDataQuery.$data,
+  fn: (data) => data.processes || [],
+  target: $processes
+});
+
+export const $processesOptions = $processes
+  .map(processes => processes.map(process => ({ value: process.id, label: process.name })));
+
 /** @section список процессов (дашбордов) */
-export const processesListLoadFx = createEffect(processesListLoad);
-export const processesListData = factoryExteralData(processesListLoadFx);
+// export const processesListLoadFx = createEffect(processesListLoad);
+// export const processesListData = factoryExteralData(processesListLoadFx);
 
 // sample({
 //   clock: [routing.processesList.opened],

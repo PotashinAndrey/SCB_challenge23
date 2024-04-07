@@ -5,26 +5,23 @@ import { Card } from 'antd';
 import { appendHistory } from '@context/model/history';
 import { dashboardDataQuery } from '@context/model/dashboard';
 import { updateTask } from '@context/model/task';
-import type { BoardColumnModelType } from '@app/types/model/board';
+import type { ProcessProps } from '@app/types/model/process';
 import BoardTask from './BoardTask';
+import { preventDefault } from '../scripts/ui-utils';
 
-const preventDefault = (event: any) => event.preventDefault();
-
-type BoardColumnProps = { column: BoardColumnModelType };
-
-const BoardColumn: FC<BoardColumnProps> = props => {
-  const { column } = props;
-  const { name } = column;
+const BoardColumn: FC<ProcessProps> = props => {
+  const { process } = props;
+  const { name } = process;
 
   const tasks = useStoreMap({
     store: dashboardDataQuery.$data,
-    fn: dashboard => (dashboard.tasks || []).filter((t: any) => t.process === column.id),
-    keys: [column],
+    fn: dashboard => (dashboard.tasks || []).filter(t => t.process === process.id),
+    keys: [process],
     defaultValue: []
   });
 
-  const handleDrop = useCallback((event: any) => {
-      const newColumnId = column.id;
+  const handleDrop = useCallback(() => {
+      const newColumnId = process.id;
       // TODO Подумать как нормально сделать
       const movedTask = JSON.parse(localStorage.getItem('movedTask') || '');
       localStorage.removeItem('movedTask');
@@ -43,12 +40,12 @@ const BoardColumn: FC<BoardColumnProps> = props => {
         });
       }
     },
-    [column.id]
+    [process.id]
   );
 
   return (
     <Card title={name} type="inner" onDrop={handleDrop} onDragOver={preventDefault} style={{ width: 300 }}>
-      {Children.toArray(tasks.map((t: any) => <BoardTask task={t} />))}
+      {Children.toArray(tasks.map(t => <BoardTask task={t} />))}
     </Card>
   );
 };

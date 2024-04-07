@@ -1,47 +1,33 @@
 import type { FC } from 'react';
 import { useUnit } from 'effector-react';
+import { useForm } from '@filledout/react';
 import { Modal, Button } from 'antd';
-// import { useForm } from 'effector-react-form';
-import { createTaskForm, createTaskFormSubmit, createTaskPopup } from '@context/model/task';
-// import { dashboardData } from '@context/model/process';
-import { InputField, TextAreaField } from '@form/input';
-import { SelectField } from '@form/select';
+import { createTaskPopup, $$taskCreateForm } from '@context/model/task';
+import TaskCreate from '@page/TaskCreate';
 
 const TaskCreatePopup: FC = () => {
-  // const dashboard = useUnit(dashboardData.$store);
-  // // const { visible, close } = useUnit(createTaskPopup);
-  // // const { controller } = useForm({ form: createTaskForm });
+  const { visible, close } = useUnit(createTaskPopup);
+  const { onSubmit } = useForm($$taskCreateForm);
 
-  // const getProcessesToSelect = () => {
-  //   const baseOptions =
-  //     dashboard?.processes?.map((proc: any) => ({
-  //       value: proc.id,
-  //       label: proc.name
-  //     })) ?? [];
-  //   return [{ label: 'Выберите процесс', value: '', disabled: true }, ...baseOptions];
-  // };
-
-  // return (
-  //   <Modal
-  //     destroyOnClose
-  //     open={false}
-  //     width={800}
-  //     closable
-  //     onCancel={() => close()}
-  //     title="Создание новой задачи"
-  //     footer={[
-  //       <Button type="primary" key="create" onClick={createTaskFormSubmit}>
-  //         Создать
-  //       </Button>
-  //     ]}
-  //   >
-  //     {/* <InputField controller={controller({ name: 'name' })} label={'Название'} />
-  //     <TextAreaField controller={controller({ name: 'description' })} label={'Описание'} />
-
-  //     <SelectField controller={controller({ name: 'process' })} label="Процесс" options={getProcessesToSelect()} /> */}
-  //   </Modal>
-  // );
-  return "task create popup";
+  return (
+    <Modal
+      destroyOnClose
+      open={visible}
+      width={900}
+      closable
+      onCancel={close}
+      title="Создание новой задачи"
+      footer={[
+        <Button key="close" type="text" onClick={() => {
+          $$taskCreateForm.reset();
+          close();
+        }}>Отмена</Button>,
+        <Button type="primary" key="create" onClick={() => onSubmit()}>Создать</Button>
+      ]}
+    >
+      <TaskCreate />
+    </Modal>
+  );
 };
 
 export default TaskCreatePopup;

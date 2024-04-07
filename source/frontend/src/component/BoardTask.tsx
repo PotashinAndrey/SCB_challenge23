@@ -1,26 +1,21 @@
 import type { FC } from 'react';
-import { useCallback, memo } from 'react';
+import { useCallback } from 'react';
 import { Card, Avatar, Descriptions } from 'antd';
-import { setCurrentTask, taskViewPopup } from '@context/model/task';
-import type { TaskModel } from '@app/types/model/task';
+import { taskViewPopup } from '@context/model/task';
+import type { TaskProps } from '@app/types/model/task';
 
-type BoardTaskProps = {
-  task: TaskModel;
-};
-const BoardTask: FC<BoardTaskProps> = ({ task }) => {
+const BoardTask: FC<TaskProps> = props => {
+  const { task } = props;
   const { title, description } = task;
+
+  const handleTaskOpen = useCallback(() => taskViewPopup.open(task), [task]);
 
   const handleDragStart = useCallback(() => {
     localStorage.setItem('movedTask', JSON.stringify(task));
   }, [task]);
 
-  const onCardOpen = () => {
-    taskViewPopup.open();
-    setCurrentTask(task);
-  };
-
   return (
-    <Card size="small" hoverable onClick={onCardOpen} onDragStart={handleDragStart} draggable className="w-card">
+    <Card size="small" hoverable onClick={handleTaskOpen} onDragStart={handleDragStart} draggable className="w-card">
       <Card.Meta
         avatar={
           // TODO Тут отображать исполнителя
@@ -38,4 +33,4 @@ const BoardTask: FC<BoardTaskProps> = ({ task }) => {
   );
 };
 
-export default memo(BoardTask);
+export default BoardTask;

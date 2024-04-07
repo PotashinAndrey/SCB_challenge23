@@ -1,4 +1,5 @@
 import type { UUID } from 'crypto';
+import type { Explain } from '@app/types/utils';
 
 export type TaskModel = {
   id?: UUID; // UUID
@@ -8,3 +9,9 @@ export type TaskModel = {
   title: string;
   description?: string;
 };
+
+export type TaskProps = {
+  task: TaskModel;
+};
+
+export type TaskCreateFormValues = Explain<Pick<TaskModel, "title" | "description" | "process">>;

@@ -21,23 +21,16 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@app/types": ["../types"],
       "@app/types/*": ["../types/*"],
-      "@app/scripts": ["../scripts"],
       "@app/scripts/*": ["../scripts/*"],
 
-      "@ui": ["./src/ui"],
       "@ui/*": ["./src/ui/*"],
-      "@component": ["./src/component"],
       "@component/*": ["./src/component/*"],
-      "@context": ["./src/context"],
+      "@page/*": ["./src/pages/*"],
       "@context/*": ["./src/context/*"],
-      "@service": ["./src/service"],
       "@service/*": ["./src/service/*"],
-      "@popup": ["./src/popup"],
       "@popup/*": ["./src/popup/*"],
-      "@form": ["./src/form"],
-      "@form/*": ["./src/form/*"],
+      "@form/*": ["./src/form/*"]
     }
   },
   "ts-node": {

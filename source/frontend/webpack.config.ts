@@ -54,11 +54,12 @@ const configuration: Configuration = {
       '@ui': path.resolve(__dirname, 'src/ui'),
       '@context': path.resolve(__dirname, 'src/context'),
       '@service': path.resolve(__dirname, 'src/service'),
+      '@page': path.resolve(__dirname, 'src/pages'),
+      '@component': path.resolve(__dirname, 'src/component'),
+      '@popup': path.resolve(__dirname, 'src/popup'),
 
       // кандидаты на улучшение
       '@form': path.resolve(__dirname, 'src/form'),
-      '@popup': path.resolve(__dirname, 'src/popup'),
-      '@component': path.resolve(__dirname, 'src/component')
     }
   },
   module: {

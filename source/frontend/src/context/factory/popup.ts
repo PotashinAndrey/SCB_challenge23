@@ -1,7 +1,7 @@
-import type { Event, Store } from 'effector';
+import type { EventCallable, Store } from 'effector';
 import { createStore, createEvent } from 'effector';
 
-type PopupBehaviourEvents<S = void> = { open: Event<S>; close: Event<void> };
+type PopupBehaviourEvents<S = void> = { open: EventCallable<S>; close: EventCallable<void> };
 type PopupBehaviourUnits<S = void> = PopupBehaviourEvents<S> & { $visible: Store<boolean> };
 type PopupBehaviourShape<S = void> = PopupBehaviourEvents<S> & { visible: Store<boolean> };
 
