@@ -1,4 +1,5 @@
 {
+  // "plugins": ["effector/babel-plugin"],
   "presets": [
     "@babel/preset-env",
     [

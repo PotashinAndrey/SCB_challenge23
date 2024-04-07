@@ -12,13 +12,15 @@ import Forbidden from './Forbidden';
 
 const RoutesView = createRoutesView({
   routes: [
-    { route: routing.login, view: Login },
-    { route: routing.registration, view: Registration },
-    { route: routing.dashboard, view: Dashboard },
+    { route: routing.auth.login, view: Login },
+    { route: routing.auth.registration, view: Registration },
+
+    { route: routing.dashboard.list, view: Dashboards },
+    { route: routing.dashboard.view, view: Dashboard },
+
     { route: routing.processCreate, view: ProcessCreate },
     { route: routing.processesList, view: Processes },
-    { route: routing.projects, view: Projects },
-    { route: routing.dashboards, view: Dashboards },
+    { route: routing.project.list, view: Projects },
     { route: routing.forbidden, view: Forbidden }
   ],
 
@@ -27,24 +29,12 @@ const RoutesView = createRoutesView({
       <div>
         <h2>Page not found!</h2>
 
-        <p>
-          <Link to={routing.login}>Login</Link>
-        </p>
-        <p>
-          <Link to={routing.registration}>Registration</Link>
-        </p>
-        <p>
-          <Link to={routing.dashboard}>Dashboard</Link>
-        </p>
-        <p>
-          <Link to={routing.processesList}>Список процессов</Link>
-        </p>
-        <p>
-          <Link to={routing.processCreate}>Создание процесса</Link>
-        </p>
-        <p>
-          <Link to={routing.projects}>Проекты</Link>
-        </p>
+        <p><Link to={routing.auth.login}>Login</Link></p>
+        <p><Link to={routing.auth.registration}>Registration</Link></p>
+        <p><Link to={routing.dashboard.list}>Dashboards</Link></p>
+        <p><Link to={routing.processesList}>Список процессов</Link></p>
+        <p><Link to={routing.processCreate}>Создание процесса</Link></p>
+        <p><Link to={routing.project.list}>Проекты</Link></p>
       </div>
     );
   }

@@ -2,7 +2,7 @@ import type { CSSProperties, FC } from 'react';
 import { useMemo } from 'react';
 import { useStoreMap } from 'effector-react';
 import { Menu, MenuProps } from 'antd';
-import { $dashboardsList, createDashboardPopup, setCurrentDashboardId } from 'src/context/model/dashboard';
+import { dashboardsListQuery, createDashboardPopup } from 'src/context/model/dashboard';
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
 import type { UIThemeProps } from '@app/types/ui';
@@ -24,15 +24,14 @@ const createDashboardMenuItems: MenuProps['items'] = [
 ];
 
 const ApplicationBar: FC<UIThemeProps> = props => {
-  const dasboardsListMenuItems = useStoreMap($dashboardsList, dasboardsList => dasboardsList.map(dashboard => ({
+  const dasboardsListMenuItems = useStoreMap(dashboardsListQuery.$data, dasboardsList => dasboardsList.map(dashboard => ({
     key: dashboard.id!,
-    label: dashboard.name,
-    onClick: () => setCurrentDashboardId(dashboard.id!)
+    label: <Link to={routing.dashboard.view} params={{ dashboard: dashboard.id }}>{dashboard.name}</Link>
   })));
 
   const mainMenuItems: MenuProps['items'] = useMemo(() => [
     {
-      label: <Link to={routing.dashboard}>Дашборд</Link>,
+      label: <Link to={routing.dashboard.list}>Дашборд</Link>,
       key: 'Дашборды',
       children: [
         ...dasboardsListMenuItems,
@@ -46,23 +45,17 @@ const ApplicationBar: FC<UIThemeProps> = props => {
       children: [
         {
           key: 'projects',
-          label: <Link to={routing.projects}>Проекты</Link>
+          label: <Link to={routing.project.list}>Проекты</Link>
         },
         {
           key: 'dashboards',
-          label: <Link to={routing.dashboards}>Доски</Link>
+          label: <Link to={routing.dashboard.list}>Доски</Link>
         }
       ]
     }
   ], [dasboardsListMenuItems]);
 
-  // const [current, setCurrent] = useState('mail');
-
-  // const onClick: MenuProps['onClick'] = (e) => {
-  //   console.log('click ', e);
-  //   setCurrent(e.key);
-  // };
-
+  const { theme, changeTheme } = props;
   return (
     <>
       <Menu
@@ -70,11 +63,9 @@ const ApplicationBar: FC<UIThemeProps> = props => {
         items={mainMenuItems}
         style={styleMenu}
         inlineIndent={0}
-        // onClick={onClick}
-        // selectedKeys={[current]}
       />
 
-      <ProfileShortcut {...props} />
+      <ProfileShortcut theme={theme} changeTheme={changeTheme} />
     </>
   );
 };

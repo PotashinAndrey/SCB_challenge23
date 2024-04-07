@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
-import { projectsList, projectById } from '../service/projects';
+import { projectsList, projectById, projectCreate } from '../service/projects';
 
 const projectsApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
@@ -20,6 +20,13 @@ const projectsApi = (fastify: FastifyInstance, options: { db: DB }, done: () => 
     const items = await projectById(data.id, db);
     return { items };
   });
+
+  fastify.post('/create', async (request, reply) => {
+    const data = JSON.parse(request.body as string);
+    const response = await projectCreate(data, db);
+    return response;
+  });
+
   done();
 };
 

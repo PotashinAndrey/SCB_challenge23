@@ -1,5 +1,5 @@
 import type DB from '../../class/DB';
-import type { UUID } from 'node:crypto';
+import type { UUID } from 'crypto';
 import { projectById } from './projects';
 import { DashboardModel } from '@app/types/model/dashboard';
 import { HistoryAppendModel } from '@app/types/model/history';

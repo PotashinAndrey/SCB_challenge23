@@ -3,7 +3,7 @@ import api from '../scripts/api';
 import { DashboardModel } from '@app/types/model/dashboard';
 import { HistoryAppendModel } from '@app/types/model/history';
 
-export const getDashboardsList = (): Promise<any> => {
+export const getDashboardsList = (): Promise<Array<DashboardModel>> => {
   return api('dashboard/list');
 };
 

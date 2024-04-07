@@ -1,10 +1,9 @@
-import { createForm } from 'effector-react-form';
-import { TaskModel } from '@app/types/model/task';
+// import { createForm } from 'effector-react-form';
+import type { TaskModel } from '@app/types/model/task';
 import { createEffect, createEvent, sample, createStore } from 'effector';
-import { taskCreate, taskUpdate } from 'src/service/tasks';
+import { taskCreate, taskUpdate } from '@service/tasks';
 import factoryPopupBehaviour from '../factory/popup';
 import { loadDashboard } from './process';
-import { $currentDashboardId } from './dashboard';
 
 export const createTask = createEvent<TaskModel>();
 export const updateTask = createEvent<TaskModel>();
@@ -32,10 +31,10 @@ sample({
 
 // TODO Сделать чтобы при создании таски, с бека возвращался таск,
 //  тогда не придется заново весь дашборд запрашивать
-sample({
-  clock: createTaskFx.done,
-  target: [createTaskPopup.close, loadDashboard]
-});
+// sample({
+//   clock: createTaskFx.done,
+//   target: [createTaskPopup.close, loadDashboard]
+// });
 
 // TODO Сделать чтобы при обновлении таски, с бека возвращался таск,
 //  тогда не придется заново весь дашборд запрашивать
@@ -49,17 +48,17 @@ sample({
   target: setCurrentTask
 });
 
-export const createTaskForm = createForm();
+// export const createTaskForm = createForm();
 export const createTaskFormSubmit = createEvent<any>();
 
-sample({
-  clock: createTaskFormSubmit,
-  source: [createTaskForm.$values, $currentDashboardId],
-  fn: ([formValues, currentDashboardId]) => ({
-    process: formValues.process,
-    dashboard: currentDashboardId,
-    title: formValues.name,
-    description: formValues.description
-  }),
-  target: createTaskFx
-});
+// sample({
+//   clock: createTaskFormSubmit,
+//   source: [createTaskForm.$values, $currentDashboardId],
+//   fn: ([formValues, currentDashboardId]) => ({
+//     process: formValues.process,
+//     dashboard: currentDashboardId,
+//     title: formValues.name,
+//     description: formValues.description
+//   }),
+//   target: createTaskFx
+// });

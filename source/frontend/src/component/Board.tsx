@@ -1,22 +1,22 @@
 import type { FC } from 'react';
-import { useEffect, Children, useMemo } from 'react';
-import { useUnit } from 'effector-react';
+import { Children } from 'react';
+import { useStoreMap, useUnit } from 'effector-react';
 import { Spin, Flex } from 'antd';
-import { dashboardData } from '@context/model/process';
-import type { BoardColumnModelType } from '@app/types/model/board';
-
+import { dashboardDataQuery } from '@context/model/dashboard';
 import BoardColumn from './BoardColumn';
 
 const Board: FC = () => {
-  const { store, error, loading } = useUnit(dashboardData);
+  const loading = useUnit(dashboardDataQuery.$pending);
 
-  const boardColumns = useMemo(() => {
-    return (store.processes || []).map((column: BoardColumnModelType) => <BoardColumn dashboardId={store?.dashboard?.id} column={column} />);
-  }, [store]);
+  const boardColumns = useStoreMap(dashboardDataQuery.$data, data => (data.processes || [])
+    .map(column => <BoardColumn column={column} />)
+  );
 
   return (
     <Spin spinning={loading}>
-      <div className="flex gap-3">{Children.toArray(boardColumns)}</div>
+      <Flex justify="space-around" className="gap-3">
+        {Children.toArray(boardColumns)}
+      </Flex>
     </Spin>
   );
 };

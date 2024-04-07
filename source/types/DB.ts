@@ -1,5 +1,5 @@
 import type { PoolClient, Client } from 'pg';
-import type { UUID } from 'node:crypto';
+import type { UUID } from 'crypto';
 
 export type BaseDBRequestClient = { client?: PoolClient | Client };
 export type BaseQueryValues = { values?: Array<any> }; // string | number

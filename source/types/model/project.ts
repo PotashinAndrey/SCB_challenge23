@@ -1,4 +1,4 @@
-import type { UUID } from 'node:crypto';
+import type { UUID } from 'crypto';
 
 export type ProjectModel = {
   id: UUID; // UUID

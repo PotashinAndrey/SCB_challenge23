@@ -1,7 +1,7 @@
+import type { UUID } from 'crypto';
+import type { ProjectModel } from '@app/types/model/project';
 import type DB from '../../class/DB';
-import type { UUID } from 'node:crypto';
-import { ProjectModel } from '@app/types/model/projects';
-import { companyById } from './companies';
+import { companyById, companiesList } from './companies';
 
 export const projectsList = async (filter: { company?: UUID } = {}, db: DB): Promise<Array<ProjectModel>> => {
   let projects: Array<ProjectModel> = [];
@@ -14,9 +14,9 @@ export const projectsList = async (filter: { company?: UUID } = {}, db: DB): Pro
       text: `select id, name, company from company.projects`
     });
   }
-  let extProjects = [];
+  const extProjects = [];
   for (let i = 0; i < projects.length; i++) {
-    let extProject = {
+    const extProject = {
       ...projects[i],
       company: await companyById(projects[i].company, db)
     };
@@ -38,3 +38,14 @@ export const projectById = async (id: UUID, db: DB) => {
   };
   return extProject as unknown as ProjectModel;
 };
+
+export const projectCreate = async (data: ProjectModel, db: DB) => {
+  const { name } = data;
+  const company = (await companiesList(db))[0].id;
+  const result = await db.insertRow<ProjectModel>({
+    fields: 'name, company',
+    tables: 'company.projects',
+    values: [name, company]
+  });
+  return result;
+}

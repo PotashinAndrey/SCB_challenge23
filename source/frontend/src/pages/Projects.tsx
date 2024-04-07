@@ -1,29 +1,28 @@
 import type { FC } from 'react';
-import { useEffect } from 'react';
-import { Avatar, List } from 'antd';
+import { Avatar, List, Button } from 'antd';
 import { useUnit } from 'effector-react';
-import PageList from '../ui/PageList';
-
-import type { ProjectModel } from '@app/types/model/projects';
-import { projectListData, projectPageOpen } from '../context/model/project';
+import { projectListQuery, projectCreateMutation } from '@context/model/project';
+import PageList from '@ui/PageList';
 
 const Projects: FC = () => {
-  const { store, loading } = useUnit(projectListData);
-
-  useEffect(projectPageOpen, []);
+  const { data, pending } = useUnit(projectListQuery);
 
   return (
     <PageList
       caption="Проекты"
       description="Список проектов команды"
-      loading={loading}
-      dataSource={(store?.items || []) as ProjectModel[]}
+      loading={pending}
+      dataSource={data.items}
       renderItem={(item, index) => (
         <List.Item>
           <List.Item.Meta avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />} title={item.name} />
         </List.Item>
       )}
-    />
+    >
+      <Button onClick={() => projectCreateMutation.start({ name: "test", company: window.crypto.randomUUID() })} type="primary">
+        Создать новый проект
+      </Button>
+    </PageList>
   );
 };
 

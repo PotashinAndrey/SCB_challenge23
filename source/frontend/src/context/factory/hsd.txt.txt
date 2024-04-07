@@ -1,0 +1,57 @@
+/source
+  /app?
+    /pages
+      /user
+    /popups (/actons)
+      /RegistrationForm.tsx
+    ...
+
+  /packages?
+    /ui
+      /Button.tsx
+    /form
+      /InputField.tsx
+    /types
+      /dashboard.ts
+      /task.ts
+    /services (/api)
+      /dashboard.ts
+      /task.ts
+    /model (/context)
+      /dashboard/
+        /model.ts
+        /init.ts
+      /task.ts
+    /widgets
+      /dashboard
+      /task
+        /TaskPreviewHeader.tsx
+        /TaskPreviewBody.tsx
+        /TaskPreviewAssignee.tsx
+
+=== [composition layer] ===
+
+    /components
+      /task
+        /TaskPreview.tsx
+
+
+import TaskPreview from "@/components/task/TaskPreview";
+import CurrentTaskPrivider from "@/context/task/useCurrentTaskContext";
+
+// <CurrentTaskPrivider value={task}>
+  <TaskPreview />
+// </CurrentTaskPrivider>
+
+TaskPreview.tsx
+import TaskPreviewHeader from "@/widgets/task/TaskPreviewHeader";
+import TaskPreviewBody from "@/widgets/task/TaskPreviewBody";
+import TaskPreviewAssignee from "@/widgets/task/TaskPreviewAssignee";
+import useCurrentTaskContext from "@/context/task/useCurrentTaskContext";
+import { $currentTask } from "@/model/task"
+
+const TaskPreview = () => {
+  // const task = useCurrentTaskContext();
+  const task = useUnit($currentTask)
+  return <TaskPreviewHeader name={task.name} />
+}

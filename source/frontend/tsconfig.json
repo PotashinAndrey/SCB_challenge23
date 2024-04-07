@@ -32,6 +32,8 @@
       "@component/*": ["./src/component/*"],
       "@context": ["./src/context"],
       "@context/*": ["./src/context/*"],
+      "@service": ["./src/service"],
+      "@service/*": ["./src/service/*"],
       "@popup": ["./src/popup"],
       "@popup/*": ["./src/popup/*"],
       "@form": ["./src/form"],

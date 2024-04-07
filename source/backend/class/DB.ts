@@ -1,5 +1,5 @@
-import crypto from 'node:crypto';
-import type { UUID } from 'node:crypto';
+import crypto from 'crypto';
+import type { UUID } from 'crypto';
 import pg from 'pg';
 import type { QueryResult, QueryArrayResult, PoolClient, PoolConfig, QueryConfig } from 'pg';
 import { promises as fs } from 'fs';

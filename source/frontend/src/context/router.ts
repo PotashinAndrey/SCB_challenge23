@@ -1,34 +1,41 @@
-import { createRoute, createHistoryRouter } from 'atomic-router';
 import { createEvent, sample } from 'effector';
+import { createRoute, createHistoryRouter, createRouterControls } from 'atomic-router';
 import { createHashHistory } from 'history';
-import type { UUID } from 'node:crypto';
-
-export const appStated = createEvent();
+import { routes as dashboardRoutes, dashboardsListQuery } from './model/dashboard';
+import { routes as projectRoutes } from './model/project';
 
 export const routing = {
-  login: createRoute(),
-  registration: createRoute(),
-  dashboard: createRoute<{ dashboard?: UUID }>(),
+  auth: {
+    login: createRoute(),
+    registration: createRoute()
+  },
+  project: projectRoutes,
+  dashboard: dashboardRoutes,
+
   processCreate: createRoute(),
   processesList: createRoute(),
-  projects: createRoute(),
-  dashboards: createRoute(),
   forbidden: createRoute()
 };
 
 export const routes = [
-  { path: '/dashboard/:dashboard?', route: routing.dashboard },
+  { path: '/registration', route: routing.auth.registration },
+  { path: '/login', route: routing.auth.login },
+
+  { path: '/projects', route: routing.project.list },
+
+  { path: '/dashboard', route: routing.dashboard.list },
+  { path: '/dashboard/:dashboard', route: routing.dashboard.view },
+
   { path: '/process-create', route: routing.processCreate },
   { path: '/processes', route: routing.processesList },
-  { path: '/registration', route: routing.registration },
-  { path: '/login', route: routing.login },
-  { path: '/projects', route: routing.projects },
-  { path: '/dashboards', route: routing.dashboards },
+
   { path: '/forbidden', route: routing.forbidden }
 ];
 
-export const router = createHistoryRouter({ routes });
+export const controls = createRouterControls();
+export const router = createHistoryRouter({ routes, controls });
 
+export const appStated = createEvent();
 sample({
   clock: appStated,
   fn: () => createHashHistory(),
@@ -37,14 +44,18 @@ sample({
 
 sample({
   clock: router.initialized,
-  // clock: router.$path,
   fn: (...args) => {
     console.log('ROUTING INIT', args);
   }
 });
 
+// Загрузка списка дашбордов при инициализации приложения
+sample({
+  clock: router.initialized, // TODO: Спрятать за логин (chainRoute?)
+  target: dashboardsListQuery.start
+});
+
 // sample({
-//   // clock: router.initialized,
 //   clock: router.$path,
 //   fn: (...args) => {
 //     console.log("ROUTING PATH", args);

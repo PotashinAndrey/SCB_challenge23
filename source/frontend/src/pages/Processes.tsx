@@ -15,7 +15,7 @@ const Processes: FC = () => {
       loading={loading}
       dataSource={(store?.items || []) as Array<any>}
       renderItem={(item, index) => (
-        <List.Item onClick={() => routing.dashboard.open({ dashboard: item.id })}>
+        <List.Item onClick={() => routing.dashboard.view.open({ dashboard: item.id })}>
           <pre>{JSON.stringify(item, null, 2)}</pre>
         </List.Item>
       )}

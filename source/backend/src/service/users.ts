@@ -1,6 +1,6 @@
 import type { UserRegistrationModel, UserLoginModel, UserModel } from '@app/types/model/user';
 import type DB from '../../class/DB';
-import type { UUID } from 'node:crypto';
+import type { UUID } from 'crypto';
 
 const usersService = {
   async registration(user: UserRegistrationModel, db: DB): Promise<UUID> {

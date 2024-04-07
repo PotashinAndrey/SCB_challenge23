@@ -36,7 +36,7 @@ const ProfileShortcut: FC<UIThemeProps> = props => {
       {
         label: 'Регистрация',
         key: '4',
-        onClick: () => routing.registration.open()
+        onClick: () => routing.auth.registration.open()
       },
       {
         label: 'Тема',

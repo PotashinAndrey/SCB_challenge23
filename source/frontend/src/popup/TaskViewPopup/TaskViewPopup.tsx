@@ -1,7 +1,7 @@
 import { type FC, useState, useReducer, useEffect, useCallback } from 'react';
-import { useStore, useUnit } from 'effector-react';
+import { useUnit } from 'effector-react';
 import { Button, Modal, Layout } from 'antd';
-import { $currentTask, taskViewPopup, updateTask } from '@context/model/tasks';
+import { $currentTask, taskViewPopup, updateTask } from '@context/model/task';
 import type { TaskModel } from '@app/types/model/task';
 import { EditableTaskTitle } from './EditableTaskTitle';
 import { EditableTaskDescription } from './EditableTaskDescription';
@@ -14,7 +14,7 @@ const reducer = (state: TaskModel, payload: Partial<TaskModel>): TaskModel => {
 const { Header, Footer, Sider, Content } = Layout;
 
 const TaskViewPopup: FC = () => {
-  const task = useStore($currentTask);
+  const task = useUnit($currentTask);
   const { visible, close } = useUnit(taskViewPopup);
   const [editableTask, dispatchTaskEdit] = useReducer(reducer, { ...task });
 

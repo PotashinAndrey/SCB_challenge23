@@ -1,14 +1,13 @@
 import type { FC, ReactNode, PropsWithChildren } from 'react';
-import type { PropsWithClassName } from '@app/types/ui';
 import { List, Spin, Typography } from 'antd';
 import cn from 'classnames';
-import Paper from '../ui/Paper';
-import Caption from '../ui/Caption';
+import Paper from '@ui/Paper';
+import Caption from '@ui/Caption';
+import type { PropsWithClassName } from '@app/types/ui';
 
 const { Text } = Typography;
 
-type PageListProps = PropsWithChildren &
-  PropsWithClassName & {
+type PageListProps = PropsWithChildren & PropsWithClassName & {
     caption?: string;
     description?: string;
     dataSource?: Array<any>;
@@ -17,7 +16,7 @@ type PageListProps = PropsWithChildren &
   };
 
 /** PageList -  */
-const PageList: FC<PageListProps> = (props) => {
+const PageList: FC<PageListProps> = props => {
   const { children, className, caption, dataSource, renderItem, loading, description } = props;
   const classes = cn('w-main margin-center mt-content mb-content', className);
 

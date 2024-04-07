@@ -1,15 +1,15 @@
 .ui-paper {
   padding: var(--gap);
   margin: var(--gap);
-  background-color: var(--background-secondary);
-  border-radius: var(--rounded);
-  box-shadow: var(--shadow-primary);
+  /* background-color: var(--background-secondary); */
+  /* border-radius: var(--rounded); */
+  /* box-shadow: var(--shadow-primary); */
 }
 
 .ui-paper.primary {
-  background-color: var(--background-primary);
+  /* background-color: var(--background-primary); */
 }
 
 .ui-paper.tertiary {
-  background-color: var(--background-tertiary);
+  /* background-color: var(--background-tertiary); */
 }

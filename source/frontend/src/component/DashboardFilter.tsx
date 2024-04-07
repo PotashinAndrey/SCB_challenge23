@@ -1,9 +1,7 @@
 import type { FC } from 'react';
 import { Button, Space } from 'antd';
-
-import Paper from '../ui/Paper';
-import { createTaskPopup, setCurrentTask } from 'src/context/model/tasks';
-import TaskCreatePopup from 'src/popup/TaskCreatePopup';
+import { createTaskPopup, setCurrentTask } from '@context/model/task';
+import Paper from '@ui/Paper';
 
 /** DashboardFilter -  */
 const DashboardFilter: FC = () => {
@@ -16,10 +14,10 @@ const DashboardFilter: FC = () => {
           }}
           type="primary"
         >
-          Добавить задачу
+          Создать задачу
         </Button>
+        <Button type="link">редактировать дашборд</Button>
       </Space>
-      <TaskCreatePopup />
     </Paper>
   );
 };
