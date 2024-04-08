@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Button, Space } from 'antd';
-import { createTaskPopup } from '@context/model/task';
+import { taskCreatePopup } from '@context/model/task';
 import Paper from '@ui/Paper';
 
 /** DashboardFilter -  */
@@ -9,7 +9,7 @@ const DashboardFilter: FC = () => {
     <Paper className="flex dashboard-header">
       <Space>
         <Button
-          onClick={() => createTaskPopup.open()}
+          onClick={() => taskCreatePopup.open()}
           type="primary"
         >
           Создать задачу

@@ -15,7 +15,7 @@ const BoardTask: FC<TaskProps> = props => {
   }, [task]);
 
   return (
-    <Card size="small" hoverable onClick={handleTaskOpen} onDragStart={handleDragStart} draggable className="w-card">
+    <Card size="small" hoverable onClick={handleTaskOpen} onDragStart={handleDragStart} draggable className="w-card mb-2">
       <Card.Meta
         avatar={
           // TODO Тут отображать исполнителя

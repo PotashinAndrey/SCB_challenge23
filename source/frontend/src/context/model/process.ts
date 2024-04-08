@@ -1,6 +1,7 @@
 import type { UUID } from 'crypto';
 import { createEffect, sample, createEvent, createStore } from 'effector';
 import type { ProcessModelType } from '@app/types/model/process';
+import type { OptionType } from '@app/types/app';
 import factoryPopupBehaviour from '../factory/popup';
 // import { routing } from '../router';
 // import { processesListLoad, dashboardLoad } from '@service/process';
@@ -12,12 +13,12 @@ export const $processes = createStore<Array<ProcessModelType>>([]);
 
 sample({
   clock: dashboardDataQuery.$data,
-  fn: (data) => data.processes || [],
+  fn: (data) => data?.processes || [],
   target: $processes
 });
 
 export const $processesOptions = $processes
-  .map(processes => processes.map(process => ({ value: process.id, label: process.name })));
+  .map(processes => processes.map<OptionType<UUID>>(process => ({ value: process.id, label: process.name })));
 
 /** @section список процессов (дашбордов) */
 // export const processesListLoadFx = createEffect(processesListLoad);

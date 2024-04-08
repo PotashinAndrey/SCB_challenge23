@@ -3,9 +3,11 @@ import { createEffect, sample, createEvent, createStore } from 'effector';
 import { createRoute, chainRoute } from 'atomic-router';
 import { attachOperation, createQuery } from '@farfetched/core';
 import { startChain } from '@farfetched/atomic-router';
-import factoryPopupBehaviour from '../factory/popup';
 import { getDashboardsList, createDashboardRequest } from '@service/dashboard';
 import { dashboardLoad } from '@service/process';
+import type { DashboardModel, DashboardDataType } from '@app/types/model/dashboard';
+import factoryPopupBehaviour from '../factory/popup';
+
 
 /** Список дашбордов */
 export const dashboardsListQuery = createQuery({
@@ -16,7 +18,8 @@ export const dashboardsListQuery = createQuery({
 /** Инфо о конкретном дашборде */
 export const dashboardDataQuery = createQuery({
   handler: dashboardLoad,
-  initialData: {}
+  initialData: {} as DashboardDataType
+  // TODO: placeholderData
 });
 
 /** Роуты */
@@ -33,6 +36,17 @@ chainRoute({
     { mapParams: ({ dashboard }: { dashboard: UUID }) => dashboard }
   ))
 });
+
+// Сохранение текущего дашборда (возможно, не нужно, он есть в dashboardDataQuery.$data)
+// export const $currentDashboard = createStore<DashboardModel>({} as DashboardModel);
+// sample({
+//   clock: dashboardDataQuery.finished.success,
+//   filter: ({ result }) => Boolean(result.dashboard),
+//   fn: ({ result }) => result.dashboard,
+//   target: $currentDashboard
+// });
+
+// ---
 
 // export const fetchDashboardsList = createEvent();
 export const setCurrentDashboardId = createEvent<UUID | null>();

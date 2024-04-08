@@ -8,7 +8,7 @@ const handleError = (error: FastifyError) => {
   switch (error.statusCode) {
     case 401:
       // Redirect to login page
-      routing.login.open();
+      routing.auth.login.open();
       break;
     case 403:
       // Redirect to forbidden page
@@ -19,7 +19,7 @@ const handleError = (error: FastifyError) => {
   }
 };
 
-const api = async <S, T>(method: string, data?: S): Promise<T> => {
+const api = async <Request, Response>(method: string, data?: Request): Promise<Response> => {
   const protocol = window.location.protocol.replace(/:$/, '') as ServerProtocol;
 
   const host = 'localhost';
@@ -37,7 +37,7 @@ const api = async <S, T>(method: string, data?: S): Promise<T> => {
     handleError(result);
     throw new Error(result.message);
   }
-  return result as T;
+  return result as Response;
 };
 
 export default api;

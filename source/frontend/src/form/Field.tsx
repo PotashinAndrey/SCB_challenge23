@@ -5,9 +5,9 @@ import { useField } from '@filledout/react';
 
 const { Paragraph, Text } = Typography;
 
-export type FieldProps<V, T> = {
+export type FieldProps<FormValues, FieldType> = {
   label: string;
-  field: FieldDescriptor<V, T>;
+  field: FieldDescriptor<FormValues, FieldType>;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint

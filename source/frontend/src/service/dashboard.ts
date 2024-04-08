@@ -1,7 +1,7 @@
-import { UUID } from 'crypto';
+import type { UUID } from 'crypto';
+import type { DashboardModel } from '@app/types/model/dashboard';
+import type { HistoryAppendModel } from '@app/types/model/history';
 import api from '../scripts/api';
-import { DashboardModel } from '@app/types/model/dashboard';
-import { HistoryAppendModel } from '@app/types/model/history';
 
 export const getDashboardsList = (): Promise<Array<DashboardModel>> => {
   return api('dashboard/list');

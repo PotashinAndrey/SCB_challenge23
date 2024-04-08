@@ -1,9 +1,11 @@
 import type { UUID } from 'crypto';
 import type { TaskModel, TaskCreateFormValues } from '@app/types/model/task';
 import { createEffect, createEvent, sample, createStore } from 'effector';
+import { createMutation, update } from '@farfetched/core';
 import { taskCreate, taskUpdate } from '@service/tasks';
 import factoryPopupBehaviour from '../factory/popup';
 import createForm from '../factory/form';
+import { $currentDashboard, dashboardDataQuery } from './dashboard';
 import { loadDashboard } from './process';
 
 // просмотр таски
@@ -26,21 +28,43 @@ sample({
 });
 
 // создение таски
-export const createTaskPopup = factoryPopupBehaviour(false);
+export const taskCreatePopup = factoryPopupBehaviour(false);
+
+export const taskCreateMutation = createMutation({ handler: taskCreate });
+update(dashboardDataQuery, {
+  on: taskCreateMutation,
+  by: {
+    success: ({ mutation }) => ({
+      refetch: { params: mutation.params.dashboard },
+      error: null
+    })
+  }
+});
 
 export const $$taskCreateForm = createForm<TaskCreateFormValues>({
   initialValues: {
     title: '',
     description: '',
     process: '' as UUID
-  }
+  },
+  // TODO: onSubmit: createTaskMutation.start
 });
 
 sample({
   clock: $$taskCreateForm.submit,
-  source: $$taskCreateForm.$values,
-  fn: (values) => console.log('values', values),
-})
+  source: { values: $$taskCreateForm.$values, dashboardData: dashboardDataQuery.$data },
+  filter: ({ dashboardData }) => Boolean(dashboardData.dashboard.id),
+  fn: ({ values, dashboardData }) => {
+    console.log('values', ({ ...values, dashboard: dashboardData.dashboard.id! }));
+    return ({ ...values, dashboard: dashboardData.dashboard.id! })
+  },
+  target: taskCreateMutation.start
+});
+
+sample({
+  clock: taskCreateMutation.finished.success,
+  target: [taskCreatePopup.close, $$taskCreateForm.reset]
+});
 
 // ---
 

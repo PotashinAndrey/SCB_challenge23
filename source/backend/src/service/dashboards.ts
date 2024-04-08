@@ -1,9 +1,10 @@
 import type DB from '../../class/DB';
 import type { UUID } from 'crypto';
 import { projectById } from './projects';
-import { DashboardModel } from '@app/types/model/dashboard';
-import { HistoryAppendModel } from '@app/types/model/history';
-import { TaskModel } from '@app/types/model/task';
+import type { DashboardModel } from '@app/types/model/dashboard';
+import type { HistoryAppendModel } from '@app/types/model/history';
+import type { ProcessModelType } from '@app/types/model/process';
+import type { TaskModel } from '@app/types/model/task';
 
 export const dashboardsList = async (db: DB) => {
   return await db.select({ fields: '*', tables: 'flow.dashboard' });
@@ -12,7 +13,7 @@ export const dashboardsList = async (db: DB) => {
 /** Список колонок дашборда */
 export const processByDashboardId = async (id: UUID, db: DB) => {
   // dashboard/get
-  return db.select({
+  return db.select<ProcessModelType>({
     fields: `*`,
     tables: 'flow.process',
     where: 'dashboard = $1',
@@ -24,7 +25,7 @@ export const processByDashboardId = async (id: UUID, db: DB) => {
 
 export const dashboardById = async (id: UUID, db: DB) => {
   // dashboard/get
-  return db.selectRow({
+  return db.selectRow<DashboardModel>({
     fields: '*',
     tables: 'flow.dashboard',
     where: 'id = $1',
@@ -33,8 +34,8 @@ export const dashboardById = async (id: UUID, db: DB) => {
 };
 
 /** Список задач у дашборда */
-export const tasksByDashboardId = (dashboardId: UUID, db: DB): Promise<TaskModel[]> => {
-  return db.select({
+export const tasksByDashboardId = (dashboardId: UUID, db: DB) => {
+  return db.select<TaskModel>({
     fields: '*',
     tables: 'flow.tasks',
     where: 'dashboard = $1 and tasks.removed = false',
