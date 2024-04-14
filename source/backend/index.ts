@@ -1,6 +1,6 @@
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import * as url from 'url';
-import type { BackendConfig } from '@app/types/config';
+import type { BackendConfig, FrontendConfig, ServerProtocol } from '@app/types/config';
 import FastifyCookie from '@fastify/cookie';
 import config from '../../config';
 import DB from './class/DB';
@@ -15,6 +15,11 @@ import tasksApi from './src/api/tasks';
 import JWT from 'jsonwebtoken';
 
 const { verify } = JWT;
+
+const { backend, frontend } = config as { backend: BackendConfig, frontend: FrontendConfig };
+const hostParams = backend[backend.protocol as ServerProtocol] || { host: '0.0.0.0', port: 3000 };
+const backendURL = `${backend.protocol || "http"}://${hostParams.host}:${hostParams.port}`;
+const frontendURL = `${frontend.protocol || "http"}://${frontend.host}:${frontend.port}`;
 
 const NOT_PROTECTED_PATHS = ['/api/users/login', '/api/users/registration'];
 
@@ -49,20 +54,24 @@ const db = await new DB().connect();
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 fastify.addHook('preHandler', (request, reply, done) => {
+  console.log('preHandler');
   reply.headers({
-    'Access-Control-Allow-Origin': 'http://localhost:8080',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Access-Control-Allow-Origin': frontendURL,
     'Content-Type': 'application/json'
   });
-  if (NOT_PROTECTED_PATHS.includes(request.routerPath)) {
+  // if (NOT_PROTECTED_PATHS.includes(request.routerPath)) {
     done();
-  } else {
-    verifyJWT(request, reply, done);
-  }
+  // } else {
+  //   verifyJWT(request, reply, done);
+  // }
 });
 
-fastify.register(FastifyCookie);
+// fastify.register(FastifyCookie);
 fastify.register(cors, {
-  origin: 'http://localhost:8080', // Установите здесь домен вашего фронтенда
+  origin: frontendURL, // Установите здесь домен вашего фронтенда
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
   allowedHeaders: ['Authorization', 'Content-Type'], // Разрешенные заголовки
   credentials: true, // Разрешить передачу куки и заголовков аутентификации
@@ -80,14 +89,10 @@ const start = async () => {
   try {
     const __migrations = __dirname.replace(/\/?$/, '/migrations');
     await db.migrations(__migrations);
-    await fastify.listen(
-      (config as unknown as { backend: BackendConfig }).backend.http || {
-        host: 'localhost',
-        port: 8080
-      }
-    );
+    await fastify.listen(hostParams);
+    console.log('API server started:', backendURL);
   } catch (error) {
-    fastify.log.error(error);
+    fastify.log.error("fastify start ERROR", error);
     // console.error("Error: fastify.start", error);
     process.exit(1);
   }

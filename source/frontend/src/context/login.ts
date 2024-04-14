@@ -2,7 +2,7 @@ import { createEffect, createEvent, createStore, sample } from 'effector';
 // import { createForm } from 'effector-react-form';
 // import { routing } from './router';
 import { UserModel } from '@app/types/model/user';
-import { getUserData, loginUser, logoutUser } from '@service/users';
+import { userAbout as getUserData, userLogin as loginUser, userLogout as logoutUser } from '@service/users';
 import { message } from 'antd';
 import { UUID } from 'crypto';
 

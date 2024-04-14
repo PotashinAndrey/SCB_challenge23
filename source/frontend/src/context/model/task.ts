@@ -31,6 +31,7 @@ sample({
 export const taskCreatePopup = factoryPopupBehaviour(false);
 
 export const taskCreateMutation = createMutation({ handler: taskCreate });
+
 update(dashboardDataQuery, {
   on: taskCreateMutation,
   by: {

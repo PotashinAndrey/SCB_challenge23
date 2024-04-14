@@ -3,13 +3,9 @@ import type { DashboardModel } from '@app/types/model/dashboard';
 import type { HistoryAppendModel } from '@app/types/model/history';
 import api from '../scripts/api';
 
-export const getDashboardsList = (): Promise<Array<DashboardModel>> => {
-  return api('dashboard/list');
-};
+export const getDashboardsList = () => api<Array<DashboardModel>>('dashboard/list');
 
-export const getDashboardById = (id: UUID): Promise<DashboardModel> => {
-  return api('dashboard/get', { id });
-};
+export const getDashboardById = (id: UUID) => api<DashboardModel, { id: UUID }>('dashboard/get', { id });
 
 export const appendHistory = (values: HistoryAppendModel): Promise<any> => {
   return api('dashboard/history-append', values);

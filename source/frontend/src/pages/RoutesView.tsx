@@ -1,14 +1,15 @@
 import { createRoutesView, Link } from 'atomic-router-react';
 import { routing } from '@context/router';
 
-import Login from './Login';
-import Registration from './Registration';
+import Login from './auth/Login';
+import Registration from './auth/Registration';
+import Forbidden from './auth/Forbidden';
+
 import Dashboard from './Dashboard';
 import Projects from './Projects';
 import ProcessCreate from './ProcessCreate';
 import Processes from './Processes';
 import Dashboards from './Dashboards';
-import Forbidden from './Forbidden';
 
 const RoutesView = createRoutesView({
   routes: [

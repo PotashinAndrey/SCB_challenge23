@@ -1,11 +1,11 @@
-import type { UserLoginModel, UserModel } from '@app/types/model/user';
+import type { UUID } from 'crypto';
+import type { UserRegistrationModel, UserLoginModel, UserModel } from '@app/types/model/user';
 import api from '../scripts/api';
-import { UUID } from 'crypto';
 
-export const loginUser = (model: UserLoginModel) => api<UserLoginModel, { token: string }>('users/login', model);
+export const userRegistration = (values: UserRegistrationModel) => api<UserModel, UserRegistrationModel>('users/registration', values);
 
-export const logoutUser = (id: UUID) => api<{ id: UUID }, void>('users/logout', { id });
+export const userLogin = (values: UserLoginModel) => api<UserModel & { token: string }, UserLoginModel>('users/login', values);
 
-export const getUserData = () => {
-  return api<any, { user: UserModel }>('users/userInfo', null);
-};
+export const userLogout = (id: UUID) => api<void, { id: UUID }>('users/logout', { id });
+
+export const userAbout = (id: UUID) => api<{ user: UserModel }, { id: UUID }>('users/about', { id });

@@ -134,9 +134,12 @@ class DB {
 
   async query<S extends {} = {}>(query: QueryConfig, client?: PoolClient | pg.Client): Promise<QueryResult<S>> {
     try {
-      return client ? await client.query<S>(query) : await this.wrap<S>((client) => client.query<S>(query));
+      console.log('query', query, client)
+      return client
+        ? await client.query<S>(query)
+        : await this.wrap<S>(client => client.query<S>(query));
     } catch (error) {
-      console.log(query);
+      console.log({ query });
       console.error('DB ERROR:', (error as Error).message);
       throw error;
     }
@@ -180,11 +183,20 @@ class DB {
 
   async connect(): Promise<DB> {
     this.pool = new Pool(config.database);
+
+    this.pool.on('connect', (client) => console.log("DB POOL CONNECT"));
+    this.pool.on('acquire', (client) => console.log("DB POOL acquire"));
+    this.pool.on('remove', (client) => console.log("DB POOL remove"));
+
+    this.pool.on('release', (err, client) => console.log("DB POOL release"));
+    this.pool.on('error', (err, client) => console.log("DB POOL ERROR"));
+
     try {
       this.client = await this.pool!.connect();
+      console.log('database connected', this.config.database);
     } catch (connectError) {
+      console.error("DB", { connectError }); // DatabaseError // ?.["err"]?.["type"]
       console.error('database not exist', this.config.database);
-      // console.error(connectError); // DatabaseError // ?.["err"]?.["type"]
       const createDatabase = await this.createDatabase();
       if (createDatabase) {
         this.client = await this.pool!.connect();
@@ -198,9 +210,14 @@ class DB {
 
   async wrap<T extends {} = {}>(fn: (client: PoolClient, db: DB) => Promise<QueryResult<T>>) {
     const client = await this.pool!.connect();
+    // console.log("DB WRAP", client);
+    console.log("DB WRAP");
     try {
-      return await fn(client, this);
+      const result = await fn(client, this);
+      console.log("DB wrap result", result);
+      return result;
     } catch (error) {
+      console.log("DB wrap catch error", error)
       throw error;
     } finally {
       client.release();
@@ -249,6 +266,7 @@ class DB {
   }
 
   disconnect() {
+    console.log("DB disconnect")
     return this.pool?.end();
   }
 

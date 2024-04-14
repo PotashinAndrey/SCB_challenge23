@@ -10,3 +10,9 @@ export type BackendConfig = {
 } & {
   [x in ServerProtocol]?: ServerInfo;
 };
+
+export type FrontendConfig = {
+  protocol: ServerProtocol;
+  host: string;
+  port: number;
+};

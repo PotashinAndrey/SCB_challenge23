@@ -9,7 +9,8 @@ const config = {
 
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
+    connectionTimeoutMillis: 2000,
+    allowExitOnIdle: false
   },
   backend: {
     protocol: 'http',
@@ -23,6 +24,8 @@ const config = {
     }
   },
   frontend: {
+    protocol: 'http',
+    host: "localhost",
     port: 8080
   }
 };

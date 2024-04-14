@@ -1,9 +1,9 @@
+import type { UUID } from 'crypto';
 import type { FastifyInstance } from 'fastify';
-import type { UserLoginModel, UserRegistrationModel } from '@app/types/model/user';
-import type DB from '../../class/DB';
+import type { UserLoginModel, UserRegistrationModel, UserModel } from '@app/types/model/user';
+import JWT from 'jsonwebtoken'; // TODO: Возможно перейти на @fastify/jwt
 import usersService from '../service/users';
-// TODO Возможно перейти на @fastify/jwt
-import JWT from 'jsonwebtoken';
+import type DB from '../../class/DB';
 
 const { sign, verify } = JWT;
 
@@ -12,24 +12,39 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done): void => 
   /** регистрация пользователя */
   fastify.post('/registration', async (request, reply) => {
     try {
-      const user = JSON.parse(request.body as string) as UserRegistrationModel;
+      console.log("request.body", request.body);
+      const user = request.body as UserRegistrationModel; // JSON.parse(request.body as string) as UserRegistrationModel;
+      console.log("user parsed", user);
       const id = await usersService.registration(user, db);
-      return { ...user, id };
+      console.log("user id", id);
+      const model: UserModel = {
+        name: user.name,
+        email: user.email,
+        id
+      };
+      // return model;
+      console.log({model})
+      reply.code(200);
+      reply.send(model);
     } catch (error) {
-      //
+      console.error(error);
+      reply.code(500);
+      throw new Error('Ошибка регистрации пользователя!', error);
     }
   });
 
   /** авторизация пользователя */
   fastify.post('/login', async (request, reply) => {
-    console.log('/login', request.body);
-    const body = JSON.parse(request.body as string) as UserLoginModel;
+    console.log('/auth/login', request.body);
+    const body = request.body as UserLoginModel; // JSON.parse(request.body as string) as UserLoginModel;
     const results = await usersService.login(body, db);
     const user = results[0];
+    console.log("users.login user", user)
     if (user) {
-      const token = sign({ user }, process.env.SECRET);
-      reply.setCookie('authToken', token, { httpOnly: true, path: '/' });
-      reply.send({ token });
+      // const token = sign({ user }, process.env.SECRET);
+      // reply.setCookie('authToken', token, { httpOnly: true, path: '/' });
+      // reply.send({ ...user, token });
+      reply.send(user); //.code(200);
     } else {
       reply.code(401);
       throw new Error('Пользователь не найден!');
@@ -65,22 +80,26 @@ const usersApi = (fastify: FastifyInstance, options: { db: DB }, done): void => 
   });
 
   //This is a protected route
-  fastify.post('/userInfo', (request, reply) => {
-    // format: 'BEARER token'
-    const authToken = request.cookies.authToken;
+  fastify.post('/about', (request, reply) => {
+    const { id } = request.body as { id: UUID };
+    console.log("users.about: id", id);
+    reply.send({ id });
 
-    // verify the JWT token generated for the user
-    verify(authToken, process.env.SECRET, (err, user) => {
-      if (err) {
-        // If error send Forbidden (403)
-        console.log('ERROR: Could not connect to the protected route');
-        reply.status(403);
-      } else {
-        // If token is successfully verified, we can send the autorized data
-        reply.send({ ...(user as object) });
-        console.log('SUCCESS: Connected to protected route');
-      }
-    });
+  //   // format: 'BEARER token'
+  //   const authToken = request.cookies.authToken;
+
+  //   // verify the JWT token generated for the user
+  //   verify(authToken, process.env.SECRET, (err, user) => {
+  //     if (err) {
+  //       // If error send Forbidden (403)
+  //       console.log('ERROR: Could not connect to the protected route');
+  //       reply.status(403);
+  //     } else {
+  //       // If token is successfully verified, we can send the autorized data
+  //       reply.send({ ...(user as object) });
+  //       console.log('SUCCESS: Connected to protected route');
+  //     }
+  //   });
   });
 
   done();
