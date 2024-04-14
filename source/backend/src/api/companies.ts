@@ -10,7 +10,7 @@ const companiesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
   fastify.post('/list', async (request, reply) => {
     try {
       const items = await companiesList(db);
-      return { items };
+      reply.send({ items })
     } catch (error) {
       //
     }
@@ -18,12 +18,12 @@ const companiesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
 
   /** Создание новой компании */
   fastify.post('/append', async (request, reply) => {
-    const eventData = JSON.parse(request.body as string) as CompanyModel;
+    const eventData = request.body as CompanyModel;
     const id = await companyCreate(eventData, db);
-    return {
+    reply.send({
       ...eventData,
       id
-    };
+    });
   });
 
   done();

@@ -1,5 +1,5 @@
+import type { UUID } from 'crypto';
 import type { FastifyInstance } from 'fastify';
-
 import type DB from '../../class/DB';
 import { dashboardsList, dashboardById, processByDashboardId, tasksByDashboardId, dashboardHistory } from '../service/dashboards';
 
@@ -8,21 +8,23 @@ const processesApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
 
   /** Получение списка процессов (дашбордов) */
   fastify.post('/list', async (request, reply) => {
-    const filter = request.body ? JSON.parse(request.body as string) : {};
+    const filter = request.body; //  ? JSON.parse(request.body as string) : {};
     const items = await dashboardsList(db);
-    return { items };
+    reply.code(200).send({ items });
   });
 
   /** Получение процесса (дашборда) */
   fastify.post('/get', async (request, reply) => {
-    const { id = '' } = request.body ? JSON.parse(request.body as string) : {};
-    if (!id) return {};
+    const { id } = request.body as { id: UUID };
+    if (!id) throw new Error('Не передан ID процесса');
+
     const dashboard = await dashboardById(id, db);
     const processes = await processByDashboardId(id, db);
     const tasks = await tasksByDashboardId(id, db);
 
     // const history = await dashboardHistory(id, db);
-    return { dashboard, processes, tasks }; //history
+    const response = { dashboard, processes, tasks };
+    reply.code(200).send(response);
   });
 
   done();
