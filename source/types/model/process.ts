@@ -1,17 +1,18 @@
 import type { UUID } from 'crypto';
 
 export type ProcessCardModelType = {
-  id: UUID | string;
+  id: UUID;
   name: string;
   process: string;
 };
 
 export type ProcessModelType = {
   id: UUID;
-  name: string;
-  order: number;
+  title: string;
+  order?: number;
+  description?: string;
+
   action?: string;
-  process_description?: string;
 };
 
 export type ProcessProps = { process: ProcessModelType };

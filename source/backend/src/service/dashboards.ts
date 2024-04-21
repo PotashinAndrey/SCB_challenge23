@@ -68,11 +68,11 @@ export const processList = async (db: DB) => {
 };
 
 export const createDashboard = async (values: DashboardModel, db: DB): Promise<DashboardModel> => {
-  const { project, name, description } = values;
+  const { project, title, description } = values;
   const response = await db.insert({
     fields: 'project, name, description',
     tables: 'flow.dashboard',
-    values: [project, name, description],
+    values: [project, title, description],
     returning: '*'
   });
   return { ...response.rows[0] };

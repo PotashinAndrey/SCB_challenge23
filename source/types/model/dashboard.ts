@@ -3,11 +3,13 @@ import type { ProcessModelType } from './process';
 import type { TaskModel } from './task';
 
 export type DashboardModel = {
-  id?: UUID; // UUID
-  name: string;
-  project: UUID; // UUID
+  id?: UUID;
   removed?: boolean;
+  project?: UUID;
+
+  title: string;
   description?: string;
+  processes?: Array<ProcessModelType>;
 };
 
 export type DashboardDataType = {

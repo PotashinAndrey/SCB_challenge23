@@ -2,7 +2,7 @@ import type { CSSProperties, FC } from 'react';
 import { useMemo } from 'react';
 import { useStoreMap } from 'effector-react';
 import { Menu, MenuProps } from 'antd';
-import { dashboardsListQuery, createDashboardPopup } from 'src/context/model/dashboard';
+import { dashboardsListQuery, dashboardCreatePopup } from 'src/context/model/dashboard';
 import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'atomic-router-react';
 import type { UIThemeProps } from '@app/types/ui';
@@ -19,7 +19,7 @@ const createDashboardMenuItems: MenuProps['items'] = [
     key: 'dashboard-create',
     icon: <PlusOutlined />,
     label: "Создать дашборд",
-    onClick: () => createDashboardPopup.open()
+    onClick: () => dashboardCreatePopup.open()
   }
 ];
 

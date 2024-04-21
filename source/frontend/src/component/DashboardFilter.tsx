@@ -14,7 +14,7 @@ const DashboardFilter: FC = () => {
         >
           Создать задачу
         </Button>
-        <Button type="link">редактировать дашборд</Button>
+        <Button type="link">Редактировать дашборд</Button>
       </Space>
     </Paper>
   );

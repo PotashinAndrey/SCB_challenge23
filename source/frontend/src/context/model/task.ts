@@ -5,7 +5,7 @@ import { createMutation, update } from '@farfetched/core';
 import { taskCreate, taskUpdate } from '@service/tasks';
 import factoryPopupBehaviour from '../factory/popup';
 import createForm from '../factory/form';
-import { $currentDashboard, dashboardDataQuery } from './dashboard';
+import { dashboardDataQuery } from './dashboard';
 import { loadDashboard } from './process';
 
 // просмотр таски
@@ -27,20 +27,8 @@ sample({
   target: $currentTask
 });
 
-// создение таски
+/** создение таски */
 export const taskCreatePopup = factoryPopupBehaviour(false);
-
-export const taskCreateMutation = createMutation({ handler: taskCreate });
-
-update(dashboardDataQuery, {
-  on: taskCreateMutation,
-  by: {
-    success: ({ mutation }) => ({
-      refetch: { params: mutation.params.dashboard },
-      error: null
-    })
-  }
-});
 
 export const $$taskCreateForm = createForm<TaskCreateFormValues>({
   initialValues: {
@@ -50,6 +38,8 @@ export const $$taskCreateForm = createForm<TaskCreateFormValues>({
   },
   // TODO: onSubmit: createTaskMutation.start
 });
+
+export const taskCreateMutation = createMutation({ handler: taskCreate });
 
 sample({
   clock: $$taskCreateForm.submit,
@@ -67,28 +57,38 @@ sample({
   target: [taskCreatePopup.close, $$taskCreateForm.reset]
 });
 
+update(dashboardDataQuery, {
+  on: taskCreateMutation,
+  by: {
+    success: ({ mutation }) => ({
+      refetch: { params: mutation.params.dashboard },
+      error: null
+    })
+  }
+});
+
 // ---
 
 export const createTask = createEvent<TaskModel>();
 export const updateTask = createEvent<TaskModel>();
 // export const setCurrentTask = createEvent<TaskModel>();
 
-const createTaskFx = createEffect(taskCreate);
-const updateTaskFx = createEffect(taskUpdate);
+// const createTaskFx = createEffect(taskCreate);
+// const updateTaskFx = createEffect(taskUpdate);
 
 
-export const isTaskCreating = createTaskFx.pending;
-export const isTaskUpdating = updateTaskFx.pending;
+// export const isTaskCreating = createTaskFx.pending;
+// export const isTaskUpdating = updateTaskFx.pending;
 
-sample({
-  clock: createTask,
-  target: createTaskFx
-});
+// sample({
+//   clock: createTask,
+//   target: createTaskFx
+// });
 
-sample({
-  clock: updateTask,
-  target: updateTaskFx
-});
+// sample({
+//   clock: updateTask,
+//   target: updateTaskFx
+// });
 
 // TODO Сделать чтобы при создании таски, с бека возвращался таск,
 //  тогда не придется заново весь дашборд запрашивать
@@ -99,10 +99,10 @@ sample({
 
 // TODO Сделать чтобы при обновлении таски, с бека возвращался таск,
 //  тогда не придется заново весь дашборд запрашивать
-sample({
-  clock: updateTaskFx.done,
-  target: loadDashboard
-});
+// sample({
+//   clock: updateTaskFx.done,
+//   target: loadDashboard
+// });
 
 // sample({
 //   clock: updateTaskFx.doneData,

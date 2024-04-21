@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 
 import TaskViewPopup from '@popup/TaskViewPopup';
-import CreateDashboardPopup from '@popup/CreateDashboardPopup';
+import DashboardCreatePopup from '@popup/DashboardCreatePopup';
 import TaskCreatePopup from '@popup/TaskCreatePopup';
 
 /** PopupsList -  */
 const PopupsList: FC = () => {
   return (
     <>
-      <CreateDashboardPopup />
+      <DashboardCreatePopup />
       <TaskCreatePopup />
       <TaskViewPopup />
     </>
