@@ -1,11 +1,10 @@
-import type { FC, SyntheticEvent } from "react";
-import { useCallback } from "react";
+import type { FC } from "react";
 import { Typography, Button, List } from 'antd';
-import { useForm, useStoreMap } from '@filledout/react';
+import { useStoreMap } from 'effector-react';
+import { useForm } from '@effector-reform/react';
 import { $$dashboardCreateForm, dashboardCreateFormProcessAppend } from '@context/model/dashboard';
 import InputField from "@form/Input";
 import TextAreaField from "@form/TextArea";
-import { preventDefault } from "../../scripts/ui-utils";
 
 const { Text } = Typography;
 const { Item } = List;
@@ -16,13 +15,8 @@ const DashboardCreate: FC = () => {
   const { onSubmit, fields } = useForm($$dashboardCreateForm);
   const processes = useStoreMap($$dashboardCreateForm.$values, values => values.processes || []);
 
-  const submit = useCallback(<T extends SyntheticEvent<E>, E>(event: T) => {
-    preventDefault(event);
-    onSubmit();
-  }, [onSubmit]);
-
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={onSubmit}>
       <InputField field={fields.title} label="Название" placeholder="Название доски" />
       <TextAreaField field={fields.description} label="Описание доски" placeholder="Описание доски" />
       <Text>Столбцы:</Text>

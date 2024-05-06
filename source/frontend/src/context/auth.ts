@@ -1,10 +1,9 @@
 import type { UserModel, UserLoginModel, UserRegistrationModel } from '@app/types/model/user';
 import type { Effect } from 'effector';
 import { createEvent, sample } from 'effector';
-import { ValidationVisibilityCondition } from '@filledout/core';
+import { createForm } from '@effector-reform/core';
 import { createMutation, createQuery, update } from '@farfetched/core';
 import { userRegistration, userLogin, userAbout, userLogout } from '@service/users';
-import createForm from './factory/form';
 
 // информация о пользователе
 export const userAboutQuery = createQuery({ handler : userAbout });
@@ -15,13 +14,12 @@ export const userRegistrationMutation = createMutation({ handler: userRegistrati
 // const $$userRegistrationFormValidate = createEvent()
 
 export const $$userRegistrationForm = createForm<UserRegistrationModel>({
-  initialValues: {
+  schema: {
     name: '',
     email: '',
     password: '',
     passwordCheck: ''
-  },
-  reinitialize: true // ?
+  }
 });
 
 sample({
@@ -33,7 +31,7 @@ sample({
 
 sample({
   clock: userRegistrationMutation.finished.success,
-  fn: ({ result }) => result.id,
+  fn: ({ result }: { result: UserModel }) => result.id,
   target: userAboutQuery.start
 });
 
@@ -95,7 +93,7 @@ sample({
 export const userLoginMutation = createMutation({ handler: userLogin });
 
 export const $$userLoginForm = createForm<UserLoginModel>({
-  initialValues: {
+  schema: {
     login: '',
     password: ''
   }
@@ -110,7 +108,7 @@ sample({
 
 sample({
   clock: userLoginMutation.finished.success,
-  fn: ({ result }) => result.id,
+  fn: ({ result }: { result: UserModel & { token: string } }) => result.id,
   target: userAboutQuery.start
 });
 

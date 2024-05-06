@@ -8,8 +8,8 @@ export type DashboardModel = {
   project?: UUID;
 
   title: string;
-  description?: string;
-  processes?: Array<ProcessModelType>;
+  description: string; // | undefined;
+  processes: Array<ProcessModelType>; // | undefined;
 };
 
 export type DashboardDataType = {

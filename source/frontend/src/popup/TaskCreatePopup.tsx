@@ -1,13 +1,13 @@
 import type { FC } from 'react';
 import { useUnit } from 'effector-react';
-import { useForm } from '@filledout/react';
+import { useForm } from '@effector-reform/react';
 import { Modal, Button } from 'antd';
-import { taskCreatePopup, $$taskCreateForm } from '@context/model/task';
+import { taskCreatePopup, taskCreateForm } from '@context/model/task';
 import TaskCreate from '@page/TaskCreate';
 
 const TaskCreatePopup: FC = () => {
   const { visible, close } = useUnit(taskCreatePopup);
-  const { onSubmit } = useForm($$taskCreateForm);
+  const { submit } = useForm(taskCreateForm);
 
   return (
     <Modal
@@ -19,10 +19,10 @@ const TaskCreatePopup: FC = () => {
       title="Создание новой задачи"
       footer={[
         <Button key="close" type="text" onClick={() => {
-          $$taskCreateForm.reset();
+          taskCreateForm.reset();
           close();
         }}>Отмена</Button>,
-        <Button type="primary" key="create" onClick={() => onSubmit()}>Создать</Button>
+        <Button type="primary" key="create" onClick={submit}>Создать</Button>
       ]}
     >
       <TaskCreate />

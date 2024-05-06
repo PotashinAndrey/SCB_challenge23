@@ -1,21 +1,21 @@
+import type { FC } from 'react';
 import { Input } from 'antd';
-import { useField } from '@filledout/react';
-import Field, { type FieldProps } from './Field';
+import Field, { useFieldProps, type FieldProps } from './Field';
 
 const { TextArea } = Input;
 
-type TextAreaProps<V> = FieldProps<V, string> & { placeholder?: string };
+type TextAreaProps = FieldProps<string> & { placeholder?: string };
 
-const TextAreaField = <V,>(props: TextAreaProps<V>) => {
+const TextAreaField: FC<TextAreaProps> = props => {
   const { label, field, placeholder } = props;
-  const { value, onChange, errors } = useField(field);
+  const { value, onChange, error } = useFieldProps(field);
 
   return (
     <Field label={label} field={field}>
       <TextArea
         value={value}
         onChange={e => onChange(e.target.value)}
-        status={errors !== null ? "error" : undefined}
+        status={error !== null ? "error" : undefined}
         placeholder={placeholder}
       />
     </Field>

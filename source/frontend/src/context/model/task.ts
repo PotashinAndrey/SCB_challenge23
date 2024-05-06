@@ -2,11 +2,12 @@ import type { UUID } from 'crypto';
 import type { TaskModel, TaskCreateFormValues } from '@app/types/model/task';
 import { createEffect, createEvent, sample, createStore } from 'effector';
 import { createMutation, update } from '@farfetched/core';
+import { createForm } from "@effector-reform/core";
 import { taskCreate, taskUpdate } from '@service/tasks';
 import factoryPopupBehaviour from '../factory/popup';
-import createForm from '../factory/form';
+// import createForm from '../factory/form';
 import { dashboardDataQuery } from './dashboard';
-import { loadDashboard } from './process';
+// import { loadDashboard } from './process';
 
 // просмотр таски
 export const taskViewPopup = factoryPopupBehaviour<TaskModel>(false);
@@ -30,8 +31,8 @@ sample({
 /** создение таски */
 export const taskCreatePopup = factoryPopupBehaviour(false);
 
-export const $$taskCreateForm = createForm<TaskCreateFormValues>({
-  initialValues: {
+export const taskCreateForm = createForm<TaskCreateFormValues>({
+  schema: {
     title: '',
     description: '',
     process: '' as UUID
@@ -42,8 +43,8 @@ export const $$taskCreateForm = createForm<TaskCreateFormValues>({
 export const taskCreateMutation = createMutation({ handler: taskCreate });
 
 sample({
-  clock: $$taskCreateForm.submit,
-  source: { values: $$taskCreateForm.$values, dashboardData: dashboardDataQuery.$data },
+  clock: taskCreateForm.submit,
+  source: { values: taskCreateForm.$values, dashboardData: dashboardDataQuery.$data },
   filter: ({ dashboardData }) => Boolean(dashboardData.dashboard.id),
   fn: ({ values, dashboardData }) => {
     console.log('values', ({ ...values, dashboard: dashboardData.dashboard.id! }));
@@ -54,7 +55,7 @@ sample({
 
 sample({
   clock: taskCreateMutation.finished.success,
-  target: [taskCreatePopup.close, $$taskCreateForm.reset]
+  target: [taskCreatePopup.close, taskCreateForm.reset]
 });
 
 update(dashboardDataQuery, {

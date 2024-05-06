@@ -1,19 +1,19 @@
+import type { FC } from 'react';
 import { Input } from 'antd';
-import { useField } from '@filledout/react';
-import Field, { type FieldProps } from './Field';
+import Field, { useFieldProps, type FieldProps } from './Field';
 
-type InputProps<V> = FieldProps<V, string> & { placeholder?: string, password?: boolean };
+type InputProps = FieldProps<string> & { placeholder?: string, password?: boolean };
 
-const InputField = <V,>(props: InputProps<V>) => {
+const InputField: FC<InputProps> = props => {
   const { label, field, placeholder, password = false } = props;
-  const { value, onChange, errors } = useField(field);
+  const { value, onChange, error } = useFieldProps(field);
 
   return (
     <Field label={label} field={field}>
       <Input
         value={value}
         onChange={e => onChange(e.target.value)}
-        status={errors !== null ? "error" : undefined}
+        status={error !== null ? "error" : undefined}
         placeholder={placeholder}
         type={password ? "password" : undefined}
       />

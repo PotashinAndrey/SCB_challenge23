@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useUnit } from 'effector-react';
 import { Modal, Button } from 'antd';
-import { useForm } from '@filledout/react';
+import { useForm } from '@effector-reform/react';
 import { dashboardCreatePopup, $$dashboardCreateForm } from '@context/model/dashboard';
 import DashboardCreate from '@page/dashboard/DashboardCreate';
 

@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import type DB from '../../class/DB';
 import { dashboardsList, historyAppend, createDashboard, createProcess } from '../service/dashboards';
+import type { DashboardCreateModel } from '@app/types/model/dashboard';
 
 const dashboardApi = (fastify: FastifyInstance, options: { db: DB }, done: () => void): void => {
   const { db } = options;
@@ -23,7 +24,7 @@ const dashboardApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
   });
 
   fastify.post('/create', async (request, reply) => {
-    const { project = '', title = '', description = null, columns = [] } = request.body ? JSON.parse(request.body as string) : {};
+    const { project = '', title = '', description = null, processes = [] } = request.body as DashboardCreateModel;
     console.log('dashboard create:\n\n', request.body, project, title, description, '\n\n');
     if (!project || !title) return {};
 
@@ -36,9 +37,9 @@ const dashboardApi = (fastify: FastifyInstance, options: { db: DB }, done: () =>
       db
     );
 
-    (columns as string[]).forEach(async (column, index) => {
-      await createProcess(dashboard.id, column, String(index), db);
-    });
+    // (processes as string[]).forEach(async (column, index) => { // ProcessModelType
+    //   await createProcess(dashboard.id, column, String(index), db);
+    // });
 
     return dashboard;
   });

@@ -1,21 +1,13 @@
-import type { FC, SyntheticEvent } from "react";
-import { useCallback } from "react";
+import type { FC } from "react";
 import { Link } from 'atomic-router-react';
 import { Button, Card, Space } from 'antd';
-import { useForm } from '@filledout/react';
+import { useForm } from '@effector-reform/react';
 import { routing } from '@context/router';
 import { $$userRegistrationForm } from '@context/auth';
 import InputField from '@form/Input';
-import { preventDefault } from "../../scripts/ui-utils";
 
 const Registration: FC = () => {
   const { onSubmit, fields } = useForm($$userRegistrationForm);
-
-  const submit = useCallback(<T extends SyntheticEvent<E>, E>(event: T) => {
-    preventDefault(event);
-    console.log('submit', { fields });
-    onSubmit();
-  }, [onSubmit]);
 
   return (
     <div className="flex center items-center mt-content">
@@ -24,7 +16,7 @@ const Registration: FC = () => {
         extra={<Link to={routing.auth.login}>Уже зарегистрированы?</Link>}
         style={{ width: 480 }}
       >
-        <form onSubmit={submit}>
+        <form onSubmit={onSubmit}>
           <InputField field={fields.name} label="Имя" placeholder="Укажите ваше имя" />
           <InputField field={fields.email} label="Электронная почта" placeholder="Укажите ваш email" />
           <InputField field={fields.password} label="Пароль" placeholder="Придумайте пароль" password />

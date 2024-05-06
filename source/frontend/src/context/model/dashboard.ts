@@ -3,12 +3,12 @@ import { createEffect, sample, createEvent, createStore } from 'effector';
 import { createRoute, chainRoute } from 'atomic-router';
 import { attachOperation, createQuery, createMutation, update } from '@farfetched/core';
 import { startChain } from '@farfetched/atomic-router';
+import { createForm } from '@effector-reform/core';
 import { getDashboardsList, dashboardCreateRequest } from '@service/dashboard';
 import { dashboardLoad } from '@service/process';
 import type { DashboardDataType, DashboardCreateModel } from '@app/types/model/dashboard';
 import type { ProcessModelType } from '@app/types/model/process';
 import factoryPopupBehaviour from '../factory/popup';
-import createForm from '../factory/form';
 
 /** Список дашбордов */
 export const dashboardsListQuery = createQuery({
@@ -70,7 +70,7 @@ chainRoute({
 /** Создание новой доски-дашборда */
 export const dashboardCreatePopup = factoryPopupBehaviour();
 export const $$dashboardCreateForm = createForm<DashboardCreateModel>({
-  initialValues: {
+  schema: {
     title: '',
     description: '',
     processes: []

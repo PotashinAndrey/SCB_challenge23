@@ -1,13 +1,12 @@
 import { Select } from 'antd';
-import { useField } from '@filledout/react';
 import type { OptionType } from '@app/types/app';
-import Field, { type FieldProps } from './Field';
+import Field, { useFieldProps, type FieldProps } from './Field';
 
-type SelectProps<FormValues, FieldType extends string> = FieldProps<FormValues, FieldType> & { placeholder?: string, options: Array<OptionType<FieldType>> };
+type SelectProps<FieldType extends string> = FieldProps<FieldType> & { placeholder?: string, options: Array<OptionType<FieldType>> };
 
-const SelectField = <FormValues, FieldType extends string, >(props: SelectProps<FormValues, FieldType>) => {
+const SelectField = <FieldType extends string, >(props: SelectProps<FieldType>) => {
   const { label, field, placeholder, options } = props;
-  const { value, onChange, errors } = useField(field);
+  const { value, onChange, error } = useFieldProps(field);
 
   return (
     <Field label={label} field={field}>
@@ -15,7 +14,7 @@ const SelectField = <FormValues, FieldType extends string, >(props: SelectProps<
         value={value}
         onChange={onChange}
         options={options}
-        status={errors !== null ? "error" : undefined}
+        status={error !== null ? "error" : undefined}
         placeholder={placeholder}
       />
     </Field>
