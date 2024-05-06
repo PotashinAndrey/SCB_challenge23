@@ -24,13 +24,14 @@
       "@app/types/*": ["../types/*"],
       "@app/scripts/*": ["../scripts/*"],
 
-      "@ui/*": ["./src/ui/*"],
-      "@component/*": ["./src/component/*"],
-      "@page/*": ["./src/pages/*"],
-      "@context/*": ["./src/context/*"],
-      "@service/*": ["./src/service/*"],
-      "@popup/*": ["./src/popup/*"],
-      "@form/*": ["./src/form/*"]
+      "@ui/*": ["./ui/*"],
+      "@component/*": ["./component/*"],
+      "@page/*": ["./pages/*"],
+      "@context/*": ["./context/*"],
+      "@service/*": ["./service/*"],
+      "@popup/*": ["./popup/*"],
+      "@form/*": ["./form/*"],
+      "@hook/*": ["./hook/*"]
     }
   },
   "ts-node": {
@@ -40,7 +41,8 @@
     "esm": true
   },
   "include": [
-    "src",
+    "index.tsx",
+    "./*.ts",
     "custom.d.ts"
   ]
 }

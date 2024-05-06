@@ -108,6 +108,7 @@ class DB {
     return this.query({ text }, client);
   }
 
+  /** Добавление столбца в таблицу */
   createField(table: string, field: string, structure: string, client?: PoolClient | pg.Client): Promise<any> {
     const [type, initial = 'NULL'] = structure.split(' ');
     const nullable = initial !== 'NULL' ? 'NOT NULL' : '';
@@ -118,6 +119,14 @@ class DB {
 
   removeField(table: string, field: string, client?: PoolClient | pg.Client): Promise<any> {
     const text = `ALTER TABLE "${table.replace('.', '"."')}" DROP COLUMN if exists "${field}"`;
+    return this.query({ text }, client);
+  }
+
+  /** Переименование столбца таблицы
+    * TODO: проверить что столбец существует и что новое имя не занято
+    */
+  renameField(table: string, field: string, newField: string, client?: PoolClient | pg.Client): Promise<any> {
+    const text = `ALTER TABLE "${table.replace('.', '"."')}" RENAME COLUMN "${field}" TO "${newField}"`;
     return this.query({ text }, client);
   }
 

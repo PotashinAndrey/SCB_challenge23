@@ -1,7 +1,6 @@
 import type { ServerProtocol, BackendConfig } from '@app/types/config';
 import type { Configuration } from 'webpack';
-
-import * as url from 'url';
+// import * as url from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import path from 'path';
@@ -28,7 +27,7 @@ if (isDevelopment) {
 const configuration: Configuration = {
   devtool: 'source-map',
   mode: isDevelopment ? 'development' : 'production',
-  entry: './src/index.tsx',
+  entry: './index.tsx',
   // devServer: {
   //   proxy: {
   //     '/api': `http://localhost:3000`
@@ -51,15 +50,14 @@ const configuration: Configuration = {
     modules: [__dirname, 'src', 'node_modules'],
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
     alias: {
-      '@ui': path.resolve(__dirname, 'src/ui'),
-      '@context': path.resolve(__dirname, 'src/context'),
-      '@service': path.resolve(__dirname, 'src/service'),
-      '@page': path.resolve(__dirname, 'src/pages'),
-      '@component': path.resolve(__dirname, 'src/component'),
-      '@popup': path.resolve(__dirname, 'src/popup'),
-
-      // кандидаты на улучшение
-      '@form': path.resolve(__dirname, 'src/form'),
+      '@ui': path.resolve(__dirname, 'ui'),
+      '@context': path.resolve(__dirname, 'context'),
+      '@service': path.resolve(__dirname, 'service'),
+      '@page': path.resolve(__dirname, 'pages'),
+      '@component': path.resolve(__dirname, 'component'),
+      '@popup': path.resolve(__dirname, 'popup'),
+      '@form': path.resolve(__dirname, 'form'),
+      '@hook': path.resolve(__dirname, 'hook')
     }
   },
   module: {

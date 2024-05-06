@@ -6,12 +6,12 @@ import config from '../../config';
 import DB from './class/DB';
 import cors from '@fastify/cors';
 
-import usersApi from './src/api/users';
-import companiesApi from './src/api/companies';
-import projectsApi from './src/api/projects';
-import processesApi from './src/api/processes';
-import dashboardApi from './src/api/dashboard';
-import tasksApi from './src/api/tasks';
+import usersApi from './api/users';
+import companiesApi from './api/companies';
+import projectsApi from './api/projects';
+import processesApi from './api/processes';
+import dashboardApi from './api/dashboard';
+import tasksApi from './api/tasks';
 import JWT from 'jsonwebtoken';
 
 const { verify } = JWT;
